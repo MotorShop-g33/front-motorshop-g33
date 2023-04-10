@@ -1,9 +1,16 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
+import { FooterComponents } from "../../components/footer";
 
 export const Dashboard = () => {
   const { count, setCount } = useContext(UserContext);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggleModal(e: any) {
+    setIsOpen(!isOpen);
+  }
 
   return (
     <>
