@@ -10,7 +10,7 @@ export const FooterComponents = () => {
           <img src={motor_shop} alt="" />
         </div>
         <Paragraph_2_400 color="--white-fixed">
-          © 2022 - Todos os direitos reservados.
+          © 2023 - Todos os direitos reservados.
         </Paragraph_2_400>
         <a href="#" id="scroll_up">
           <img src={angle_up} alt="" />

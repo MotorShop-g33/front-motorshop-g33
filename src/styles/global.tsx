@@ -4,8 +4,8 @@ export const GlobalStyleDefault = createGlobalStyle`
 
 // COLORS
 :root {
-    --brand-1: #4529E6;
-    --brand-2: #5126EA;
+    --brand-1: #092548;
+    --brand-2: #1B4479;
     --brand-3: #B0A6F0;
     --brand-4: #EDEAFD;
 
@@ -20,6 +20,8 @@ export const GlobalStyleDefault = createGlobalStyle`
     --gray-8: #F1F3F5;
     --gray-9: #F8F9FA;
     --gray-10: #FDFDFD;
+
+    --boxShdown: #00000025;
 
     --white-fixed: #FFFFFF;
 
