@@ -29,7 +29,7 @@ export const HeaderMenu = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem("@tokenName:token");
+    localStorage.removeItem("@token:token");
     localStorage.removeItem("@userId:id");
     navigate("/");
   };
@@ -53,40 +53,54 @@ export const HeaderMenu = () => {
           <Flex
             borderLeft={"solid 2px var(--gray-6) "}
             p={"1rem"}
+            minW={"240px"}
             h={"100%"}
             alignItems={"center"}
+            justifyContent={"center"}
             css={{
               "@media (max-width: 769px)": {
                 borderLeft: "none",
+                "justify-content": "flex-end",
               },
             }}
           >
-            {" "}
-            <IconButton
-              size={"md"}
-              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-              aria-label={"Open Menu"}
-              display={{ md: "none" }}
-              onClick={isOpen ? onClose : onOpen}
-            />
             {user.token ? (
               <Menu>
                 <MenuButton
-                  display={{ base: "none", md: "block" }}
                   as={Button}
                   rounded={"full"}
                   variant={"link"}
                   cursor={"pointer"}
                   minW={0}
                 >
-                  <Avatar size={"sm"} name={"douglas borger"} src={"img"} />
+                  <IconButton
+                    size={"md"}
+                    icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                    aria-label={"Open Menu"}
+                    display={{ md: "none" }}
+                  />
+                  <Avatar
+                    size={"sm"}
+                    name={"douglas borger"}
+                    src={"img"}
+                    display={{ base: "none", md: "block" }}
+                  />
                 </MenuButton>
 
                 <MenuList
-                  display={{ base: "none", md: "block" }}
-                  bg={"var(--gray-9)"}
-                  m={"10px -4rem"}
+                  position={"absolute"}
+                  w={"200px"}
+                  minW={0}
+                  top={"6px"}
+                  left={"-1rem"}
                   boxShadow={"0px 4px 40px -10px var(--boxShdown)"}
+                  css={{
+                    "@media (max-width: 769px)": {
+                      width: "140px",
+                      bg: "red",
+                      left: "-5rem",
+                    },
+                  }}
                 >
                   <MenuItem
                     bg={"var(--gray-9)"}
@@ -120,6 +134,7 @@ export const HeaderMenu = () => {
                     Sair
                   </MenuItem>
                 </MenuList>
+
                 <Text
                   display={{ base: "none", md: "block" }}
                   color={"var(--gray-2)"}
@@ -135,18 +150,6 @@ export const HeaderMenu = () => {
             )}
           </Flex>
         </Flex>
-
-        {isOpen == true && (
-          <Flex
-            pb={4}
-            display={{ md: "none" }}
-            color={"var( --gray-0: #0B0D0D)"}
-          >
-            <Link> Edita perfil</Link>
-            <Link> Editar endereço</Link>
-            <Link>sair </Link>
-          </Flex>
-        )}
       </Box>
     </>
   );
