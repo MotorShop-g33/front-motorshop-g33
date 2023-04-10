@@ -2,14 +2,29 @@ import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import { MainSection, Banner, Content } from "../../styles/dashboard";
-import G33 from "../../../public/icon_g33.png";
+import { AnnouncementCard } from "../../components/announcementList.tsx";
+import { UnorderedList } from "@chakra-ui/react";
+import G33 from "../../assets/icon_g33.png"
+
+
 export const Dashboard = () => {
-  const { count, setCount } = useContext(UserContext);
 
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleModal(e: any) {
     setIsOpen(!isOpen);
+  }
+
+  // --> DADOS MOCKADOS APENAS PARA VISUALIZAÇÃO DO DESIGN DOS CARDS (NECESSÁRIO DELEÇÃO FUTURA) <--
+  const exampleData =  {
+    img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-PNG-Pic-Background.png",
+    title: "Burro do shrek",
+    description: "Um novissimo burro com 0 km e manutenção em dia",
+    userImg: "",
+    username: "Felipe Bulhoes",
+    milage: "0",
+    year: 2006,
+    price: 59990
   }
 
   return (
@@ -33,12 +48,11 @@ export const Dashboard = () => {
             </div>
           </aside>
 
-          <section>
-            <button onClick={() => setCount(count + 1)}>Aumentar </button>
-            <button onClick={() => setCount(count - 1)}>Diminuir </button>
-            <hr />
-            <h2>Contador {count}</h2>
-          </section>
+            <UnorderedList w={"70%"} display={"flex"} flexWrap={"wrap"} justifyContent={"space-evenly"}  gap={"24px"}>
+              <AnnouncementCard img={exampleData.img} title={exampleData.title} description={exampleData.description} userImg={exampleData.userImg} username={exampleData.username} milage={exampleData.milage} year={exampleData.year} price={exampleData.price}></AnnouncementCard>
+              <AnnouncementCard img={exampleData.img} title={exampleData.title} description={exampleData.description} userImg={exampleData.userImg} username={exampleData.username} milage={exampleData.milage} year={exampleData.year} price={exampleData.price}></AnnouncementCard>
+              <AnnouncementCard img={exampleData.img} title={exampleData.title} description={exampleData.description} userImg={exampleData.userImg} username={exampleData.username} milage={exampleData.milage} year={exampleData.year} price={exampleData.price}></AnnouncementCard>
+            </UnorderedList>
         </Content>
       </MainSection>
     </>
