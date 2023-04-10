@@ -6,12 +6,10 @@ export const MainSection = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-
-    width: 100vw;
 `;
 
 export const Banner = styled.div`
-    background-image: url("../../public/banner.jpeg");
+    background-image: url("../src/assets/banner.jpeg");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -45,8 +43,8 @@ export const Content = styled.div`
     align-items: center;
     justify-content: flex-start;
 
-    width: 100vw;
-    padding: 25px 10px;
+    width: 95%;
+    padding: 25px 0px;
 
     aside {
         width: 25%;
