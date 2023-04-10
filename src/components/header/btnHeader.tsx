@@ -1,28 +1,79 @@
-import { Box, Flex, Link } from "@chakra-ui/react";
-import { Button_medium_text } from "../../styles/buttons";
-import { IUserContextProps, UserContext } from "../../context/UserContext";
-import { useContext } from "react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useBreakpointValue,
+} from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
 
 export const BtnHeader = () => {
-  const { navigate } = useContext(UserContext);
-
+  const displayValue = useBreakpointValue({ base: "flex", md: "none" });
   return (
-    <Flex gap={5} align={"center"} display={{ base: "none", md: "flex" }}>
-      <Link
-        width={"90px"}
-        colorScheme={"var(--gray-2)"}
-        href="http://localhost:5173/login"
-      >
-        Fazer Login
-      </Link>
-      <Link
-        border={"solid 1px var(--gray-4)"}
-        p={" .6rem 2rem"}
-        color={"black"}
-        href="http://localhost:5173/register"
-      >
-        Register
-      </Link>
-    </Flex>
+    <>
+      <Menu>
+        <MenuButton
+          display={{ md: "none" }}
+          as={IconButton}
+          aria-label="Options"
+          icon={<HamburgerIcon />}
+          variant="outline"
+        />
+        <MenuList
+          display={displayValue}
+          flexDir={"column"}
+          h={"181"}
+          borderColor={"none"}
+          w={"319px"}
+          justifyContent={"center"}
+          gap={"2rem"}
+          margin={"0 -1.5rem"}
+        >
+          <MenuItem>
+            <Link
+              width={"90px"}
+              colorScheme={"var(--gray-2)"}
+              href="http://localhost:5173/login"
+            >
+              Fazer Login
+            </Link>
+          </MenuItem>
+          <MenuItem _hover={{ bg: "none" }}>
+            <Link
+              w={"95%"}
+              border={"solid 1px var(--gray-4)"}
+              p={" .6rem 2rem"}
+              color={"black"}
+              textAlign={"center"}
+              href="http://localhost:5173/register"
+            >
+              Register
+            </Link>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+
+      <Flex gap={5} align={"center"} display={{ base: "none", md: "flex" }}>
+        <Link
+          width={"90px"}
+          colorScheme={"var(--gray-2)"}
+          href="http://localhost:5173/login"
+        >
+          Fazer Login
+        </Link>
+        <Link
+          border={"solid 1px var(--gray-4)"}
+          p={" .6rem 2rem"}
+          color={"black"}
+          href="http://localhost:5173/register"
+        >
+          Register
+        </Link>
+      </Flex>
+    </>
   );
 };
