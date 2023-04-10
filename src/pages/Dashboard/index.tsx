@@ -1,21 +1,26 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import { MainSection, Banner, Content } from "../../styles/dashboard";
-import G33 from "../../../public/icon_g33.png"
-
+import G33 from "../../../public/icon_g33.png";
 export const Dashboard = () => {
   const { count, setCount } = useContext(UserContext);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggleModal(e: any) {
+    setIsOpen(!isOpen);
+  }
+
   return (
-    <><MainSection>
-        
+    <>
+      <MainSection>
         <Banner>
           <div>
-          <img src={G33} width={80} height={80} alt="G33 Motorshop Logo"/>
-          <h1>MOTORSHOP</h1>
+            <img src={G33} width={80} height={80} alt="G33 Motorshop Logo" />
+            <h1>MOTORSHOP</h1>
             <span>A melhor plataforma de anúncios de carros do país.</span>
-          </div>          
+          </div>
         </Banner>
 
         <Content>
@@ -35,7 +40,6 @@ export const Dashboard = () => {
             <h2>Contador {count}</h2>
           </section>
         </Content>
-
       </MainSection>
     </>
   );
