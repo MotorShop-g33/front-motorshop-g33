@@ -16,6 +16,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { BtnHeader } from "./btnHeader";
+import logoG33 from "../../assets/logo_g33.png";
 
 export const HeaderMenu = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,7 +47,7 @@ export const HeaderMenu = () => {
         >
           <Box>
             <Text fontWeight={"bold"} fontSize={16} color={"var(--gray-0)"}>
-              <a href="/">G33</a>
+              <a href="/"><img src={logoG33} alt="G33 Motorshop Logo" /></a>
             </Text>
           </Box>
 
