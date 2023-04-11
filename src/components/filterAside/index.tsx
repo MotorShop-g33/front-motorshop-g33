@@ -53,7 +53,7 @@ export const FilterAside = () => {
   const handleFilter = (e: string | number) => {
     setFilterValue(e);
   };
-  console.log(filterValue);
+
   return (
     <Flex flexDir={"column"} gap={"1rem"}>
       <Box>

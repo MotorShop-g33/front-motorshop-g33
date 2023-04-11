@@ -35,7 +35,7 @@ export const HeaderMenu = () => {
   const logout = () => {
     localStorage.removeItem("@token:token");
     localStorage.removeItem("@userId:id");
-    navigate("/");
+    navigate("/home");
   };
 
   return (
@@ -50,7 +50,7 @@ export const HeaderMenu = () => {
         >
           <Box>
             <Text fontWeight={"bold"} fontSize={16} color={"var(--gray-0)"}>
-              <a href="/">
+              <a href="/home">
                 <img src={logoG33} alt="G33 Motorshop Logo" />
               </a>
             </Text>
@@ -135,7 +135,7 @@ export const HeaderMenu = () => {
                     </MenuItem>
                   )}
 
-                  {pathname.includes("/") == true && (
+                  {pathname.includes("/home") == true && (
                     <MenuItem
                       display={{ base: "blcok", md: "none" }}
                       bg={"var(--gray-9)"}
