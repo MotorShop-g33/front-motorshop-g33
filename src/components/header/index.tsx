@@ -18,7 +18,7 @@ import { UserContext } from "../../context/UserContext";
 import { BtnHeader } from "./btnHeader";
 
 export const HeaderMenu = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen } = useDisclosure();
 
   const { token, navigate } = useContext(UserContext);
 
@@ -60,7 +60,7 @@ export const HeaderMenu = () => {
             css={{
               "@media (max-width: 769px)": {
                 borderLeft: "none",
-                "justify-content": "flex-end",
+                justifyContent: "flex-end",
               },
             }}
           >
@@ -74,6 +74,9 @@ export const HeaderMenu = () => {
                   minW={0}
                 >
                   <IconButton
+                    color={"var(--gray-0)"}
+                    p={"1em"}
+                    as={"span"}
                     size={"md"}
                     icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
                     aria-label={"Open Menu"}

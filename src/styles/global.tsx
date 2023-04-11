@@ -45,6 +45,8 @@ export const GlobalStyleDefault = createGlobalStyle`
     --random-10: #6100FF;
     --random-11: #5700E3;
     --random-12: #30007D;
+
+   
 }
 
 *{
@@ -63,5 +65,12 @@ li{
 
 a{
     cursor: pointer;
+}
+
+
+.titleFilter{
+    font-family: 'Lexend', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 900;
 }
 `;
