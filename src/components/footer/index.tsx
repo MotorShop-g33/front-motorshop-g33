@@ -1,5 +1,5 @@
 import { Footer } from "../../styles/footer";
-import motor_shop from "../../assets/motor-shop.svg";
+import motor_shop from "../../assets/footer_g33.png";
 import angle_up from "../../assets/angle-up.svg";
 import { Paragraph_2_400 } from "../../styles/typography";
 export const FooterComponents = () => {
@@ -7,7 +7,7 @@ export const FooterComponents = () => {
     <>
       <Footer>
         <div>
-          <img src={motor_shop} alt="" />
+          <img src={motor_shop} width={180} alt="" />
         </div>
         <Paragraph_2_400 color="--white-fixed">
           © 2023 - Todos os direitos reservados.
