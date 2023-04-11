@@ -40,13 +40,18 @@ export const Banner = styled.div`
 export const Content = styled.div`
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
 
     width: 95%;
     padding: 25px 0px;
 
     aside {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
         width: 25%;
         @media screen and (max-width: 750px) {
             display: none;
@@ -56,25 +61,5 @@ export const Content = styled.div`
 
     section {
         width: 75%;
-    }
-
-    //TEMPORARIO
-    button {
-        background-color: var(--brand-1);
-        color: var(--white-fixed);
-        
-        font-size: 14px;
-        font-weight: 500;
-        margin: 5px 10px;
-        border-radius: 5px;
-        
-        width: 80px;
-        height: 35px;
-    }
-
-    //TEMPORARIO
-    h2 {
-        margin: 0px 10px;
-        font-size: 21px;
     }
 `;
