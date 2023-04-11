@@ -40,12 +40,6 @@ export const Dashboard = () => {
         <Content>
           <aside>
             <FilterAside />
-            <div>
-              <Link to={"/register"}>Registro</Link>
-            </div>
-            <div>
-              <Link to={"/login"}>Login</Link>
-            </div>
           </aside>
 
           <UnorderedList

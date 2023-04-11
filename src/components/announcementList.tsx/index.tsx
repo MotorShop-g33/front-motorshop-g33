@@ -5,8 +5,6 @@ import {
   Avatar,
   Image,
   Box,
-  Wrap,
-  WrapItem,
   ListItem,
 } from "@chakra-ui/react";
 import {
