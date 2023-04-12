@@ -146,6 +146,10 @@ export const ProductPhotos = styled.div`
 	background: var(--gray-10);
 
 	border-radius: 4px;
+
+	h1 {
+		margin-bottom: 32px;
+	}
 `;
 
 export const UserProfile = styled.div`

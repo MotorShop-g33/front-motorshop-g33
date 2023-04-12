@@ -8,19 +8,26 @@ export const StyledList = styled(List)`
 	align-content: center;
 	justify-content: center;
 	align-items: center;
-	gap: 32px 14px;
+	
+  gap: 32px 14px;
 `;
 
 export const StyledListItem = styled(ListItem)`
 	display: flex;
 	align-content: center;
 	justify-content: center;
-	margin-top: 0;
+
+	padding: 20px 5px;
+	gap: 10px;
+
+	background: var(--gray-7);
+	border-radius: 4px;
 
 	height: 108px;
 	width: 108px;
 
 	img {
 		height: 100%;
+		width: auto;
 	}
 `;
