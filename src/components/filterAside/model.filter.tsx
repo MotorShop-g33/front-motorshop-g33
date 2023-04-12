@@ -1,8 +1,10 @@
 import {
+  Button,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Text,
@@ -14,14 +16,17 @@ export const ModalFilter = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Text
-        bg={"var(--gray-9)"}
-        color={"black"}
+      <Button
+        bg={"var(--brand2)"}
+        color={"var(--white-fixed)"}
         onClick={onOpen}
+        w={"279px"}
+        h={"48px"}
+        margin={"1rem 0"}
         display={{ base: "blcok", md: "none" }}
       >
-        Open Modal
-      </Text>
+        Filtros
+      </Button>
       <Modal
         isCentered
         onClose={onClose}
@@ -35,6 +40,16 @@ export const ModalFilter = () => {
           <ModalBody>
             <FilterAside />
           </ModalBody>
+          <ModalFooter justifyContent={"center"}>
+            <Button
+              bg={"var(--brand2)"}
+              color={"var(--white-fixed)"}
+              p={"1rem 5rem"}
+              onClick={onClose}
+            >
+              Ver anúncios
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

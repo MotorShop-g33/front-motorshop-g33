@@ -11,7 +11,7 @@ import {
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { IAnnouncements } from "../../interfaces/announcements";
-import { Button_big_text } from "../../styles/buttons";
+import { Button_big_text, Button_medium_text } from "../../styles/buttons";
 
 export const FilterAside = () => {
   const { productsList, setFilterValue, filterValue } = useContext(UserContext);
@@ -49,14 +49,13 @@ export const FilterAside = () => {
   //   return valores;
   // };
   // handlePrice();
-  const { onClose } = useDisclosure();
   const handleFilter = (e: string | number) => {
     setFilterValue(e);
   };
 
   return (
-    <Flex flexDir={"column"} gap={"1rem"}>
-      <Box>
+    <Flex flexDir={"column"}>
+      <Flex flexDir={"column"} gap={"1rem"}>
         {/*====Marcas ==== */}
         <List>
           <Text className="titleFilter" as={"h3"}>
@@ -115,9 +114,9 @@ export const FilterAside = () => {
             Km
           </Text>
 
-          <Flex>
-            <Button_big_text set_background_color="red">Minimo</Button_big_text>
-            <Button_big_text>Máxma</Button_big_text>
+          <Flex justifyContent={"space-around"}>
+            <Button_medium_text>Minimo</Button_medium_text>
+            <Button_medium_text>Máxma</Button_medium_text>
           </Flex>
         </List>
         {/*====Proço ==== */}
@@ -125,15 +124,21 @@ export const FilterAside = () => {
           <Text className="titleFilter" as={"h3"}>
             Proço
           </Text>
-          <Flex>
-            <Button_big_text set_background_color="red">Minimo</Button_big_text>
-            <Button_big_text>Máxma</Button_big_text>
+          <Flex justifyContent={"space-around"}>
+            <Button_medium_text>Minimo</Button_medium_text>
+            <Button_medium_text>Máxma</Button_medium_text>
           </Flex>
         </List>
-      </Box>
+      </Flex>
 
-      <Box>
-        <Button p={"1rem 5rem"}>Limpar filtros</Button>
+      <Box display={{ base: "none", md: "flex" }} justifyContent={"center"}>
+        <Button
+          bg={"var(--brand2)"}
+          color={"var(--white-fixed)"}
+          p={"1rem 5rem"}
+        >
+          Limpar filtros
+        </Button>
       </Box>
     </Flex>
   );

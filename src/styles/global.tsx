@@ -73,5 +73,6 @@ a{
     font-family: 'Lexend', sans-serif;
     font-size: 1.2rem;
     font-weight: 900;
+    margin-bottom: 6px;
 }
 `;

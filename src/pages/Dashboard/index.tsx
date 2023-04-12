@@ -6,6 +6,7 @@ import { AnnouncementCard } from "../../components/announcementList.tsx";
 import { UnorderedList } from "@chakra-ui/react";
 import G33 from "../../assets/icon_g33.png";
 import { FilterAside } from "../../components/filterAside";
+import { ModalFilter } from "../../components/filterAside/model.filter";
 
 export const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,6 +82,7 @@ export const Dashboard = () => {
             ></AnnouncementCard>
           </UnorderedList>
         </Content>
+        <ModalFilter />
       </MainSection>
     </>
   );
