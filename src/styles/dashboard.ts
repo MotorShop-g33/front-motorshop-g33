@@ -62,8 +62,8 @@ export const Content = styled.div`
 
   //TEMPORARIO
   button {
-    background-color: var(--brand-1);
-    color: var(--white-fixed);
+    /* background-color: var(--brand-1); */ //esta deixando todo os btn mesmo cor
+    /* color: var(--white-fixed); */
 
     font-size: 14px;
     font-weight: 500;

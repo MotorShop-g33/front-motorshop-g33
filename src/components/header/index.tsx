@@ -17,12 +17,9 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { BtnHeader } from "./btnHeader";
 import logoG33 from "../../assets/logo_g33.png";
-import { useLocation } from "react-router-dom";
-import { ModalFilter } from "../filterAside/model.filter";
 
 export const HeaderMenu = () => {
   const { isOpen } = useDisclosure();
-  const { pathname } = useLocation();
 
   const { token, navigate } = useContext(UserContext);
 
@@ -134,17 +131,6 @@ export const HeaderMenu = () => {
                       Meus Anúncios
                     </MenuItem>
                   )}
-
-                  {pathname.includes("/home") == true && (
-                    <MenuItem
-                      display={{ base: "blcok", md: "none" }}
-                      bg={"var(--gray-9)"}
-                      color={"black"} // pagina não existe ainda
-                    >
-                      <ModalFilter />
-                    </MenuItem>
-                  )}
-
                   <MenuItem
                     bg={"var(--gray-9)"}
                     color={"black"}
