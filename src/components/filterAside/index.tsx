@@ -1,17 +1,8 @@
-import {
-  Box,
-  Button,
-  Flex,
-  List,
-  ListItem,
-  Text,
-  background,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, List, ListItem, Text } from "@chakra-ui/react";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { IAnnouncements } from "../../interfaces/announcements";
-import { Button_big_text, Button_medium_text } from "../../styles/buttons";
+import { Button_medium_text } from "../../styles/buttons";
 
 export const FilterAside = () => {
   const { productsList, setFilterValue, filterValue } = useContext(UserContext);
@@ -116,17 +107,17 @@ export const FilterAside = () => {
 
           <Flex justifyContent={"space-around"} maxW={"210px"} gap={"1rem"}>
             <Button_medium_text>Minimo</Button_medium_text>
-            <Button_medium_text>Máxma</Button_medium_text>
+            <Button_medium_text>Máxima</Button_medium_text>
           </Flex>
         </List>
         {/*====Proço ==== */}
         <List>
           <Text className="titleFilter" as={"h3"}>
-            Proço
+            Preço
           </Text>
           <Flex justifyContent={"space-around"} maxW={"210px"} gap={"1rem"}>
             <Button_medium_text>Minimo</Button_medium_text>
-            <Button_medium_text>Máxma</Button_medium_text>
+            <Button_medium_text>Máxima</Button_medium_text>
           </Flex>
         </List>
       </Flex>

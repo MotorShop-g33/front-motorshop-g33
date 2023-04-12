@@ -32,7 +32,7 @@ export const HeaderMenu = () => {
   const logout = () => {
     localStorage.removeItem("@token:token");
     localStorage.removeItem("@userId:id");
-    navigate("/home");
+    navigate("/");
   };
 
   return (
@@ -47,7 +47,7 @@ export const HeaderMenu = () => {
         >
           <Box>
             <Text fontWeight={"bold"} fontSize={16} color={"var(--gray-0)"}>
-              <a href="/home">
+              <a href="/">
                 <img src={logoG33} alt="G33 Motorshop Logo" />
               </a>
             </Text>
