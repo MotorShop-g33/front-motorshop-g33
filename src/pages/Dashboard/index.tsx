@@ -3,13 +3,15 @@ import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router-dom";
 import { MainSection, Banner, Content } from "../../styles/dashboard";
 import { AnnouncementCard } from "../../components/announcementList.tsx";
-import { UnorderedList } from "@chakra-ui/react";
+import { UnorderedList, useMediaQuery } from "@chakra-ui/react";
 import G33 from "../../assets/icon_g33.png";
 import { FilterAside } from "../../components/filterAside";
 import { ModalFilter } from "../../components/filterAside/model.filter";
 
 export const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLargerThan750] = useMediaQuery("(min-width: 750px)")
+
 
   function toggleModal(e: any) {
     setIsOpen(!isOpen);
@@ -43,12 +45,13 @@ export const Dashboard = () => {
             <FilterAside />
           </aside>
 
+        { isLargerThan750 ? 
           <UnorderedList
-            w={"70%"}
-            display={"flex"}
-            flexWrap={"wrap"}
-            justifyContent={"space-evenly"}
-            gap={"24px"}
+          w={"70%"}
+          display={"flex"}
+          flexWrap={"wrap"}
+          justifyContent={"space-evenly"}
+          gap={"24px"}
           >
             <AnnouncementCard
               img={exampleData.img}
@@ -81,9 +84,132 @@ export const Dashboard = () => {
               price={exampleData.price}
             ></AnnouncementCard>
           </UnorderedList>
+        : 
+          <UnorderedList
+          w={"100%"}
+          display={"flex"}
+          flexWrap={"nowrap"}
+          overflowX={"scroll"}
+          gap={"24px"}
+          >
+            <AnnouncementCard
+              img={exampleData.img}
+              title={exampleData.title}
+              description={exampleData.description}
+              userImg={exampleData.userImg}
+              username={exampleData.username}
+              milage={exampleData.milage}
+              year={exampleData.year}
+              price={exampleData.price}
+            ></AnnouncementCard>
+            <AnnouncementCard
+              img={exampleData.img}
+              title={exampleData.title}
+              description={exampleData.description}
+              userImg={exampleData.userImg}
+              username={exampleData.username}
+              milage={exampleData.milage}
+              year={exampleData.year}
+              price={exampleData.price}
+            ></AnnouncementCard>
+            <AnnouncementCard
+              img={exampleData.img}
+              title={exampleData.title}
+              description={exampleData.description}
+              userImg={exampleData.userImg}
+              username={exampleData.username}
+              milage={exampleData.milage}
+              year={exampleData.year}
+              price={exampleData.price}
+            ></AnnouncementCard>
+          </UnorderedList>
+        }
+          
         </Content>
         <ModalFilter />
       </MainSection>
     </>
   );
 };
+
+/*
+      { isLargerThan750 ? 
+          <UnorderedList
+          w={"70%"}
+          display={"flex"}
+          flexWrap={"wrap"}
+          justifyContent={"space-evenly"}
+          gap={"24px"}
+          >
+            <AnnouncementCard
+              img={exampleData.img}
+              title={exampleData.title}
+              description={exampleData.description}
+              userImg={exampleData.userImg}
+              username={exampleData.username}
+              milage={exampleData.milage}
+              year={exampleData.year}
+              price={exampleData.price}
+            ></AnnouncementCard>
+            <AnnouncementCard
+              img={exampleData.img}
+              title={exampleData.title}
+              description={exampleData.description}
+              userImg={exampleData.userImg}
+              username={exampleData.username}
+              milage={exampleData.milage}
+              year={exampleData.year}
+              price={exampleData.price}
+            ></AnnouncementCard>
+            <AnnouncementCard
+              img={exampleData.img}
+              title={exampleData.title}
+              description={exampleData.description}
+              userImg={exampleData.userImg}
+              username={exampleData.username}
+              milage={exampleData.milage}
+              year={exampleData.year}
+              price={exampleData.price}
+            ></AnnouncementCard>
+          </UnorderedList>
+        : 
+          <UnorderedList
+          w={"100%"}
+          display={"flex"}
+          flexWrap={"nowrap"}
+          overflowX={"scroll"}
+          gap={"24px"}
+          >
+            <AnnouncementCard
+              img={exampleData.img}
+              title={exampleData.title}
+              description={exampleData.description}
+              userImg={exampleData.userImg}
+              username={exampleData.username}
+              milage={exampleData.milage}
+              year={exampleData.year}
+              price={exampleData.price}
+            ></AnnouncementCard>
+            <AnnouncementCard
+              img={exampleData.img}
+              title={exampleData.title}
+              description={exampleData.description}
+              userImg={exampleData.userImg}
+              username={exampleData.username}
+              milage={exampleData.milage}
+              year={exampleData.year}
+              price={exampleData.price}
+            ></AnnouncementCard>
+            <AnnouncementCard
+              img={exampleData.img}
+              title={exampleData.title}
+              description={exampleData.description}
+              userImg={exampleData.userImg}
+              username={exampleData.username}
+              milage={exampleData.milage}
+              year={exampleData.year}
+              price={exampleData.price}
+            ></AnnouncementCard>
+          </UnorderedList>
+        }    
+*/
