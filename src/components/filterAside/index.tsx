@@ -114,7 +114,7 @@ export const FilterAside = () => {
             Km
           </Text>
 
-          <Flex justifyContent={"space-around"}>
+          <Flex justifyContent={"space-around"} maxW={"210px"} gap={"1rem"}>
             <Button_medium_text>Minimo</Button_medium_text>
             <Button_medium_text>Máxma</Button_medium_text>
           </Flex>
@@ -124,14 +124,18 @@ export const FilterAside = () => {
           <Text className="titleFilter" as={"h3"}>
             Proço
           </Text>
-          <Flex justifyContent={"space-around"}>
+          <Flex justifyContent={"space-around"} maxW={"210px"} gap={"1rem"}>
             <Button_medium_text>Minimo</Button_medium_text>
             <Button_medium_text>Máxma</Button_medium_text>
           </Flex>
         </List>
       </Flex>
 
-      <Box display={{ base: "none", md: "flex" }} justifyContent={"center"}>
+      <Box
+        display={{ base: "none", md: "flex" }}
+        justifyContent={"center"}
+        maxW={"210px"}
+      >
         <Button
           bg={"var(--brand2)"}
           color={"var(--white-fixed)"}
