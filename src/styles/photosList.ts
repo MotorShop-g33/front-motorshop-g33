@@ -8,12 +8,13 @@ export const StyledList = styled(List)`
 	align-content: center;
 	justify-content: center;
 	align-items: center;
-	
-  gap: 32px 14px;
+
+	gap: 32px 14px;
 `;
 
 export const StyledListItem = styled(ListItem)`
 	display: flex;
+	align-items: flex-start;
 	align-content: center;
 	justify-content: center;
 
@@ -26,8 +27,16 @@ export const StyledListItem = styled(ListItem)`
 	height: 108px;
 	width: 108px;
 
+	cursor: pointer;
 	img {
 		height: 100%;
 		width: auto;
 	}
+`;
+
+export const DivImage = styled.div`
+	margin-bottom: 28px;
+
+	background: var(--gray-7);
+	border-radius: 4px;
 `;

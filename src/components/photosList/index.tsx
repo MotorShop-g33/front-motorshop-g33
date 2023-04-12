@@ -1,4 +1,5 @@
-import { StyledList, StyledListItem } from "../../styles/photosList";
+import { useState } from "react";
+import { DivImage, StyledList, StyledListItem } from "../../styles/photosList";
 
 import {
 	Modal,
@@ -16,23 +17,31 @@ interface IPhotosList {
 
 export const PhotosList = ({ photosList }: IPhotosList) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [productImage, setProductImage] = useState<string | undefined>();
 
 	return (
 		<>
 			<StyledList>
 				{photosList.map((item) => (
-					<StyledListItem onClick={onOpen} key={item.id} >
+					<StyledListItem onClick={() => {
+            onOpen()
+            setProductImage(item.img)}}  key={item.id}>
 						<img src={item.img} />
 					</StyledListItem>
 				))}
 			</StyledList>
+
 
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 				<ModalContent>
 					<ModalHeader>Imagem do veículo</ModalHeader>
 					<ModalCloseButton />
-					<ModalBody></ModalBody>
+					<ModalBody>
+						<DivImage>
+							<img src={productImage} />
+						</DivImage>
+					</ModalBody>
 				</ModalContent>
 			</Modal>
 		</>
