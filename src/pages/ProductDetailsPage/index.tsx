@@ -43,20 +43,19 @@ export const ProductDetailsPage = () => {
 		{
 			id: 2,
 			userImg:
+				"https://www.seekpng.com/png/full/145-1453424_shrek-movie-dragon-james-charles-dragon-from-shrek.png",
+			username: "Dragon",
+			description: "Esse já é rodado, pau pra toda obra uiui",
+			createdAt: "há 1 dia",
+		},
+		{
+			id: 3,
+			userImg:
 				"https://www.pngplay.com/wp-content/uploads/12/Shrek-PNG-HD-Quality.png",
 			username: "Shrek",
 			description:
 				"Esse é o meu preferido, já rodei muitos quilômetros com ele, pra qualquer lugar que eu ia.",
 			createdAt: "há 8 dias",
-		},
-		{
-			id: 3,
-			userImg:
-				"https://www.pngplay.com/wp-content/uploads/14/Princess-Fiona-PNG-Clipart-Background.png",
-			username: "Fiona",
-			description:
-				"Burro de qualidade, tração nas quatro patas. POTEEENTE!",
-			createdAt: "há 3 dias",
 		},
 	];
 
