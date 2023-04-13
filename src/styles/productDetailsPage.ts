@@ -12,7 +12,7 @@ export const Main = styled.main`
 	font-style: normal;
 
 	color: var(--gray-1);
-	background: var(--random-13);
+	background: linear-gradient(to bottom, var(--random-13), var(--gray-7));
 
 	h1 {
 		font-family: "Inter";
