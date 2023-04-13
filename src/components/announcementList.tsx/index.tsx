@@ -1,5 +1,6 @@
 import { Card, CardBody, CardFooter, Avatar, Image, Box, Wrap, WrapItem, ListItem } from "@chakra-ui/react"
 import { Heading_7_500, Heading_7_600, Paragraph_2_400, Paragraph_2_500 } from "../../styles/typography"
+import { Link } from "react-router-dom"
 
 interface iAnnouncementCard {
     img: string,
@@ -15,7 +16,7 @@ interface iAnnouncementCard {
 export const AnnouncementCard = ({img, title, description, userImg, username, milage, year, price}: iAnnouncementCard) => {
 
     return (
-        <ListItem className="Ola">
+        <ListItem className="Ola" as={Link} to="/product">
             <Card w={312} h={360} boxShadow={"none"}>
                 <CardBody padding={"0"}>
                     <Box bg={"var(--gray-7)"} h={152} display={"flex"} justifyContent={"center"}>
