@@ -19,7 +19,7 @@ import { BtnHeader } from "./btnHeader";
 import logoG33 from "../../assets/logo_g33.png";
 
 export const HeaderMenu = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen } = useDisclosure();
 
   const { token, navigate } = useContext(UserContext);
 
@@ -47,7 +47,9 @@ export const HeaderMenu = () => {
         >
           <Box>
             <Text fontWeight={"bold"} fontSize={16} color={"var(--gray-0)"}>
-              <a href="/"><img src={logoG33} alt="G33 Motorshop Logo" /></a>
+              <a href="/">
+                <img src={logoG33} alt="G33 Motorshop Logo" />
+              </a>
             </Text>
           </Box>
 
@@ -61,7 +63,7 @@ export const HeaderMenu = () => {
             css={{
               "@media (max-width: 769px)": {
                 borderLeft: "none",
-                "justify-content": "flex-end",
+                justifyContent: "flex-end",
               },
             }}
           >
@@ -75,6 +77,9 @@ export const HeaderMenu = () => {
                   minW={0}
                 >
                   <IconButton
+                    color={"var(--gray-0)"}
+                    p={"1em"}
+                    as={"span"}
                     size={"md"}
                     icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
                     aria-label={"Open Menu"}
@@ -126,7 +131,6 @@ export const HeaderMenu = () => {
                       Meus Anúncios
                     </MenuItem>
                   )}
-
                   <MenuItem
                     bg={"var(--gray-9)"}
                     color={"black"}

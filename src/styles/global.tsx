@@ -8,6 +8,7 @@ export const GlobalStyleDefault = createGlobalStyle`
     --brand-2: #1B4479;
     --brand-3: #B0A6F0;
     --brand-4: #EDEAFD;
+    --brand2:#5126EA;
 
     --gray-0: #0B0D0D;
     --gray-1: #212529;
@@ -45,7 +46,8 @@ export const GlobalStyleDefault = createGlobalStyle`
     --random-10: #6100FF;
     --random-11: #5700E3;
     --random-12: #30007D;
-    --random-13: #4529E6
+    --random-13: #4529E6;
+
 }
 
 *{
@@ -64,5 +66,13 @@ li{
 
 a{
     cursor: pointer;
+}
+
+
+.titleFilter{
+    font-family: 'Lexend', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    margin-bottom: 6px;
 }
 `;

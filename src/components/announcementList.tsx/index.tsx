@@ -1,16 +1,18 @@
+
 import { Card, CardBody, CardFooter, Avatar, Image, Box, Wrap, WrapItem, ListItem } from "@chakra-ui/react"
 import { Heading_7_500, Heading_7_600, Paragraph_2_400, Paragraph_2_500 } from "../../styles/typography"
 import { Link } from "react-router-dom"
 
+
 interface iAnnouncementCard {
-    img: string,
-    title: string,
-    description: string,
-    userImg: string,
-    username: string,
-    milage: string,
-    year: number | string,
-    price: number | string
+  img: string;
+  title: string;
+  description: string;
+  userImg: string;
+  username: string;
+  milage: string;
+  year: number | string;
+  price: number | string;
 }
 
 export const AnnouncementCard = ({img, title, description, userImg, username, milage, year, price}: iAnnouncementCard) => {
@@ -50,3 +52,4 @@ export const AnnouncementCard = ({img, title, description, userImg, username, mi
         </ListItem>
     )
 }
+
