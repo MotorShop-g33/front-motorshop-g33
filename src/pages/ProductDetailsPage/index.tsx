@@ -9,9 +9,11 @@ import {
 	InfoProduct,
 	InfoSection,
 	Main,
+	PrimarySection,
 	ProductMainImage,
 	ProductPhotos,
 	ProductSection,
+	SecondarySection,
 	UserProfile,
 } from "../../styles/productDetailsPage";
 
@@ -36,15 +38,16 @@ export const ProductDetailsPage = () => {
 			username: "Fiona",
 			description:
 				"Burro de qualidade, tração nas quatro patas! POTEEENTE!",
-			createdAt: "12/04/2023",
+			createdAt: "há 3 dias",
 		},
 		{
 			id: 2,
 			userImg:
 				"https://www.pngplay.com/wp-content/uploads/12/Shrek-PNG-HD-Quality.png",
 			username: "Shrek",
-			description: "Esse é o meu preferido, tô com ele em todo lugar.",
-			createdAt: "12/04/2023",
+			description:
+				"Esse é o meu preferido, já rodei muitos quilômetros com ele, pra qualquer lugar que eu ia.",
+			createdAt: "há 8 dias",
 		},
 		{
 			id: 3,
@@ -53,7 +56,7 @@ export const ProductDetailsPage = () => {
 			username: "Fiona",
 			description:
 				"Burro de qualidade, tração nas quatro patas. POTEEENTE!",
-			createdAt: "12/04/2023",
+			createdAt: "há 3 dias",
 		},
 	];
 
@@ -72,7 +75,7 @@ export const ProductDetailsPage = () => {
 		},
 		{
 			id: 4,
-			img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-Transparent-Images.png",
+			img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-PNG-Pic-Background.png",
 		},
 		{
 			id: 5,
@@ -80,20 +83,16 @@ export const ProductDetailsPage = () => {
 		},
 		{
 			id: 6,
-			img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-PNG-Pic-Background.png",
+			img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-Transparent-Images.png",
 		},
 	];
 
 	return (
-		<>
-			<Main>
+		<Main>
+			<PrimarySection>
 				<ProductSection>
-					<h1></h1>
 					<ProductMainImage>
-						<img
-							src={exampleData.img}
-							alt={exampleData.description}
-						/>
+						<img src={exampleData.img} alt={exampleData.title} />
 					</ProductMainImage>
 					<InfoProduct>
 						<div>
@@ -119,14 +118,8 @@ export const ProductDetailsPage = () => {
 						<h1>Description</h1>
 						<p>{exampleData.description}</p>
 					</DescriptionProduct>
-					<CommentsProduct>
-						<Comments>
-							<h1 className="comments-h1">Comments</h1>
-							<CommentsList commentsList={fakeComments} />
-						</Comments>
-						<AddComments>Add Comments</AddComments>
-					</CommentsProduct>
 				</ProductSection>
+
 				<InfoSection>
 					<ProductPhotos>
 						<h1>Fotos</h1>
@@ -134,7 +127,17 @@ export const ProductDetailsPage = () => {
 					</ProductPhotos>
 					<UserProfile>Profile</UserProfile>
 				</InfoSection>
-			</Main>
-		</>
+			</PrimarySection>
+
+			<SecondarySection>
+				<CommentsProduct>
+					<Comments>
+						<h1 className="comments-h1">Comments</h1>
+						<CommentsList commentsList={fakeComments} />
+					</Comments>
+					<AddComments>Add Comments</AddComments>
+				</CommentsProduct>
+			</SecondarySection>
+		</Main>
 	);
 };

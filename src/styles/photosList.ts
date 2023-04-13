@@ -33,6 +33,11 @@ export const StyledListItem = styled(ListItem)`
 		height: 100%;
 		width: auto;
 	}
+
+	@media screen and (max-width: 750) {
+		height: 90px;
+		width: 90px;
+	}
 `;
 
 export const DivImage = styled.div`
@@ -40,7 +45,7 @@ export const DivImage = styled.div`
 	justify-content: center;
 	align-items: center;
 	margin-bottom: 28px;
-	
+
 	height: 32vh;
 
 	background: var(--gray-7);
