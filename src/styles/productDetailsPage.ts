@@ -26,7 +26,8 @@ export const Main = styled.main`
 		color: var(--gray-2);
 	}
 
-	@media screen and (max-width: 750px) {
+	@media screen and (max-width: 1060px) {
+		gap: 1rem;
 	}
 `;
 
@@ -35,10 +36,11 @@ export const PrimarySection = styled.section`
 	flex-direction: row;
 	justify-content: center;
 	align-items: flex-start;
+	gap: 1rem;
 
 	width: auto;
 
-	@media screen and (max-width: 750px) {
+	@media screen and (max-width: 1060px) {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -50,6 +52,10 @@ export const PrimarySection = styled.section`
 export const ProductSection = styled.section`
 	width: 54vw;
 	padding-right: 2vw;
+
+	@media screen and (max-width: 1060px) {
+		padding: 0;
+	}
 
 	@media screen and (max-width: 750px) {
 		padding: 0 2vw 0 2vw;
@@ -175,11 +181,15 @@ export const DescriptionProduct = styled.div`
 export const SecondarySection = styled.section`
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
-	align-items: flex-start;
-	margin-left: 7.5vw;
+	-webkit-box-pack: center;
+	width: 86%;
+	margin: 0 auto;
 
-	width: 54vw;
+	@media screen and (max-width: 1060px) {
+		margin-left: 0;
+		width: 100%;
+		justify-content: center;
+	}
 
 	@media screen and (max-width: 750px) {
 		margin: 0;
@@ -188,8 +198,13 @@ export const SecondarySection = styled.section`
 `;
 
 export const CommentsProduct = styled.section`
-	width: inherit;
+	width: 54vw;
 	padding: 0 2vw 0 0;
+
+	@media screen and (max-width: 1060px) {
+		width: 54vw;
+		padding: 0;
+	}
 
 	@media screen and (max-width: 750px) {
 		padding: 0 2vw 0 2vw;
@@ -228,10 +243,14 @@ export const InfoSection = styled.section`
 	height: min-content;
 	width: 30vw;
 
+	@media screen and (max-width: 1060px) {
+		width: 54vw;
+	}
+
 	@media screen and (max-width: 750px) {
-		padding: 0 2vw 0 2vw;
+		width: auto;
+		padding: 0 2vw;
 		margin-bottom: 18px;
-		width: inherit;
 	}
 `;
 
