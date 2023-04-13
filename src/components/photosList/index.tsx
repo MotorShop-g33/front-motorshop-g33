@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { DivImage, StyledList, StyledListItem } from "../../styles/photosList";
+import {
+	DivImage,
+	StyledList,
+	StyledListItem,
+	StyledModalContent,
+} from "../../styles/photosList";
 
 import {
 	Modal,
 	ModalOverlay,
-	ModalContent,
 	ModalHeader,
 	ModalBody,
 	ModalCloseButton,
@@ -23,26 +27,33 @@ export const PhotosList = ({ photosList }: IPhotosList) => {
 		<>
 			<StyledList>
 				{photosList.map((item) => (
-					<StyledListItem onClick={() => {
-            onOpen()
-            setProductImage(item.img)}}  key={item.id}>
+					<StyledListItem
+						onClick={() => {
+							onOpen();
+							setProductImage(item.img);
+						}}
+						key={item.id}
+					>
 						<img src={item.img} />
 					</StyledListItem>
 				))}
 			</StyledList>
 
-
-			<Modal isOpen={isOpen} onClose={onClose}>
+			<Modal isOpen={isOpen} onClose={onClose} size="xl">	
 				<ModalOverlay />
-				<ModalContent>
-					<ModalHeader>Imagem do veículo</ModalHeader>
-					<ModalCloseButton />
+				<StyledModalContent>
+					<ModalHeader pb={45}>Imagem do veículo</ModalHeader>
+					<ModalCloseButton
+						fontSize={"md"}
+						color={"var(--gray-4)"}
+						_hover={{ bg: "var(--gray-7)", color: "var(--gray-2)" }}
+					/>
 					<ModalBody>
 						<DivImage>
 							<img src={productImage} />
 						</DivImage>
 					</ModalBody>
-				</ModalContent>
+				</StyledModalContent>
 			</Modal>
 		</>
 	);

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { List, ListItem } from "@chakra-ui/react";
+import { List, ListItem, ModalContent } from "@chakra-ui/react";
 
 export const StyledList = styled(List)`
 	display: flex;
@@ -28,6 +28,7 @@ export const StyledListItem = styled(ListItem)`
 	width: 108px;
 
 	cursor: pointer;
+
 	img {
 		height: 100%;
 		width: auto;
@@ -35,8 +36,24 @@ export const StyledListItem = styled(ListItem)`
 `;
 
 export const DivImage = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	margin-bottom: 28px;
+	
+	height: 32vh;
 
 	background: var(--gray-7);
 	border-radius: 4px;
+
+	img {
+		height: 100%;
+		width: auto;
+
+		padding: 20px;
+	}
+`;
+
+export const StyledModalContent = styled(ModalContent)`
+	width: 100vw;
 `;
