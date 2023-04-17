@@ -20,7 +20,6 @@ export const Dashboard = () => {
   return (
     <>
       <MainSection>
-        <button onClick={() => console.log(productsList)}>Ola</button>
         <Banner>
           <div>
             <img src={G33} width={80} height={80} alt="G33 Motorshop Logo" />
