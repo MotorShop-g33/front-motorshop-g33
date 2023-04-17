@@ -5,6 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/UserContext";
 import { GlobalStyleDefault } from "./styles/global";
 import { ChakraProvider } from "@chakra-ui/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -13,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <UserProvider>
           <GlobalStyleDefault />
           <App />
+          <ToastContainer />
         </UserProvider>
       </BrowserRouter>
     </ChakraProvider>

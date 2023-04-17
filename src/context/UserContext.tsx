@@ -5,6 +5,8 @@ import {
   IAnnouncements,
   IListAnnouncements,
 } from "../interfaces/announcements";
+import { ILoginUser } from "../interfaces/login";
+import { toast } from "react-toastify";
 
 export interface IUserContextProps {
   children: React.ReactNode;
@@ -20,6 +22,7 @@ interface IUserContext {
     React.SetStateAction<string | number | undefined>
   >;
   filterValue: string | number | undefined;
+  loginUser: (data: ILoginUser) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -44,6 +47,17 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
+  const loginUser = async (data: ILoginUser): Promise<void> => {
+    try {
+      const response = await api.post("/login", data);
+      localStorage.setItem("@tokenG33:token", response.data.token);
+      navigate("/");
+    } catch (error: any) {
+      console.log(error.response.data);
+      toast.error("Senha ou email incorreto", { autoClose: 2000 });
+    }
+  };
+
   useEffect(() => {
     if (pathname.includes("/")) {
       annoucements();
@@ -60,6 +74,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         productsList,
         setFilterValue,
         filterValue,
+        loginUser,
       }}
     >
       {children}

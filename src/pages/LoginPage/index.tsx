@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
+import { Box, Flex } from "@chakra-ui/react";
+import { useState } from "react";
+
+import { FormLogin } from "../../components/formLogin";
 
 export const LoginPage = () => {
   return (
-    <>
-      <h1>Eu sou o LoginPage</h1>
-      <Link to={"/"}>Home page</Link><br />
-      <Link to={"/register"}>Register</Link>
-    </>
+    <Flex bg={"var(--gray-8)"} h={"100vh"} alignItems="center">
+      <FormLogin />
+    </Flex>
   );
 };
