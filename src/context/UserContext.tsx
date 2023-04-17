@@ -7,6 +7,8 @@ import {
 } from "../interfaces/announcements";
 import { ILoginUser } from "../interfaces/login";
 import { toast } from "react-toastify";
+import { Box, useDisclosure, useToast } from "@chakra-ui/react";
+import { IUserRequest } from "../interfaces/user";
 
 export interface IUserContextProps {
   children: React.ReactNode;
@@ -23,13 +25,17 @@ interface IUserContext {
   >;
   filterValue: string | number | undefined;
   loginUser: (data: ILoginUser) => void;
+  registerUser: (data: IUserRequest, onOpen: () => void) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
 
 export const UserProvider = ({ children }: IUserContextProps) => {
+  const toast = useToast();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const [confiRegister, setConfirmeregister] = useState(false);
 
   const token = localStorage.getItem("@token: token");
   const [count, setCount] = useState(0);
@@ -54,9 +60,34 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       navigate("/");
     } catch (error: any) {
       console.log(error.response.data);
-      toast.error("Senha ou email incorreto", { autoClose: 2000 });
+      // toast.error("Senha ou email incorreto", { autoClose: 2000 });
     }
   };
+
+  const registerUser = async (
+    data: IUserRequest,
+    onOpen: () => void
+  ): Promise<void> => {
+    try {
+      await api.post("/users", data);
+
+      onOpen();
+      console.log(confiRegister, "passou ");
+    } catch (error: any) {
+      const toastmsg = error.response.data.message;
+      toast({
+        title: "error loging",
+        position: "top-right",
+        isClosable: true,
+        render: () => (
+          <Box color="white" p={3} bg="red.400">
+            {`${toastmsg}`}
+          </Box>
+        ),
+      });
+    }
+  };
+  // console.log(confiRegister);
 
   useEffect(() => {
     if (pathname.includes("/")) {
@@ -75,6 +106,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         setFilterValue,
         filterValue,
         loginUser,
+        registerUser,
       }}
     >
       {children}

@@ -75,4 +75,16 @@ a{
     font-weight: 900;
     margin-bottom: 6px;
 }
+
+.labelForms {
+    font-weight: 500;
+    font-size: 0.88em;
+    color: red
+}
+.titlesForms {
+    align-self: flex-start;
+    font-weight: 500;
+    font-size: 1em;
+    color: var(--gray-0)
+}
 `;
