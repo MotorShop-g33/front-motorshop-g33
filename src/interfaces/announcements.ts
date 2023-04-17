@@ -9,7 +9,7 @@ export interface IAnnouncements {
   fipe: "decimal";
   price: "decimal";
   description: string;
-  cover: string;
+  avatar: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
