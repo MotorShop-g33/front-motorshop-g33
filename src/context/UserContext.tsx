@@ -60,7 +60,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       navigate("/");
     } catch (error: any) {
       console.log(error.response.data);
-      // toast.error("Senha ou email incorreto", { autoClose: 2000 });
+      toast.error("Senha ou email incorreto", { autoClose: 2000 });
     }
   };
 
@@ -87,7 +87,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       });
     }
   };
-  // console.log(confiRegister);
 
   useEffect(() => {
     if (pathname.includes("/")) {

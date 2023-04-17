@@ -286,10 +286,10 @@ export const RegisterPage = () => {
       </Box>
       <>
         {/* trocar para o componente depois  */}
-        <Box aria-label="Confirmação de registro"></Box>
+
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent w={"95%"} maxW={"500px"}>
             <ModalHeader>Sucesso!</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
@@ -317,7 +317,6 @@ export const RegisterPage = () => {
           </ModalContent>
         </Modal>
       </>
-      ;
     </Box>
   );
 };
