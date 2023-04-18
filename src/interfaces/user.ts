@@ -36,3 +36,9 @@ export interface IUser {
   name: string;
   id: string;
 }
+
+export interface IAdUser {
+  id: string;
+  name: string;
+  descritption: string;
+}

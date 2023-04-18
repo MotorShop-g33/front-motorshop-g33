@@ -16,8 +16,9 @@ import {
 } from "@chakra-ui/react";
 
 interface IPhotoObject {
-  img: string;
+  image: string;
   id: string;
+  createdAt: Date;
 }
 
 interface IPhotosList {
@@ -35,11 +36,11 @@ export const PhotosList = ({ photosList }: IPhotosList) => {
           <StyledListItem
             onClick={() => {
               onOpen();
-              setProductImage(item.img);
+              setProductImage(item.image);
             }}
             key={item.id}
           >
-            <img src={item.img} />
+            <img src={item.image} />
           </StyledListItem>
         ))}
       </StyledList>

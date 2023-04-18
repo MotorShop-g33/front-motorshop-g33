@@ -44,7 +44,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
   const annoucements = async (): Promise<void> => {
     try {
-      const { data } = await api.get("announcement?page=1&limit=4000");
+      const { data } = await api.get("announcement");
 
       setProductsList(data.results);
     } catch (error) {

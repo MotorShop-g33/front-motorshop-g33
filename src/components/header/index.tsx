@@ -119,7 +119,7 @@ export const HeaderMenu = () => {
                     <MenuItem
                       bg={"var(--gray-9)"}
                       color={"black"}
-                      onClick={() => navigate("/announcement")} // pagina não existe ainda
+                      onClick={() => navigate("/profile")} // pagina não existe ainda
                     >
                       Meus Anúncios
                     </MenuItem>
