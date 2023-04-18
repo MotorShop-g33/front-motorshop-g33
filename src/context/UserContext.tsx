@@ -57,7 +57,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       const response = await api.post("/login", data);
       const { loginUser } = response.data;
       localStorage.setItem("@tokenG33:token", response.data.token);
-      setUser(loginUser);
       navigate("/");
     } catch (error: any) {
       console.log(error.response.data);
@@ -78,7 +77,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     try {
       api.defaults.headers.authorization = `Bearer ${token}`;
       const response = await api.get("users/profile");
-      console.log(response.data);
       setUser(response.data);
     } catch (error) {}
   };
@@ -111,7 +109,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       getUserLogin();
       annoucements();
     }
-  }, []);
+  }, [token]);
 
   return (
     <UserContext.Provider
