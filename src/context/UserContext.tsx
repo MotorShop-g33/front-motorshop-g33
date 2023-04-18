@@ -6,9 +6,8 @@ import {
   IListAnnouncements,
 } from "../interfaces/announcements";
 import { ILoginUser } from "../interfaces/login";
-import { toast } from "react-toastify";
 import { Box, useDisclosure, useToast } from "@chakra-ui/react";
-import { IUserRequest } from "../interfaces/user";
+import { IUser, IUserRequest } from "../interfaces/user";
 
 export interface IUserContextProps {
   children: React.ReactNode;
@@ -26,6 +25,7 @@ interface IUserContext {
   filterValue: string | number | undefined;
   loginUser: (data: ILoginUser) => void;
   registerUser: (data: IUserRequest, onOpen: () => void) => void;
+  user: IUser;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -35,10 +35,9 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const [confiRegister, setConfirmeregister] = useState(false);
-
-  const token = localStorage.getItem("@token: token");
+  const token = localStorage.getItem("@tokenG33:token");
   const [count, setCount] = useState(0);
+  const [user, setUser] = useState<IUser>({} as IUser);
 
   const [productsList, setProductsList] = useState<IAnnouncements[]>([]);
   const [filterValue, setFilterValue] = useState<string | number>();
@@ -56,7 +55,9 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const loginUser = async (data: ILoginUser): Promise<void> => {
     try {
       const response = await api.post("/login", data);
+      const { loginUser } = response.data;
       localStorage.setItem("@tokenG33:token", response.data.token);
+      setUser(loginUser);
       navigate("/");
     } catch (error: any) {
       console.log(error.response.data);
@@ -73,6 +74,15 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
+  const getUserLogin = async (): Promise<void> => {
+    try {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+      const response = await api.get("users/profile");
+      console.log(response.data);
+      setUser(response.data);
+    } catch (error) {}
+  };
+
   const registerUser = async (
     data: IUserRequest,
     onOpen: () => void
@@ -81,7 +91,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       await api.post("/users", data);
 
       onOpen();
-      console.log(confiRegister, "passou ");
     } catch (error: any) {
       const toastmsg = error.response.data.message;
       toast({
@@ -99,6 +108,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
   useEffect(() => {
     if (pathname.includes("/")) {
+      getUserLogin();
       annoucements();
     }
   }, []);
@@ -115,6 +125,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         filterValue,
         loginUser,
         registerUser,
+        user,
       }}
     >
       {children}

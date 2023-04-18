@@ -15,3 +15,24 @@ export interface IUserRequest {
   complement?: string;
   isStaff: boolean;
 }
+
+export interface IUser {
+  updatedAt: Date;
+  createdAt: Date;
+  isActive: boolean;
+  isAdm: boolean;
+  isStaff: boolean;
+  complement: string;
+  number: string;
+  street: string;
+  city: string;
+  state: string;
+  cep: string;
+  description: string;
+  birthday: Date;
+  phone: string;
+  cpf: string;
+  email: string;
+  name: string;
+  id: string;
+}
