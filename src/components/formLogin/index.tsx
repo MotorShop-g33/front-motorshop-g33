@@ -42,11 +42,7 @@ export const FormLogin = () => {
   return (
     <>
       <LoginForm onSubmit={handleSubmit(loginUser)}>
-        <FormControl
-          display="flex"
-          flexDirection="column"
-          p="45px 50px 45px 50px"
-        >
+        <FormControl display="flex" flexDirection="column">
           <Heading_5_600>Login</Heading_5_600>
           <FormLabel>Email</FormLabel>
           <Input
@@ -78,7 +74,7 @@ export const FormLogin = () => {
           <span className="forgotPassword">Esqueci minha senha</span>
           <Button_medium_text
             type="submit"
-            set_width="315px"
+            set_width="98%"
             set_background_color="random-13"
             set_text_color="white-fixed"
             set_hover_bg_color="random-10"

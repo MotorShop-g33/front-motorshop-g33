@@ -59,6 +59,7 @@ export const Button_medium_text = styled.button`
   border-radius: 4px;
   font-size: 16px;
   font-weight: 600;
+  align-self: center;
 
   width: ${({ set_width = "146px" }: iPropsButtons) => set_width};
   color: var(
