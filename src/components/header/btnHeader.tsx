@@ -59,6 +59,8 @@ export const BtnHeader = () => {
 
       <Flex gap={5} align={"center"} display={{ base: "none", md: "flex" }}>
         <Link
+          fontWeight="600"
+          _hover={{ color: "blue", transitionDuration: "400ms" }}
           width={"90px"}
           colorScheme={"var(--gray-2)"}
           href="http://localhost:5173/login"
@@ -66,6 +68,7 @@ export const BtnHeader = () => {
           Fazer Login
         </Link>
         <Link
+          fontWeight="600"
           border={"solid 1px var(--gray-4)"}
           p={" .6rem 2rem"}
           color={"black"}

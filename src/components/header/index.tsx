@@ -25,7 +25,7 @@ export const HeaderMenu = () => {
 
   //user para teste token ou isStaff
   const user = {
-    token: "token",
+    token: "",
     isStaff: true,
   };
 

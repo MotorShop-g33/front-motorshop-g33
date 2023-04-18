@@ -8,21 +8,36 @@ interface iAnnouncementCard {
   img: string;
   title: string;
   description: string;
-  userImg: string;
-  username: string;
-  milage: string;
   year: number | string;
   price: number | string;
+  milage: number;
+  user: any;
 }
 
-export const AnnouncementCard = ({img, title, description, userImg, username, milage, year, price}: iAnnouncementCard) => {
+export const AnnouncementCard = ({img, title, description, year, price, milage, user}: iAnnouncementCard) => {
+
+    function handleCarImage(): string {
+        if (img.includes("http")) {
+            return img
+        } else {
+            return "https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png"
+        }
+    }
+
+    function handlePrice(): string {
+        const stringfiedPrice = price.toString()
+        const integerPart = parseInt(stringfiedPrice.slice(0, stringfiedPrice.length - 3))
+        const decimalPart = stringfiedPrice.slice(stringfiedPrice.length - 3)
+        const thousandsFormatted = integerPart.toLocaleString('en-US', { useGrouping: true, minimumFractionDigits: 0, maximumFractionDigits: 0, }).replaceAll(",", ".")
+        return `R$${thousandsFormatted}${decimalPart}`
+    }
 
     return (
         <ListItem className="Ola" as={Link} to="/product">
             <Card w={312} h={360} boxShadow={"none"}>
                 <CardBody padding={"0"}>
                     <Box bg={"var(--gray-7)"} h={152} display={"flex"} justifyContent={"center"}>
-                        <Image src={img} h={152}></Image>
+                        <Image src={handleCarImage()} h={152}></Image>
                     </Box>
                     <Box margin={"16px 0px" }>
                         <Heading_7_600>{title}</Heading_7_600>
@@ -31,8 +46,8 @@ export const AnnouncementCard = ({img, title, description, userImg, username, mi
                         <Paragraph_2_400>{description}</Paragraph_2_400>
                     </Box>
                     <Box display={"flex"} alignItems={"center"} gap={"2"} margin={"16px 0px"}>
-                        <Avatar name={username} size={"sm"} src={userImg}></Avatar>
-                        <Paragraph_2_500>{username}</Paragraph_2_500>
+                        <Avatar name={user.name} size={"sm"} src={"placeholder"}></Avatar>
+                        <Paragraph_2_500>{user.name}</Paragraph_2_500>
                     </Box>
                 </CardBody>
                 <CardFooter display={"flex"} justifyContent={"space-between"} padding={"0px 0px 16px 0px"}>
@@ -45,7 +60,7 @@ export const AnnouncementCard = ({img, title, description, userImg, username, mi
                         </Box>
                     </Box>
                     <Box>
-                        <Heading_7_500>R${price}</Heading_7_500>
+                        <Heading_7_500>{handlePrice()}</Heading_7_500>
                     </Box>
                 </CardFooter>
             </Card>
