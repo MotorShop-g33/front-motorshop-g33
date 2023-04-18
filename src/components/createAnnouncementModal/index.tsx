@@ -19,6 +19,8 @@ import {
 	useDisclosure,
 } from "@chakra-ui/react";
 
+import { DivModal } from "../../styles/createAnnouncementModal";
+
 export const CreateAnnouncementModal = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -27,7 +29,16 @@ export const CreateAnnouncementModal = () => {
 
 	return (
 		<>
-			<Button onClick={onOpen}>Criar anúncio</Button>
+			<Button
+				className="buttonOpenModal"
+				onClick={onOpen}
+				color="var(--random-13)"
+				borderRadius={3}
+				colorScheme="purple"
+				variant="outline"
+			>
+				Criar anúncio
+			</Button>
 
 			<Modal
 				initialFocusRef={initialRef}
@@ -35,99 +46,200 @@ export const CreateAnnouncementModal = () => {
 				isOpen={isOpen}
 				onClose={onClose}
 			>
-				<ModalOverlay />
-				<ModalContent>
-					<ModalHeader paddingY={4}>Criar anúncio</ModalHeader>
-					<ModalCloseButton />
+				<DivModal>
+					<ModalOverlay />
+					<ModalContent>
+						<ModalHeader
+							fontFamily="Lexend"
+							fontWeight={500}
+							fontSize="16px"
+							lineHeight="20px"
+							paddingY={4}
+						>
+							Criar anúncio
+						</ModalHeader>
+						<ModalCloseButton
+							color="var(--gray-4)"
+							_hover={{
+								color: "var(--gray-0)",
+								bgColor: "var(--gray-4)",
+							}}
+						/>
 
-					<ModalBody pb={6}>
-						<Text fontSize="14px" fontFamily="Inter" fontWeight={500} lineHeight="24px" color="#000">Infomações do veículo</Text>
-						<FormControl mt={3}>
-							<FormLabel>Marca</FormLabel>
-							<Input
-								ref={initialRef}
-								placeholder="Mercedes Benz"
-							/>
-						</FormControl>
+						<ModalBody
+							pt={0}
+							pb={6}
+							fontFamily="Inter"
+							fontWeight={500}
+							fontSize="14px"
+						>
+							<Text lineHeight="24px" color="var(--gray-0)">
+								Infomações do veículo
+							</Text>
+							<FormControl mt={4}>
+								<FormLabel className="label">Marca</FormLabel>
+								<Input
+									ref={initialRef}
+									className="input"
+									placeholder="Mercedes Benz"
+								/>
+							</FormControl>
 
-						<FormControl mt={4}>
-							<FormLabel>Modelo</FormLabel>
-							<Input placeholder="A 200 CGI ADVANCE SEDAN" />
-						</FormControl>
+							<FormControl mt={4}>
+								<FormLabel className="label">Modelo</FormLabel>
+								<Input
+									className="input"
+									placeholder="A 200 CGI ADVANCE SEDAN"
+								/>
+							</FormControl>
 
-						<Stack>
-							<HStack mt={4}>
-								<FormControl>
-									<FormLabel>Ano</FormLabel>
-									<Input placeholder="2018" />
-								</FormControl>
+							<Stack>
+								<HStack mt={4}>
+									<FormControl>
+										<FormLabel className="label">
+											Ano
+										</FormLabel>
+										<Input
+											className="input"
+											placeholder="2018"
+										/>
+									</FormControl>
 
-								<FormControl>
-									<FormLabel>Combustível</FormLabel>
-									<Input placeholder="Gasolina / Etanol" />
-								</FormControl>
-							</HStack>
+									<FormControl>
+										<FormLabel className="label">
+											Combustível
+										</FormLabel>
+										<Input
+											className="input"
+											placeholder="Gasolina / Etanol"
+										/>
+									</FormControl>
+								</HStack>
 
-							<HStack mt={4}>
-								<FormControl>
-									<FormLabel>Quilometragem</FormLabel>
-									<Input placeholder="30.000" />
-								</FormControl>
+								<HStack mt={4}>
+									<FormControl>
+										<FormLabel className="label">
+											Quilometragem
+										</FormLabel>
+										<Input
+											className="input"
+											placeholder="30.000"
+										/>
+									</FormControl>
 
-								<FormControl>
-									<FormLabel>Cor</FormLabel>
-									<Input placeholder="Branco" />
-								</FormControl>
-							</HStack>
+									<FormControl>
+										<FormLabel className="label">
+											Cor
+										</FormLabel>
+										<Input
+											className="input"
+											placeholder="Branco"
+										/>
+									</FormControl>
+								</HStack>
 
-							<HStack mt={4}>
-								<FormControl>
-									<FormLabel>Preço tabela FIPE</FormLabel>
-									<Input placeholder="R$ 48.000,00" />
-								</FormControl>
+								<HStack mt={4}>
+									<FormControl>
+										<FormLabel className="label">
+											Preço tabela FIPE
+										</FormLabel>
+										<Input
+											className="input"
+											placeholder="R$ 48.000,00"
+										/>
+									</FormControl>
 
-								<FormControl>
-									<FormLabel>Preço</FormLabel>
-									<Input placeholder="R$ 50.000,00" />
-								</FormControl>
-							</HStack>
-						</Stack>
+									<FormControl>
+										<FormLabel className="label">
+											Preço
+										</FormLabel>
+										<Input
+											className="input"
+											placeholder="R$ 50.000,00"
+										/>
+									</FormControl>
+								</HStack>
+							</Stack>
 
-						<FormControl mt={4}>
-							<FormLabel>Descrição</FormLabel>
-							<Textarea
-								resize="none"
-								placeholder="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-							/>
-						</FormControl>
+							<FormControl mt={4}>
+								<FormLabel className="label">
+									Descrição
+								</FormLabel>
+								<Textarea
+									className="textArea"
+									resize="none"
+									placeholder="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+								/>
+							</FormControl>
 
-						<FormControl mt={4}>
-							<FormLabel>Imagem da capa</FormLabel>
-							<Input placeholder="https://image.com" />
-						</FormControl>
+							<FormControl mt={4}>
+								<FormLabel className="label">
+									Imagem da capa
+								</FormLabel>
+								<Input
+									className="input"
+									placeholder="https://image.com"
+								/>
+							</FormControl>
 
-						<FormControl mt={4}>
-							<FormLabel>1° Imagem da galeria</FormLabel>
-							<Input placeholder="https://image.com" />
-						</FormControl>
+							<FormControl mt={4}>
+								<FormLabel className="label">
+									1° Imagem da galeria
+								</FormLabel>
+								<Input
+									className="input"
+									placeholder="https://image.com"
+								/>
+							</FormControl>
 
-						<FormControl mt={4}>
-							<FormLabel>2° Imagem da galeria</FormLabel>
-							<Input placeholder="https://image.com" />
-						</FormControl>
+							<FormControl mt={4}>
+								<FormLabel className="label">
+									2° Imagem da galeria
+								</FormLabel>
+								<Input
+									className="input"
+									placeholder="https://image.com"
+								/>
+							</FormControl>
 
-						<Button mt={3}>
-							Adicionar campo para imagem da galeria
-						</Button>
-					</ModalBody>
+							<Button
+								color="var(--random-13)"
+								bg="var(--brand-4)"
+								borderRadius={3}
+								_hover={{
+									bg: "var(--brand-3)",
+								}}
+								_active={{
+									bg: "var(--brand-4)",
+								}}
+								mt={5}
+							>
+								Adicionar campo para imagem da galeria
+							</Button>
+						</ModalBody>
 
-					<ModalFooter>
-						<Button onClick={onClose} mr={3}>
-							Cancelar
-						</Button>
-						<Button colorScheme="purple">Criar anúncio</Button>
-					</ModalFooter>
-				</ModalContent>
+						<ModalFooter>
+							<Button
+								className="buttonFooter"
+								onClick={onClose}
+								color="var(--gray-2)"
+								bg="var(--gray-6)"
+								colorScheme="gray"
+								mr={3}
+							>
+								Cancelar
+							</Button>
+							<Button
+								className="buttonFooter"
+								color="var(--brand-4)"
+								bg="var(--brand-3)"
+								colorScheme="purple"
+							>
+								Criar anúncio
+							</Button>
+						</ModalFooter>
+					</ModalContent>
+				</DivModal>
 			</Modal>
 		</>
 	);
