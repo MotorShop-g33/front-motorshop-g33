@@ -60,7 +60,16 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       navigate("/");
     } catch (error: any) {
       console.log(error.response.data);
-      toast.error("Senha ou email incorreto", { autoClose: 2000 });
+      toast({
+        title: "error loging",
+        position: "top-right",
+        isClosable: true,
+        render: () => (
+          <Box color="white" p={3} bg="red.400">
+            {`Senha ou email incorreto`}
+          </Box>
+        ),
+      });
     }
   };
 
