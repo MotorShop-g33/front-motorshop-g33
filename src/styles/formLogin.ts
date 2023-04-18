@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 export const LoginForm = styled.form`
-  width: 412px;
+  width: 95%;
+  max-width: 412px;
   height: 542px;
   margin: 0 auto;
   background-color: var(--white-fixed);
   border-radius: 4px;
+  padding: 1rem;
+  margin: 0 1rem;
 
   h5 {
     margin-bottom: 32px;

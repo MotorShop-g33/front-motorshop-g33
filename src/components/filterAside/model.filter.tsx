@@ -27,14 +27,9 @@ export const ModalFilter = () => {
       >
         Filtros
       </Button>
-      <Modal
-        isCentered
-        onClose={onClose}
-        isOpen={isOpen}
-        motionPreset="slideInBottom"
-      >
+      <Modal onClose={onClose} isOpen={isOpen} motionPreset="slideInBottom">
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent w={"95%"} m={"1rem"} className="doug">
           <ModalHeader>Menu</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
