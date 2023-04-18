@@ -42,7 +42,7 @@ export const AnnouncementCard = ({img, title, description, year, price, milage, 
                     <Box margin={"16px 0px" }>
                         <Heading_7_600>{title}</Heading_7_600>
                     </Box>
-                    <Box>
+                    <Box h={42} overflow={"hidden"}>
                         <Paragraph_2_400>{description}</Paragraph_2_400>
                     </Box>
                     <Box display={"flex"} alignItems={"center"} gap={"2"} margin={"16px 0px"}>
