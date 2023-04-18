@@ -16,20 +16,45 @@ import {
   SecondarySection,
   UserProfile,
 } from "../../styles/productDetailsPage";
+import { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+import { IAnnouncements } from "../../interfaces/announcements";
+import { api } from "../../services";
 
 export const ProductDetailsPage = () => {
-  // --> DADOS MOCKADOS APENAS PARA VISUALIZAÇÃO DO DESIGN DOS CARDS (NECESSÁRIO DELEÇÃO FUTURA) <--
-  const exampleData = {
-    img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-PNG-Pic-Background.png",
-    title: "Burro do shrek",
-    description: "Um novissimo burro com 0 km e manutenção em dia",
-    userImg: "",
-    username: "Felipe Bulhoes",
-    milage: "0 KM",
-    year: 2006,
-    price: 59990,
-  };
+  const token = localStorage.getItem("@tokenG33:token");
+  const [productAd, setProductAd] = useState<IAnnouncements>();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const adId = queryParams.get('ad');
 
+  useEffect(() => {
+    const getProductAd = async (adId: string | null): Promise<void> => {
+    try {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+      const response = await api.get("announcement/" + adId);
+      setProductAd(response.data);
+    } catch (error) {}
+  };
+  getProductAd(adId);
+  }, []);
+  
+  const productData = {
+    img: productAd?.avatar,
+    title: productAd?.model,
+    description: productAd?.description,
+    userImg: "",
+    username: productAd?.user.name,
+    milage: productAd?.milage,
+    year: productAd?.year,
+    price: productAd?.price,
+    photos: productAd?.photos
+  };
+  
+  const photosAnnouncement = productData.photos;
+  
+  // --> DADOS MOCKADOS APENAS PARA VISUALIZAÇÃO DO DESIGN DOS CARDS (NECESSÁRIO DELEÇÃO FUTURA) <--
   const fakeComments = [
     {
       id: 1,
@@ -58,50 +83,25 @@ export const ProductDetailsPage = () => {
     },
   ];
 
-  const photosAnnouncement = [
-    {
-      id: "1",
-      img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-PNG-Pic-Background.png",
-    },
-    {
-      id: "2",
-      img: "https://www.pngplay.com/wp-content/uploads/12/Shrek-PNG-Background-Clip-Art.png",
-    },
-    {
-      id: "3",
-      img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-Transparent-Images.png",
-    },
-    {
-      id: "4",
-      img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-PNG-Pic-Background.png",
-    },
-    {
-      id: "5",
-      img: "https://www.pngplay.com/wp-content/uploads/12/Shrek-PNG-Background-Clip-Art.png",
-    },
-    {
-      id: "6",
-      img: "https://www.pngplay.com/wp-content/uploads/12/Donkey-From-Shrek-Transparent-Images.png",
-    },
-  ];
+  
 
   return (
     <Main>
       <PrimarySection>
         <ProductSection>
           <ProductMainImage>
-            <img src={exampleData.img} alt={exampleData.title} />
+            <img src={productData.img} alt={productData.title} />
           </ProductMainImage>
           <InfoProduct>
             <div>
-              <h1>{exampleData.title}</h1>
+              <h1>{productData.title}</h1>
 
               <div className="frame-info">
                 <div className="frame-tags">
-                  <div className="tags">{exampleData.year}</div>
-                  <div className="tags">{exampleData.milage}</div>
+                  <div className="tags">{productData.year}</div>
+                  <div className="tags">{productData.milage}</div>
                 </div>
-                <p>R$ {exampleData.price}</p>
+                <p>R$ {productData.price}</p>
               </div>
               <Button_medium_text className="purchase-button">
                 Comprar
@@ -110,14 +110,14 @@ export const ProductDetailsPage = () => {
           </InfoProduct>
           <DescriptionProduct>
             <h1>Description</h1>
-            <p>{exampleData.description}</p>
+            <p>{productData.description}</p>
           </DescriptionProduct>
         </ProductSection>
 
         <InfoSection>
           <ProductPhotos>
             <h1>Fotos</h1>
-            <PhotosList photosList={photosAnnouncement} />
+            {photosAnnouncement ? <PhotosList photosList={photosAnnouncement} /> : ''}
           </ProductPhotos>
           <UserProfile>Profile</UserProfile>
         </InfoSection>

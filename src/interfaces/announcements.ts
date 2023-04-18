@@ -1,3 +1,5 @@
+import { IAdUser } from "./user";
+
 export interface IAnnouncements {
   id: string;
   brand: string;
@@ -13,7 +15,8 @@ export interface IAnnouncements {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
-  user: string;
+  user: IAdUser;
+  photos: [];
 }
 
 export interface IListAnnouncements {
