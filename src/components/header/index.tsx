@@ -21,17 +21,10 @@ import logoG33 from "../../assets/logo_g33.png";
 export const HeaderMenu = () => {
   const { isOpen } = useDisclosure();
 
-  const { token, navigate } = useContext(UserContext);
-
-  //user para teste token ou isStaff
-  const user = {
-    token: "",
-    isStaff: true,
-  };
+  const { token, navigate, user } = useContext(UserContext);
 
   const logout = () => {
-    localStorage.removeItem("@token:token");
-    localStorage.removeItem("@userId:id");
+    localStorage.removeItem("@tokenG33:token");
     navigate("/");
   };
 
@@ -67,7 +60,7 @@ export const HeaderMenu = () => {
               },
             }}
           >
-            {user.token ? (
+            {token ? (
               <Menu>
                 <MenuButton
                   as={Button}
@@ -126,7 +119,7 @@ export const HeaderMenu = () => {
                     <MenuItem
                       bg={"var(--gray-9)"}
                       color={"black"}
-                      onClick={() => navigate("/announcement")} // pagina não existe ainda
+                      onClick={() => navigate("/profile")} // pagina não existe ainda
                     >
                       Meus Anúncios
                     </MenuItem>
@@ -145,7 +138,7 @@ export const HeaderMenu = () => {
                   color={"var(--gray-2)"}
                   ml={"10px"}
                 >
-                  {"user name "}
+                  {user?.name || "user name"}
                 </Text>
               </Menu>
             ) : (

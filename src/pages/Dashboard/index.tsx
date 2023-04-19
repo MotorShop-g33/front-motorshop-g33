@@ -43,6 +43,7 @@ export const Dashboard = () => {
           >
             {productsList.map((product) => 
               <AnnouncementCard key={product.id}
+                id={product.id}  
                 img={product.avatar}
                 title={product.model}
                 description={product.description}
@@ -63,6 +64,7 @@ export const Dashboard = () => {
           >
             {productsList.map((product) => 
               <AnnouncementCard key={product.id}
+                id={product.id}  
                 img={product.avatar}
                 title={product.model}
                 description={product.description}
