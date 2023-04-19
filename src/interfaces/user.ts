@@ -1,3 +1,5 @@
+import { IAnnouncements } from "./announcements";
+
 export interface IUserRequest {
   name: string;
   email: string;
@@ -17,6 +19,7 @@ export interface IUserRequest {
 }
 
 export interface IUser {
+  announcement: IAnnouncements[];
   updatedAt: Date;
   createdAt: Date;
   isActive: boolean;
@@ -40,5 +43,5 @@ export interface IUser {
 export interface IAdUser {
   id: string;
   name: string;
-  descritption: string;
+  description: string;
 }
