@@ -273,9 +273,15 @@ export const UserProfile = styled.div`
 	flex-direction: column;
 	align-items: center;
 	padding: 36px 44px;
+	gap: 15px;
 	background: var(--gray-10);
 
 	border-radius: 4px;
+
+	span {
+		font-size: 14px;
+		text-align: justify;
+	}
 
 	.profileLink {
 		color: var(--white-fixed);
