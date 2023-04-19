@@ -8,14 +8,13 @@ export const Main = styled.main`
 
 	width: 100%;
 
-	font-family: "Inter";
+	font-family: 'Lexend', sans-serif;
 	font-style: normal;
 
 	color: var(--gray-1);
-	background: linear-gradient(to bottom, var(--random-13), var(--gray-7));
+	background: linear-gradient(to bottom, var(--brand-1) 350px, var(--gray-7) 350px);
 
 	h1 {
-		font-family: "Inter";
 		font-style: normal;
 		font-weight: 600;
 		font-size: 20px;
@@ -93,7 +92,6 @@ export const InfoProduct = styled.div`
 	background: var(--gray-10);
 
 	p {
-		font-family: "Inter";
 		font-style: normal;
 		font-weight: 500;
 		font-size: 16px;
@@ -136,7 +134,7 @@ export const InfoProduct = styled.div`
 
 	.purchase-button {
 		color: var(--white-fixed);
-		background: var(--random-13);
+		background: var(--brand-1);
 	}
 
 	@media screen and (max-width: 750px) {
@@ -271,8 +269,25 @@ export const ProductPhotos = styled.div`
 `;
 
 export const UserProfile = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	padding: 36px 44px;
+	gap: 15px;
 	background: var(--gray-10);
 
 	border-radius: 4px;
+
+	span {
+		font-size: 14px;
+		text-align: justify;
+	}
+
+	.profileLink {
+		color: var(--white-fixed);
+		background: var(--gray-0);
+		margin: 25px auto 0px;
+		padding: 15px 20px;
+		border-radius: 5px;
+	}
 `;

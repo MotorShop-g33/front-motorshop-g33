@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 
 
 interface iAnnouncementCard {
+  id: string;
   img: string;
   title: string;
   description: string;
@@ -14,7 +15,7 @@ interface iAnnouncementCard {
   user: any;
 }
 
-export const AnnouncementCard = ({img, title, description, year, price, milage, user}: iAnnouncementCard) => {
+export const AnnouncementCard = ({id, img, title, description, year, price, milage, user}: iAnnouncementCard) => {
 
     function handleCarImage(): string {
         if (img.includes("http")) {
@@ -33,7 +34,7 @@ export const AnnouncementCard = ({img, title, description, year, price, milage, 
     }
 
     return (
-        <ListItem className="Ola" as={Link} to="/product">
+        <ListItem className="Ola" as={Link} to={`/product?ad=${id}`}>
             <Card w={312} h={360} boxShadow={"none"}>
                 <CardBody padding={"0"}>
                     <Box bg={"var(--gray-7)"} h={152} display={"flex"} justifyContent={"center"}>
