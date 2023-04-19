@@ -39,6 +39,12 @@ export const DivModal = styled.div`
 		color: var(--gray-3);
 	}
 
+	.buttonAddImage {
+		@media screen and (max-width: 415px){
+			height: 3rem;
+		}
+	}
+
 	.buttonFooter {
 		font-family: "Inter";
 		font-style: normal;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
 	Button,
@@ -23,9 +23,24 @@ import { DivModal } from "../../styles/createAnnouncementModal";
 
 export const CreateAnnouncementModal = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [inputs, setInputs] = useState<any[]>([]);
+	const [count, setCount] = useState(0);
 
 	const initialRef = React.useRef(null);
 	const finalRef = React.useRef(null);
+
+	const addInput = () => {
+		if (count < 4) {
+			setInputs([...inputs, ""]);
+			setCount(count + 1);
+		}
+	};
+
+	const handleInputChange = (event: any, index: any) => {
+		const newInputs: any = [...inputs];
+		newInputs[index] = event.target.value;
+		setInputs(newInputs);
+	};
 
 	return (
 		<>
@@ -45,6 +60,7 @@ export const CreateAnnouncementModal = () => {
 				finalFocusRef={finalRef}
 				isOpen={isOpen}
 				onClose={onClose}
+				size="xl"
 			>
 				<DivModal>
 					<ModalOverlay />
@@ -202,7 +218,30 @@ export const CreateAnnouncementModal = () => {
 								/>
 							</FormControl>
 
+							<>
+								{inputs.map((value, index) => (
+									<FormControl mt={4}>
+										<FormLabel className="label">
+											{index + 3}° Imagem da galeria
+										</FormLabel>
+										<Input
+											key={index}
+											value={value}
+											onChange={(event) =>
+												handleInputChange(event, index)
+											}
+											className="input"
+											placeholder="https://image.com"
+										/>
+									</FormControl>
+								))}
+							</>
+
 							<Button
+								onClick={addInput}
+								isDisabled={count >= 4}
+								className="buttonAddImage"
+								whiteSpace="pre-wrap"
 								color="var(--random-13)"
 								bg="var(--brand-4)"
 								borderRadius={3}
@@ -210,7 +249,8 @@ export const CreateAnnouncementModal = () => {
 									bg: "var(--brand-3)",
 								}}
 								_active={{
-									bg: "var(--brand-4)",
+									color: "var(--brand-4)",
+									bg: "var(--random-5)",
 								}}
 								mt={5}
 							>
@@ -233,7 +273,12 @@ export const CreateAnnouncementModal = () => {
 								className="buttonFooter"
 								color="var(--brand-4)"
 								bg="var(--brand-3)"
-								colorScheme="purple"
+								_hover={{
+									bg: "var(--random-4)",
+								}}
+								_active={{
+									bg: "var(--random-5)",
+								}}
 							>
 								Criar anúncio
 							</Button>
