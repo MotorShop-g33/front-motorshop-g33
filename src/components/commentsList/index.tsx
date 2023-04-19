@@ -1,8 +1,16 @@
 import { List, ListItem } from "@chakra-ui/react";
 import { DivInfo } from "../../styles/commentsList";
 
+interface ICommentsObject {
+	id: string;
+	userImg: string;
+	username: string;
+	createdAt: string;
+	description: string;
+}
+
 interface ICommentsList {
-	commentsList: Array<object>;
+	commentsList: ICommentsObject[];
 }
 
 export const CommentsList = ({ commentsList }: ICommentsList) => {

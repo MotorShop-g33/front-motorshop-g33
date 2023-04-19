@@ -6,6 +6,7 @@ import { ProfileAds, ProfileCard } from "../../components/profileAds";
 import { Avatar, UnorderedList, useMediaQuery } from "@chakra-ui/react";
 import { api } from "../../services";
 import G33 from "../../assets/icon_g33.png";
+import { CreateAnnouncementModal } from "../../components/createAnnouncementModal";
 
 export const Profile = () => {
     const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
@@ -42,7 +43,7 @@ export const Profile = () => {
         <div><Avatar name={userProfile.name} size={"xl"}></Avatar>
           <h1>{userProfile.name}</h1>
           <span>{userProfile.description}</span><br />
-          {userProfile.id == user.id ? <button>Criar Anúncio</button> : ''}
+          {userProfile.id == user.id ? <CreateAnnouncementModal /> : ''}
         </div>
       </Banner>
 
