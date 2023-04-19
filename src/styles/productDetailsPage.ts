@@ -269,8 +269,25 @@ export const ProductPhotos = styled.div`
 `;
 
 export const UserProfile = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	padding: 36px 44px;
+	gap: 15px;
 	background: var(--gray-10);
 
 	border-radius: 4px;
+
+	span {
+		font-size: 14px;
+		text-align: justify;
+	}
+
+	.profileLink {
+		color: var(--white-fixed);
+		background: var(--gray-0);
+		margin: 25px auto 0px;
+		padding: 15px 20px;
+		border-radius: 5px;
+	}
 `;

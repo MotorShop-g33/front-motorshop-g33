@@ -17,13 +17,13 @@ import {
   UserProfile,
 } from "../../styles/productDetailsPage";
 import { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { IAnnouncements } from "../../interfaces/announcements";
 import { api } from "../../services";
+import { Avatar } from "@chakra-ui/react";
 
 export const ProductDetailsPage = () => {
-  const token = localStorage.getItem("@tokenG33:token");
   const [productAd, setProductAd] = useState<IAnnouncements>();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -32,7 +32,6 @@ export const ProductDetailsPage = () => {
   useEffect(() => {
     const getProductAd = async (adId: string | null): Promise<void> => {
     try {
-      api.defaults.headers.authorization = `Bearer ${token}`;
       const response = await api.get("announcement/" + adId);
       setProductAd(response.data);
     } catch (error) {}
@@ -45,7 +44,9 @@ export const ProductDetailsPage = () => {
     title: productAd?.model,
     description: productAd?.description,
     userImg: "",
+    userid: productAd?.user.id,
     username: productAd?.user.name,
+    usertext: productAd?.user.description,
     milage: productAd?.milage,
     year: productAd?.year,
     price: productAd?.price,
@@ -119,7 +120,13 @@ export const ProductDetailsPage = () => {
             <h1>Fotos</h1>
             {photosAnnouncement ? <PhotosList photosList={photosAnnouncement} /> : ''}
           </ProductPhotos>
-          <UserProfile>Profile</UserProfile>
+          <UserProfile>
+            <Avatar name={productData.username} size={"xl"}/>
+            <h1>{productData.username}</h1><span>{productData.usertext}</span>
+            <Link className="profileLink" to={`/profile?id=${productData.userid}`}>
+              Ver anúncios
+            </Link>
+          </UserProfile>
         </InfoSection>
       </PrimarySection>
 
