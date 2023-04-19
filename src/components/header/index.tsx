@@ -80,7 +80,7 @@ export const HeaderMenu = () => {
                   />
                   <Avatar
                     size={"sm"}
-                    name={"douglas borger"}
+                    name={user?.name}
                     src={"img"}
                     display={{ base: "none", md: "block" }}
                   />
