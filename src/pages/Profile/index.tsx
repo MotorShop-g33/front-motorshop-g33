@@ -62,6 +62,7 @@ export const Profile = () => {
                 flexWrap={"wrap"}
                 justifyContent={"space-evenly"}
                 gap={"24px"}
+                bg={"red"}
               >
                 {userProfile.id == user.id
                   ? profileAds.map((product) => (
@@ -96,8 +97,8 @@ export const Profile = () => {
                 display={"flex"}
                 flexWrap={"nowrap"}
                 overflowX={"scroll"}
-                h={"max-content"}
                 gap={"24px"}
+                h={"465px"}
               >
                 {userProfile.id == user.id
                   ? profileAds.map((product) => (
