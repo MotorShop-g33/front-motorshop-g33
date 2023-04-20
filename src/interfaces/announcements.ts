@@ -35,7 +35,7 @@ export interface IAnnouncementsRequest {
   createdAt: Date;
   updatedAt: Date;
   user: IAdUser;
-  photos: [];
+  photos: string[];
 }
 
 export interface IListAnnouncements {
