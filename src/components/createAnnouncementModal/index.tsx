@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, useWatch } from "react-hook-form";
 
 import {
   Button,
@@ -40,20 +40,35 @@ export const CreateAnnouncementModal = () => {
   const [filterAnnunc, setFlterAnnunc] = useState<any | []>([]);
   const [annunc, setAnnunc] = useState<any>();
   const [name, setName] = useState<any>();
+  const [brand, setbrand] = useState<any>();
   const [fuel, setFuel] = useState<any>();
   const [year, setYear] = useState<any>();
   const [fipe, setfipe] = useState<any>();
   const baseURL = "https://kenzie-kars.herokuapp.com/cars";
-  const tableFipe = async () => {
-    try {
-      const { data } = await api.get(`${baseURL}`);
-      const obj = Object.keys(data);
-      setFlterAnnunc(obj);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+  // const tableFipe = async () => {
+  //   try {
+  //     const { data } = await api.get(`${baseURL}`);
+  //     const obj = Object.keys(data);
+  //     setFlterAnnunc(obj);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   const yearFipe = [2019, 2020, 2021, 2022];
+  const objAnnunc = [
+    "citroën",
+    "fiat",
+    "ford",
+    "chevrolet",
+    "honda",
+    "hyundai",
+    "nissan",
+    "peugeot",
+    "renault",
+    "toyota",
+    "volkswagen",
+  ];
 
   const table = async (brand: any) => {
     try {
@@ -64,10 +79,6 @@ export const CreateAnnouncementModal = () => {
     }
   };
 
-  const getyear = () => {
-    const obj = annunc?.find((item: any) => item.name == name);
-    return obj?.year;
-  };
   const getFipe = () => {
     const obj = annunc?.find((item: any) => item.name == name);
     return obj?.value;
@@ -81,12 +92,11 @@ export const CreateAnnouncementModal = () => {
   };
 
   useEffect(() => {
-    tableFipe();
-    getyear();
-  }, []);
-
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
+    if (brand) {
+      table(brand);
+    }
+    // tableFipe();
+  }, [brand]);
 
   const addInput = () => {
     if (count < 5) {
@@ -114,9 +124,11 @@ export const CreateAnnouncementModal = () => {
 
   const [teste, setTest] = useState<[] | any>([]);
   const handleTeste = (data: any) => {
+    data.fipe = getFipe();
     newAd(data);
   };
 
+  console.log(getFipe());
   return (
     <>
       <Button
@@ -130,13 +142,7 @@ export const CreateAnnouncementModal = () => {
         Criar anúncio
       </Button>
 
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={onClose}
-        size="xl"
-      >
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
         <DivModal>
           <ModalOverlay />
           <ModalContent>
@@ -172,11 +178,11 @@ export const CreateAnnouncementModal = () => {
                   <Select
                     {...register("brand")}
                     onChange={(e) => {
-                      table(e.target.value);
+                      setbrand(e.target.value);
                     }}
                   >
                     <option value={undefined}>Selecione</option>
-                    {filterAnnunc.map((option: string, i: number) => (
+                    {objAnnunc.map((option: string, i: number) => (
                       <option key={i} value={option}>
                         {option}
                       </option>
@@ -188,10 +194,11 @@ export const CreateAnnouncementModal = () => {
                   <FormLabel className="label">Modelo</FormLabel>
                   <Select
                     {...register("model")}
+                    value={name}
                     onChange={(e) => setName(e.target.value)}
+                    placeholder="Selecione seu modelo"
                   >
-                    <option value={undefined}>Selecione</option>
-                    {annunc?.map((option: any, i: number) => (
+                    {annunc?.map((option: any) => (
                       <option key={option.id} value={option.name}>
                         {option.name}
                       </option>
@@ -204,10 +211,10 @@ export const CreateAnnouncementModal = () => {
                     <FormControl isRequired>
                       <FormLabel className="label">Ano</FormLabel>
                       <Select
-                        {...register("model")}
+                        {...register("year")}
                         onChange={(e) => setYear(e.target.value)}
+                        placeholder="Selecione Ano"
                       >
-                        <option value={undefined}>Selecione</option>
                         {yearFipe?.map((option: any, i: number) => (
                           <option key={option.i} value={option}>
                             {option}
@@ -264,16 +271,20 @@ export const CreateAnnouncementModal = () => {
                   </HStack>
 
                   <HStack mt={4}>
-                    <FormControl>
+                    <FormControl isInvalid={Boolean(errors.fipe)}>
                       <FormLabel className="label">Preço tabela FIPE</FormLabel>
                       <Input
-                        defaultValue={getFipe()}
+                        isDisabled
+                        value={Number(getFipe())}
                         id="fipe"
                         type="number"
                         className="input"
                         placeholder="R$ 48.000,00"
                         {...register("fipe")}
                       />
+                      <FormErrorMessage>
+                        {errors.fipe?.message}
+                      </FormErrorMessage>
                     </FormControl>
 
                     <FormControl>

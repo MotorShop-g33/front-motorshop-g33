@@ -7,7 +7,7 @@ export const CreateAnnouncementSchema = yup.object().shape({
   fuel: yup.string().required("Combustível obrigatorio"),
   milage: yup.string().required("Quilometragem obrigatorio"),
   color: yup.string().required("Cor obrigatoria"),
-  fipe: yup.number().required("Tabela Fipe obrigatoria"),
+  fipe: yup.number().notRequired(),
   price: yup.number().required("Preço obrigatorio"),
   description: yup.string().required("Descrição obrigatoria"),
   avatar: yup.string().required("Imagem da capa obrigatorio"),
