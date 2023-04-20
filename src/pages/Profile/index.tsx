@@ -57,12 +57,11 @@ export const Profile = () => {
           <Content>
             {isLargerThan750 ? (
               <UnorderedList
-                w={"77%"}
-                display={"grid"}
+                w={"90%"}
+                display={"flex"}
                 flexWrap={"wrap"}
-                gridTemplateColumns={"repeat(auto-fit, minmax(255px, 1fr))"}
-                justifyContent={"flex-start"}
-                gap={"2rem"}
+                justifyContent={"space-evenly"}
+                gap={"24px"}
               >
                 {userProfile.id == user.id
                   ? profileAds.map((product) => (
@@ -97,6 +96,7 @@ export const Profile = () => {
                 display={"flex"}
                 flexWrap={"nowrap"}
                 overflowX={"scroll"}
+                h={"max-content"}
                 gap={"24px"}
               >
                 {userProfile.id == user.id
