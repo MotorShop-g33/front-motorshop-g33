@@ -20,7 +20,7 @@ export interface IAnnouncements {
 }
 
 export interface IAnnouncementsRequest {
-  id: string;
+  //id: string;
   brand: string;
   model: string;
   year: number;
@@ -31,11 +31,15 @@ export interface IAnnouncementsRequest {
   price: number;
   description: string;
   avatar: string;
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  user: IAdUser;
-  photos: string[];
+  //isActive: boolean;
+  //createdAt: Date;
+  //updatedAt: Date;
+  //user: IAdUser;
+  photos: IImage[];
+}
+
+interface IImage {
+	image: string;
 }
 
 export interface IListAnnouncements {

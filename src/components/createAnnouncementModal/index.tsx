@@ -38,7 +38,7 @@ import { api } from "../../services";
 export const CreateAnnouncementModal = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [inputs, setInputs] = useState<any[]>([]);
-	const [count, setCount] = useState(0);
+	const [count, setCount] = useState<number>(0);
 
 	const [filterAnnunc, setFlterAnnunc] = useState<any | []>([]);
 	const [annunc, setAnnunc] = useState<any>();
@@ -119,9 +119,34 @@ export const CreateAnnouncementModal = () => {
 		handleSubmit,
 		formState: { errors },
 		setValue,
+		control,
 	} = useForm<IAnnouncementsRequest>({
+		//defaultValues: { photos: [{ image: "" }] },
 		resolver: yupResolver(CreateAnnouncementSchema),
 	});
+
+	const { fields, append, remove } = useFieldArray({
+		control,
+		name: "photos",
+	});
+
+	const addPhotoInput = () => {
+		append({
+			image: "",
+		});
+		if (count < 5) {
+			
+			setCount(count + 1);console.log(count+1);
+		}
+	};
+
+	const removePhotoInput = (index: any) => {
+		if (count > 0) {
+			remove(index);
+			
+			setCount(count - 1);console.log(count-1);
+		}
+	};
 
 	const { newAd } = useContext(UserContext);
 
@@ -241,7 +266,11 @@ export const CreateAnnouncementModal = () => {
 								</FormControl>
 
 								<Stack>
-									<HStack display="flex" alignItems="flex-start" mt={4}>
+									<HStack
+										display="flex"
+										alignItems="flex-start"
+										mt={4}
+									>
 										<FormControl
 											isRequired
 											isInvalid={Boolean(errors.year)}
@@ -328,7 +357,11 @@ export const CreateAnnouncementModal = () => {
 										</FormControl>
 									</HStack>
 
-									<HStack display="flex" alignItems="flex-start" mt={4}>
+									<HStack
+										display="flex"
+										alignItems="flex-start"
+										mt={4}
+									>
 										<FormControl
 											isInvalid={Boolean(errors.milage)}
 										>
@@ -366,7 +399,11 @@ export const CreateAnnouncementModal = () => {
 										</FormControl>
 									</HStack>
 
-									<HStack display="flex" alignItems="flex-start" mt="2rem" >
+									<HStack
+										display="flex"
+										alignItems="flex-start"
+										mt="2rem"
+									>
 										<FormControl
 											isInvalid={Boolean(errors.fipe)}
 										>
@@ -467,7 +504,55 @@ export const CreateAnnouncementModal = () => {
 									</FormErrorMessage>
 								</FormControl>
 
-								<FormControl
+								{fields.map((photo, index) => {
+									return (
+										<FormControl key={photo.id} mt={4}>
+											<FormLabel className="label">
+												{index + 1}° Imagem da galeria
+											</FormLabel>
+
+											<Input
+												id="photos"
+												className="input"
+												type="text"
+												placeholder="https://image.com"
+												{...register(
+													`photos.${index}.image`
+												)}
+											/>
+
+											<Button
+												onClick={():void => removePhotoInput(
+													index
+												)}
+											>
+												Remover
+											</Button>
+										</FormControl>
+									);
+								})}
+
+								<Button
+									onClick={addPhotoInput}
+									isDisabled={count >= 5}
+									className="buttonAddImage"
+									whiteSpace="pre-wrap"
+									color="var(--random-13)"
+									bg="var(--brand-4)"
+									borderRadius={3}
+									_hover={{
+										bg: "var(--brand-3)",
+									}}
+									_active={{
+										color: "var(--brand-4)",
+										bg: "var(--random-5)",
+									}}
+									mt={5}
+								>
+									Adicionar campo para imagem da galeria
+								</Button>
+
+								{/* <FormControl
 									mt={4}
 									isInvalid={Boolean(errors.photos)}
 								>
@@ -480,7 +565,10 @@ export const CreateAnnouncementModal = () => {
 										className="input"
 										placeholder="https://image.com"
 										onChange={(e) => {
-											setAddPhotos([...addPhotos, e.target.value]);
+											setAddPhotos([
+												...addPhotos,
+												e.target.value,
+											]);
 											setValue("photos", [
 												e.target.value,
 											]);
@@ -541,7 +629,7 @@ export const CreateAnnouncementModal = () => {
 									mt={5}
 								>
 									Adicionar campo para imagem da galeria
-								</Button>
+								</Button> */}
 							</ModalBody>
 							<ModalFooter>
 								<Button
