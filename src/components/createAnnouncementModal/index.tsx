@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useForm, useFieldArray, useWatch } from "react-hook-form";
+import { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 import {
 	Button,
@@ -119,34 +119,9 @@ export const CreateAnnouncementModal = () => {
 		handleSubmit,
 		formState: { errors },
 		setValue,
-		control,
 	} = useForm<IAnnouncementsRequest>({
-		//defaultValues: { photos: [{ image: "" }] },
 		resolver: yupResolver(CreateAnnouncementSchema),
 	});
-
-	const { fields, append, remove } = useFieldArray({
-		control,
-		name: "photos",
-	});
-
-	const addPhotoInput = () => {
-		append({
-			image: "",
-		});
-		if (count < 5) {
-			
-			setCount(count + 1);console.log(count+1);
-		}
-	};
-
-	const removePhotoInput = (index: any) => {
-		if (count > 0) {
-			remove(index);
-			
-			setCount(count - 1);console.log(count-1);
-		}
-	};
 
 	const { newAd } = useContext(UserContext);
 
@@ -154,11 +129,12 @@ export const CreateAnnouncementModal = () => {
 	const submitAd = (data: any) => {
 		data.fipe = getFipe();
 		newAd(data);
+		onClose();
+		location.reload();
 	};
 
 	const isError = getFipe() === "";
 
-	console.log(getFipe());
 	return (
 		<>
 			<Button
@@ -504,55 +480,7 @@ export const CreateAnnouncementModal = () => {
 									</FormErrorMessage>
 								</FormControl>
 
-								{fields.map((photo, index) => {
-									return (
-										<FormControl key={photo.id} mt={4}>
-											<FormLabel className="label">
-												{index + 1}° Imagem da galeria
-											</FormLabel>
-
-											<Input
-												id="photos"
-												className="input"
-												type="text"
-												placeholder="https://image.com"
-												{...register(
-													`photos.${index}.image`
-												)}
-											/>
-
-											<Button
-												onClick={():void => removePhotoInput(
-													index
-												)}
-											>
-												Remover
-											</Button>
-										</FormControl>
-									);
-								})}
-
-								<Button
-									onClick={addPhotoInput}
-									isDisabled={count >= 5}
-									className="buttonAddImage"
-									whiteSpace="pre-wrap"
-									color="var(--random-13)"
-									bg="var(--brand-4)"
-									borderRadius={3}
-									_hover={{
-										bg: "var(--brand-3)",
-									}}
-									_active={{
-										color: "var(--brand-4)",
-										bg: "var(--random-5)",
-									}}
-									mt={5}
-								>
-									Adicionar campo para imagem da galeria
-								</Button>
-
-								{/* <FormControl
+								<FormControl
 									mt={4}
 									isInvalid={Boolean(errors.photos)}
 								>
@@ -629,7 +557,7 @@ export const CreateAnnouncementModal = () => {
 									mt={5}
 								>
 									Adicionar campo para imagem da galeria
-								</Button> */}
+								</Button>
 							</ModalBody>
 							<ModalFooter>
 								<Button
