@@ -34,9 +34,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CreateAnnouncementSchema } from "../../validateSchemas/validateAnnouncementSchema";
 import { UserContext } from "../../context/UserContext";
 import { api } from "../../services";
+import { SuccessModal } from "../successModal";
 
 export const CreateAnnouncementModal = () => {
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	// const { isOpen, onOpen, onClose } = useDisclosure();
+	const { isOpen: isOpenModal1, onOpen: onOpenModal1, onClose: onCloseModal1 } = useDisclosure();
+  const { isOpen: isOpenModal2, onOpen: onOpenModal2, onClose: onCloseModal2 } = useDisclosure();
+
 	const [inputs, setInputs] = useState<any[]>([]);
 	const [count, setCount] = useState<number>(0);
 
@@ -126,11 +130,13 @@ export const CreateAnnouncementModal = () => {
 	const { newAd } = useContext(UserContext);
 
 	const [addPhotos, setAddPhotos] = useState<[] | any>([]);
-	const submitAd = (data: any) => {
+	
+	const submitAd = async (data: IAnnouncementsRequest) => {
 		data.fipe = getFipe();
 		newAd(data);
-		onClose();		
-		location.reload();
+		onCloseModal1();
+		//location.reload();
+		onOpenModal2();		
 	};
 	
 	const isError = getFipe() === "";
@@ -139,7 +145,7 @@ export const CreateAnnouncementModal = () => {
 		<>
 			<Button
 				className="buttonOpenModal"
-				onClick={onOpen}
+				onClick={onOpenModal1}
 				color="var(--random-13)"
 				borderRadius={3}
 				colorScheme="purple"
@@ -148,7 +154,7 @@ export const CreateAnnouncementModal = () => {
 				Criar anúncio
 			</Button>
 
-			<Modal isOpen={isOpen} onClose={onClose} size="xl">
+			<Modal isOpen={isOpenModal1} onClose={onCloseModal1} size="xl">
 				<DivModal>
 					<ModalOverlay />
 					<ModalContent>
@@ -561,7 +567,7 @@ export const CreateAnnouncementModal = () => {
 							<ModalFooter>
 								<Button
 									className="buttonFooter"
-									onClick={onClose}
+									onClick={onCloseModal1}
 									color="var(--gray-2)"
 									bg="var(--gray-6)"
 									colorScheme="gray"
@@ -587,6 +593,24 @@ export const CreateAnnouncementModal = () => {
 					</ModalContent>
 				</DivModal>
 			</Modal>
+
+
+			<Modal isOpen={isOpenModal2} onClose={onCloseModal2}>
+			<ModalOverlay />
+			<ModalContent w={"95%"} maxW={"500px"}>
+				<ModalHeader>Sucesso!</ModalHeader>
+				<ModalCloseButton />
+				<ModalBody>
+					<Text as={"h3"} fontSize={"1em"} fontWeight={500}>
+						Sua anúncio foi criado com sucesso!
+					</Text>
+					<Text mt={"1rem"}>
+						Agora você poderá ver seus negócios crescendo em grande
+						escala
+					</Text>
+				</ModalBody>
+			</ModalContent>
+		</Modal>
 		</>
 	);
 };
