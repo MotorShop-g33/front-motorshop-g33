@@ -129,10 +129,10 @@ export const CreateAnnouncementModal = () => {
 	const submitAd = (data: any) => {
 		data.fipe = getFipe();
 		newAd(data);
-		onClose();
+		onClose();		
 		location.reload();
 	};
-
+	
 	const isError = getFipe() === "";
 
 	return (
@@ -152,7 +152,6 @@ export const CreateAnnouncementModal = () => {
 				<DivModal>
 					<ModalOverlay />
 					<ModalContent>
-						<form onSubmit={handleSubmit(submitAd)}>
 							<ModalHeader
 								fontFamily="Lexend"
 								fontWeight={500}
@@ -571,7 +570,7 @@ export const CreateAnnouncementModal = () => {
 									Cancelar
 								</Button>
 								<Button
-									type="submit"
+									onClick={handleSubmit(submitAd)}
 									className="buttonFooter"
 									color="var(--brand-4)"
 									bg="var(--brand-3)"
@@ -585,7 +584,6 @@ export const CreateAnnouncementModal = () => {
 									Criar anúncio
 								</Button>
 							</ModalFooter>{" "}
-						</form>
 					</ModalContent>
 				</DivModal>
 			</Modal>
