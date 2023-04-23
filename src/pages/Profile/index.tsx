@@ -62,7 +62,6 @@ export const Profile = () => {
                 flexWrap={"wrap"}
                 justifyContent={"space-evenly"}
                 gap={"24px"}
-                bg={"red"}
               >
                 {userProfile.id == user.id
                   ? profileAds.map((product) => (

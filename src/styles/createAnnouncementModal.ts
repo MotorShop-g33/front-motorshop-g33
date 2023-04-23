@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
 export const DivModal = styled.div`
-	font-family: "Lexend";
-	font-weight: 500;
+	font-family: 'Lexend', sans-serif;
+    font-weight: 500;
 	font-size: 16px;
 	line-height: 20px;
 
 	.buttonOpenModal {
-		font-family: "Inter";
 		font-style: normal;
 		font-weight: 600;
 		font-size: 16px;
@@ -46,7 +45,6 @@ export const DivModal = styled.div`
 	}
 
 	.buttonFooter {
-		font-family: "Inter";
 		font-style: normal;
 		font-weight: 600;
 		font-size: 16px;
