@@ -466,7 +466,7 @@ export const CreateAnnouncementModal = () => {
 									id="description"
 									className="textArea"
 									resize="none"
-									placeholder="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+									placeholder="Descrição do anúncio"
 									{...register("description")}
 								/>
 								<FormErrorMessage>
@@ -515,6 +515,9 @@ export const CreateAnnouncementModal = () => {
 										setValue("photos", [e.target.value]);
 									}}
 								/>
+									<FormErrorMessage>
+									{errors.photos?.message}
+								</FormErrorMessage>
 							</FormControl>
 
 							<>
