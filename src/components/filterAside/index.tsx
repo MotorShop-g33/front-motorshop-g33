@@ -54,7 +54,12 @@ export const FilterAside = () => {
           </Text>
           {singleBrand?.map((item, i) => (
             <ListItem key={i}>
-              <Text onClick={(e) => handleFilter(item)} color={"var(--gray-3)"}>
+              <Text
+                _hover={{ color: "var(--brand2)" }}
+                cursor={"pointer"}
+                onClick={(e) => handleFilter(item)}
+                color={"var(--gray-3)"}
+              >
                 {item}
               </Text>
             </ListItem>
@@ -67,7 +72,12 @@ export const FilterAside = () => {
           </Text>
           {uniqueModel?.map((item, i) => (
             <ListItem key={i}>
-              <Text onClick={(e) => handleFilter(item)} color={"var(--gray-3)"}>
+              <Text
+                _hover={{ color: "var(--brand2)" }}
+                cursor={"pointer"}
+                onClick={(e) => handleFilter(item)}
+                color={"var(--gray-3)"}
+              >
                 {item}
               </Text>
             </ListItem>
@@ -80,7 +90,12 @@ export const FilterAside = () => {
           </Text>
           {singleColor?.map((item, i) => (
             <ListItem key={i}>
-              <Text onClick={(e) => handleFilter(item)} color={"var(--gray-3)"}>
+              <Text
+                _hover={{ color: "var(--brand2)" }}
+                cursor={"pointer"}
+                onClick={(e) => handleFilter(item)}
+                color={"var(--gray-3)"}
+              >
                 {item}
               </Text>
             </ListItem>
@@ -93,7 +108,29 @@ export const FilterAside = () => {
           </Text>
           {singleyear?.map((item, i) => (
             <ListItem key={i}>
-              <Text onClick={(e) => handleFilter(item)} color={"var(--gray-3)"}>
+              <Text
+                _hover={{ color: "var(--brand2)" }}
+                cursor={"pointer"}
+                onClick={(e) => handleFilter(item)}
+                color={"var(--gray-3)"}
+              >
+                {item}
+              </Text>
+            </ListItem>
+          ))}
+        </List>
+        <List>
+          <Text className="titleFilter" as={"h3"}>
+            Combustível
+          </Text>
+          {singleFuel?.map((item, i) => (
+            <ListItem key={i}>
+              <Text
+                _hover={{ color: "var(--brand2)" }}
+                cursor={"pointer"}
+                onClick={(e) => handleFilter(item)}
+                color={"var(--gray-3)"}
+              >
                 {item}
               </Text>
             </ListItem>

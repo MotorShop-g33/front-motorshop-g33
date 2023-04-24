@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
 export const MainSection = styled.div`
-  background: linear-gradient(to bottom, var(--brand-1) 350px, var(--gray-7) 350px);
+  background: linear-gradient(
+    to bottom,
+    var(--brand-1) 350px,
+    var(--gray-7) 350px
+  );
   display: flex;
   flex-direction: column;
   align-items: center;

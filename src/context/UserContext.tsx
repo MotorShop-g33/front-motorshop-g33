@@ -3,6 +3,7 @@ import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../services";
 import {
   IAnnouncements,
+  IAnnouncementsRequest,
   IListAnnouncements,
 } from "../interfaces/announcements";
 import { ILoginUser } from "../interfaces/login";
@@ -26,6 +27,7 @@ interface IUserContext {
   loginUser: (data: ILoginUser) => void;
   registerUser: (data: IUserRequest, onOpen: () => void) => void;
   user: IUser;
+  newAd: (data: IAnnouncementsRequest) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -104,6 +106,16 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
+  const newAd = async (data: IAnnouncementsRequest) => {
+    try {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+      const response = await api.post("announcement", data);
+      console.log(response);
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  };
+
   useEffect(() => {
     if (pathname.includes("/")) {
       getUserLogin();
@@ -124,6 +136,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         loginUser,
         registerUser,
         user,
+        newAd,
       }}
     >
       {children}
