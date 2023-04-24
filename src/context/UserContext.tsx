@@ -110,7 +110,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     try {
       api.defaults.headers.authorization = `Bearer ${token}`;
       const response = await api.post("announcement", data);
-      navigate("/");
+      console.log(response);
     } catch (error: any) {
       console.log(error.response.data);
     }

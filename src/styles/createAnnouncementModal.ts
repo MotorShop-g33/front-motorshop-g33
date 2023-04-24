@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 export const DivModal = styled.div`
-	font-family: 'Lexend', sans-serif;
-    font-weight: 500;
+	font-family: "Lexend", sans-serif;
+	font-style: normal;
+	font-weight: 500;
 	font-size: 16px;
 	line-height: 20px;
 
 	.buttonOpenModal {
+		font-family: "Inter", sans-serif;
 		font-style: normal;
 		font-weight: 600;
 		font-size: 16px;
@@ -35,11 +37,11 @@ export const DivModal = styled.div`
 		font-size: 16px;
 		line-height: 28px;
 
-		color: var(--gray-3);
+		color: var(--gray-1);
 	}
 
 	.buttonAddImage {
-		@media screen and (max-width: 415px){
+		@media screen and (max-width: 415px) {
 			height: 3rem;
 		}
 	}
