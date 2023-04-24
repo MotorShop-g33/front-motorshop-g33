@@ -107,7 +107,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   };
 
   const newAd = async (data: IAnnouncementsRequest) => {
-    console.log(data);
     try {
       api.defaults.headers.authorization = `Bearer ${token}`;
       const response = await api.post("announcement", data);

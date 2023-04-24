@@ -47,7 +47,6 @@ export const DivModal = styled.div`
 	}
 
 	.buttonFooter {
-		font-family: "Inter";
 		font-style: normal;
 		font-weight: 600;
 		font-size: 16px;
