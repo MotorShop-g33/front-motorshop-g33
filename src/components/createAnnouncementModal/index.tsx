@@ -36,6 +36,18 @@ import { CreateAnnouncementSchema } from "../../validateSchemas/validateAnnounce
 import { UserContext } from "../../context/UserContext";
 import { api } from "../../services";
 
+interface Item {
+  name: string;
+  value: string;
+}
+
+interface Announcement {
+  brand: string;
+  title: string;
+  content: string;
+}
+
+
 export const CreateAnnouncementModal = () => {
 	const {
 		isOpen: isOpenModal1,
@@ -48,27 +60,17 @@ export const CreateAnnouncementModal = () => {
 		onClose: onCloseModal2,
 	} = useDisclosure();
 
-	const [inputs, setInputs] = useState<any[]>([]);
+	const [inputs, setInputs] = useState<string[]>([]);
 	const [count, setCount] = useState<number>(0);
-
-	const [filterAnnunc, setFlterAnnunc] = useState<any | []>([]);
+	//const [filterAnnunc, setFlterAnnunc] = useState<any | []>([]);
 	const [annunc, setAnnunc] = useState<any>();
-	const [name, setName] = useState<any>();
-	const [brand, setBrand] = useState<any>();
-	const [fuel, setFuel] = useState<any>();
-	const [year, setYear] = useState<any>();
-	const [fipe, setfipe] = useState<any>();
+	const [name, setName] = useState<string>();
+	const [brand, setBrand] = useState<string>();
+	const [fuel, setFuel] = useState<string>();
+	const [year, setYear] = useState<string>();
+	//const [fipe, setfipe] = useState<any>();
 	const baseURL = "https://kenzie-kars.herokuapp.com/cars";
 
-	// const tableFipe = async () => {
-	//   try {
-	//     const { data } = await api.get(`${baseURL}`);
-	//     const obj = Object.keys(data);
-	//     setFlterAnnunc(obj);
-	//   } catch (error) {
-	//     console.log(error);
-	//   }
-	// };
 	const yearFipe = [2019, 2020, 2021, 2022];
 	const objAnnunc = [
 		"citroën",
@@ -84,7 +86,7 @@ export const CreateAnnouncementModal = () => {
 		"volkswagen",
 	];
 
-	const table = async (brand: any) => {
+	const table = async (brand: string) => {
 		try {
 			const { data } = await api.get(`${baseURL}?brand=${brand}`);
 			setAnnunc(data);
@@ -94,7 +96,7 @@ export const CreateAnnouncementModal = () => {
 	};
 
 	const getFipe = () => {
-		const obj = annunc?.find((item: any) => item.name == name);
+		const obj = annunc?.find((item: Item) => item.name == name);
 		return obj?.value;
 	};
 
@@ -119,8 +121,8 @@ export const CreateAnnouncementModal = () => {
 		}
 	};
 
-	const handleInputChange = (event: any, index: any) => {
-		const newInputs: any = [...inputs];
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+		const newInputs: string[] = [...inputs];
 		newInputs[index] = event.target.value;
 		setInputs(newInputs);
 	};
@@ -136,7 +138,7 @@ export const CreateAnnouncementModal = () => {
 
 	const { newAd } = useContext(UserContext);
 
-	const [addPhotos, setAddPhotos] = useState<[] | any>([]);
+	const [addPhotos, setAddPhotos] = useState<string[]>([]);
 
 	const submitAd = async (data: IAnnouncementsRequest) => {
 		data.fipe = getFipe();
@@ -144,7 +146,6 @@ export const CreateAnnouncementModal = () => {
 		onCloseModal1();
 		//location.reload();
 		onOpenModal2();
-		// setTimeout(() => location.reload(), 2500)
 	};
 
 	const isError = getFipe() === "";
@@ -517,7 +518,7 @@ export const CreateAnnouncementModal = () => {
 							</FormControl>
 
 							<>
-								{inputs.map((value, index) => (
+								{inputs.map((value: string, index: number) => (
 									<FormControl
 										mt={4}
 										isInvalid={Boolean(errors.photos)}
