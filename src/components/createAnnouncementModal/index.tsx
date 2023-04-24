@@ -128,7 +128,6 @@ export const CreateAnnouncementModal = () => {
     newAd(data);
   };
 
-  console.log(getFipe());
   return (
     <>
       <Button
@@ -148,7 +147,6 @@ export const CreateAnnouncementModal = () => {
           <ModalContent>
             <form onSubmit={handleSubmit(handleTeste)}>
               <ModalHeader
-                fontFamily="Lexend"
                 fontWeight={500}
                 fontSize="16px"
                 lineHeight="20px"
@@ -166,7 +164,6 @@ export const CreateAnnouncementModal = () => {
               <ModalBody
                 pt={0}
                 pb={6}
-                fontFamily="Inter"
                 fontWeight={500}
                 fontSize="14px"
               >
@@ -254,6 +251,7 @@ export const CreateAnnouncementModal = () => {
                         type="text"
                         className="input"
                         placeholder="30.000"
+                        required
                         {...register("milage")}
                       />
                     </FormControl>
@@ -265,6 +263,7 @@ export const CreateAnnouncementModal = () => {
                         type="text"
                         className="input"
                         placeholder="Branco"
+                        required
                         {...register("color")}
                       />
                     </FormControl>
@@ -294,6 +293,7 @@ export const CreateAnnouncementModal = () => {
                         type="number"
                         className="input"
                         placeholder="R$ 50.000,00"
+                        required
                         {...register("price")}
                       />
                     </FormControl>
@@ -306,7 +306,8 @@ export const CreateAnnouncementModal = () => {
                     id="description"
                     className="textArea"
                     resize="none"
-                    placeholder="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+                    placeholder="Descrição do anúncio"
+                    required
                     {...register("description")}
                   />
                 </FormControl>
@@ -318,6 +319,7 @@ export const CreateAnnouncementModal = () => {
                     type="text"
                     className="input"
                     placeholder="https://image.com"
+                    required
                     {...register("avatar")}
                   />
                 </FormControl>
@@ -329,6 +331,7 @@ export const CreateAnnouncementModal = () => {
                     type="text"
                     className="input"
                     placeholder="https://image.com"
+                    required
                     onChange={(e) => {
                       setTest([...teste, e.target.value]);
                       setValue("photos", [e.target.value]);
