@@ -37,16 +37,15 @@ import { UserContext } from "../../context/UserContext";
 import { api } from "../../services";
 
 interface Item {
-  name: string;
-  value: string;
+	name: string;
+	value: string;
 }
 
 interface Announcement {
-  brand: string;
-  title: string;
-  content: string;
+	brand: string;
+	title: string;
+	content: string;
 }
-
 
 export const CreateAnnouncementModal = () => {
 	const {
@@ -121,7 +120,10 @@ export const CreateAnnouncementModal = () => {
 		}
 	};
 
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+	const handleInputChange = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		index: number
+	) => {
 		const newInputs: string[] = [...inputs];
 		newInputs[index] = event.target.value;
 		setInputs(newInputs);
@@ -206,9 +208,7 @@ export const CreateAnnouncementModal = () => {
 										setBrand(e.target.value);
 									}}
 								>
-									<option value="" disabled selected>
-										Selecione a marca
-									</option>
+									<option value="">Selecione a marca</option>
 									{objAnnunc.map(
 										(option: string, i: number) => (
 											<option key={i} value={option}>
@@ -234,9 +234,7 @@ export const CreateAnnouncementModal = () => {
 									value={name}
 									onChange={(e) => setName(e.target.value)}
 								>
-									<option value="" disabled selected>
-										Selecione o modelo
-									</option>
+									<option value="">Selecione o modelo</option>
 									{annunc?.map((option: any) => (
 										<option
 											key={option.id}
@@ -271,7 +269,7 @@ export const CreateAnnouncementModal = () => {
 												setYear(e.target.value)
 											}
 										>
-											<option value="" disabled selected>
+											<option value="">
 												Selecione o ano
 											</option>
 											{yearFipe?.map(
@@ -304,7 +302,7 @@ export const CreateAnnouncementModal = () => {
 												setFuel(e.target.value)
 											}
 										>
-											<option value="" disabled selected>
+											<option value="">
 												Selecione o combustível
 											</option>
 											{getfuel()?.map(
@@ -405,7 +403,7 @@ export const CreateAnnouncementModal = () => {
 												isDisabled
 												isReadOnly
 												focusBorderColor="purple.500"
-												value={Number(getFipe())}
+												value={Number(getFipe() || 0)}
 												id="fipe"
 												type="number"
 												className="input"
@@ -466,7 +464,7 @@ export const CreateAnnouncementModal = () => {
 									id="description"
 									className="textArea"
 									resize="none"
-									placeholder="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+									placeholder="Descrição do anúncio"
 									{...register("description")}
 								/>
 								<FormErrorMessage>
@@ -515,6 +513,9 @@ export const CreateAnnouncementModal = () => {
 										setValue("photos", [e.target.value]);
 									}}
 								/>
+								<FormErrorMessage>
+									{errors.photos?.message}
+								</FormErrorMessage>
 							</FormControl>
 
 							<>
@@ -614,7 +615,7 @@ export const CreateAnnouncementModal = () => {
 						<Text as={"h3"} fontSize={"1em"} fontWeight={500}>
 							Sua anúncio foi criado com sucesso!
 						</Text>
-						<Text m={"1.5rem 0"} >
+						<Text m={"1.5rem 0"}>
 							Agora você poderá ver seus negócios crescendo em
 							grande escala
 						</Text>
