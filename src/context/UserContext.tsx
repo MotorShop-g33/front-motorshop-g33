@@ -20,6 +20,7 @@ interface IUserContext {
   token: string | null;
   navigate: NavigateFunction;
   productsList: IAnnouncements[];
+  filterproduct: IAnnouncements[];
   setFilterValue: React.Dispatch<
     React.SetStateAction<string | number | undefined>
   >;
@@ -28,6 +29,10 @@ interface IUserContext {
   registerUser: (data: IUserRequest, onOpen: () => void) => void;
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
+  handlePriceMin: () => void;
+  handlePriceMax: () => void;
+  handleMinKm: () => void;
+  handleMaxKm: () => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -42,12 +47,16 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const [user, setUser] = useState<IUser>({} as IUser);
 
   const [productsList, setProductsList] = useState<IAnnouncements[]>([]);
-  const [filterValue, setFilterValue] = useState<string | number>();
+  const [filterValue, setFilterValue] = useState<string | number | undefined>(
+    undefined
+  );
+  const [filterPrice, setFilterPrice] = useState<IAnnouncements[]>([]);
+  const [filterKm, setFilterKm] = useState<IAnnouncements[]>([]);
+  const [filterproduct, setFilterProduct] = useState<IAnnouncements[]>([]);
 
   const annoucements = async (): Promise<void> => {
     try {
       const { data } = await api.get("announcement");
-
       setProductsList(data.results);
     } catch (error) {
       console.log(error);
@@ -115,6 +124,53 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
+  const handlePriceMin = () => {
+    const minPrice = filterproduct.sort((a: any, b: any) => a.price - b.price);
+    console.log(minPrice);
+    setFilterPrice(minPrice);
+
+    setFilterPrice([]);
+  };
+
+  const handlePriceMax = () => {
+    const maxPrice = filterproduct.sort((a: any, b: any) => b.price - a.price);
+
+    setFilterPrice(maxPrice);
+  };
+  const handleMinKm = () => {
+    const minKm = filterproduct.sort(
+      (a: IAnnouncements, b: IAnnouncements) => a.milage - b.milage
+    );
+    console.log(minKm);
+    setFilterPrice(minKm);
+    setFilterPrice([]);
+  };
+  const handleMaxKm = () => {
+    const maxKm = filterproduct.sort(
+      (a: IAnnouncements, b: IAnnouncements) => b.milage - a.milage
+    );
+    setFilterPrice(maxKm);
+  };
+
+  useEffect(() => {
+    if (filterValue == undefined) {
+      setFilterProduct(productsList);
+    } else {
+      const arrayProduct = productsList.filter((announc: any) => {
+        if (
+          announc.brand == filterValue ||
+          announc.model == filterValue ||
+          announc.color == filterValue ||
+          announc.fuel == filterValue ||
+          announc.year == filterValue
+        ) {
+          return true;
+        }
+      });
+      setFilterProduct(arrayProduct);
+    }
+  }, [filterValue, productsList]);
+
   useEffect(() => {
     if (pathname.includes("/")) {
       getUserLogin();
@@ -136,6 +192,11 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         registerUser,
         user,
         newAd,
+        handlePriceMin,
+        handlePriceMax,
+        handleMinKm,
+        handleMaxKm,
+        filterproduct,
       }}
     >
       {children}

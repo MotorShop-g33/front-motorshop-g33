@@ -5,7 +5,14 @@ import { IAnnouncements } from "../../interfaces/announcements";
 import { Button_medium_text } from "../../styles/buttons";
 
 export const FilterAside = () => {
-  const { productsList, setFilterValue, filterValue } = useContext(UserContext);
+  const {
+    productsList,
+    setFilterValue,
+    handlePriceMin,
+    handlePriceMax,
+    handleMaxKm,
+    handleMinKm,
+  } = useContext(UserContext);
   //provisorio
   const singleBrand: string[] = [];
   const uniqueModel: string[] = [];
@@ -32,14 +39,6 @@ export const FilterAside = () => {
     }
   });
 
-  // const handlePrice = () => {
-  //   const valores = productsList
-  //     .map((p) => p.price)
-  //     .sort((a: any, b: any) => a - b);
-
-  //   return valores;
-  // };
-  // handlePrice();
   const handleFilter = (e: string | number) => {
     setFilterValue(e);
   };
@@ -57,7 +56,9 @@ export const FilterAside = () => {
               <Text
                 _hover={{ color: "var(--brand2)" }}
                 cursor={"pointer"}
-                onClick={(e) => handleFilter(item)}
+                onClick={(e) => {
+                  handleFilter(item);
+                }}
                 color={"var(--gray-3)"}
               >
                 {item}
@@ -143,8 +144,12 @@ export const FilterAside = () => {
           </Text>
 
           <Flex justifyContent={"space-around"} maxW={"210px"} gap={"1rem"}>
-            <Button_medium_text>Minimo</Button_medium_text>
-            <Button_medium_text>Máxima</Button_medium_text>
+            <Button_medium_text onClick={() => handleMinKm()}>
+              Minimo
+            </Button_medium_text>
+            <Button_medium_text onClick={() => handleMaxKm()}>
+              Máxima
+            </Button_medium_text>
           </Flex>
         </List>
         {/*====Proço ==== */}
@@ -153,8 +158,12 @@ export const FilterAside = () => {
             Preço
           </Text>
           <Flex justifyContent={"space-around"} maxW={"210px"} gap={"1rem"}>
-            <Button_medium_text>Minimo</Button_medium_text>
-            <Button_medium_text>Máxima</Button_medium_text>
+            <Button_medium_text onClick={() => handlePriceMin()}>
+              Minimo
+            </Button_medium_text>
+            <Button_medium_text onClick={() => handlePriceMax()}>
+              Máxima
+            </Button_medium_text>
           </Flex>
         </List>
       </Flex>
