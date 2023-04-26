@@ -35,6 +35,8 @@ interface IUserContext {
   handlePriceMax: () => void;
   handleMinKm: () => void;
   handleMaxKm: () => void;
+  requestPasswordRecovery: (data: {email: string}) => void;
+  executePasswordRecovery: (data: {password: string}, token: string) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -128,6 +130,43 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
+  const requestPasswordRecovery = async (data: {email: string}): Promise<void> => {
+    try {
+      await api.post("/users/resetPassword", data)
+    } catch (error: any) {
+      const toastmsg = error.response.data.message;
+      toast({
+        title: "error loging",
+        position: "top-right",
+        isClosable: true,
+        render: () => (
+          <Box color="white" p={3} bg="red.400">
+            {`${toastmsg}`}
+          </Box>
+        ),
+      });
+    }
+  }
+
+  const executePasswordRecovery = async (data: {password: string}, token: string): Promise<void> => {
+    try {
+      await api.patch(`/users/resetPassword/${token}`, data)
+      navigate("/login")
+    } catch (error: any) {
+      const toastmsg = error.response.data.message;
+      toast({
+        title: "error loging",
+        position: "top-right",
+        isClosable: true,
+        render: () => (
+          <Box color="white" p={3} bg="red.400">
+            {`${toastmsg}`}
+          </Box>
+        ),
+      });
+    }
+  }
+
   const newAd = async (data: IAnnouncementsRequest) => {
     try {
       api.defaults.headers.authorization = `Bearer ${token}`;
@@ -210,6 +249,8 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         handleMinKm,
         handleMaxKm,
         filterproduct,
+        requestPasswordRecovery,
+        executePasswordRecovery
         setFilterProduct,
       }}
     >

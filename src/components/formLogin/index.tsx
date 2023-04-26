@@ -71,7 +71,7 @@ export const FormLogin = () => {
             </InputRightElement>
           </InputGroup>
           <p className="errorMessage">{errors.password?.message}</p>
-          <span className="forgotPassword">Esqueci minha senha</span>
+          <Link className="forgotPassword" to={"/request-password-recovery"}>Esqueci minha senha</Link>
           <Button_medium_text
             type="submit"
             set_width="98%"
