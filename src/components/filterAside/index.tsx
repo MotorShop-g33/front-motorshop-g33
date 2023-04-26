@@ -12,6 +12,8 @@ export const FilterAside = () => {
     handlePriceMax,
     handleMaxKm,
     handleMinKm,
+    setFilterProduct,
+    SetCurrentPage,
   } = useContext(UserContext);
   //provisorio
   const singleBrand: string[] = [];
@@ -41,6 +43,11 @@ export const FilterAside = () => {
 
   const handleFilter = (e: string | number) => {
     setFilterValue(e);
+  };
+
+  const ClearFilter = () => {
+    console.log(productsList);
+    setFilterProduct(productsList);
   };
 
   return (
@@ -177,6 +184,10 @@ export const FilterAside = () => {
           bg={"var(--brand2)"}
           color={"var(--white-fixed)"}
           p={"1rem 5rem"}
+          onClick={() => {
+            SetCurrentPage(0);
+            ClearFilter();
+          }}
         >
           Limpar filtros
         </Button>
