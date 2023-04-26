@@ -45,3 +45,13 @@ export interface IAdUser {
   name: string;
   description: string;
 }
+
+export interface IUserInfoRequest {
+  name: string;
+  email: string;
+  cpf: string;
+  phone: string;
+  birthday: Date;
+  description: string;
+}
+
