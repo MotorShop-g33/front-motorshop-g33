@@ -1,7 +1,6 @@
 import {
 	Button,
 	FormControl,
-	FormErrorMessage,
 	FormLabel,
 	Input,
 	Modal,
@@ -15,8 +14,13 @@ import {
 	Textarea,
 	useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
 import { ToastContainer, toast } from "react-toastify";
+import React, { useContext } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { RegisterUserSchema } from "../../validateSchemas/validateUserSchema";
+import { useForm } from "react-hook-form";
+import { IUserInfoRequest } from "../../interfaces/user";
+import { UserContext } from "../../context/UserContext";
 
 type ModalProps = {
 	isOpen: boolean;
@@ -24,22 +28,11 @@ type ModalProps = {
 };
 
 export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
-	//const { isOpen, onOpen, onClose } = useDisclosure();
-	const {
-		isOpen: isOpenModal1,
-		onOpen: onOpenModal1,
-		onClose: onCloseModal1,
-	} = useDisclosure();
 	const {
 		isOpen: isOpenModalExclude,
 		onOpen: onOpenModalExclude,
 		onClose: onCloseModalExclude,
 	} = useDisclosure();
-
-	const submitAd = () => {
-		onClose();
-		onOpenModalExclude();
-	};
 
 	const notify = (message: string) =>
 		toast.success(message, {
@@ -52,14 +45,31 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 			theme: "light",
 		});
 
+	const {
+		handleSubmit,
+		register,
+		formState: { errors },
+		setValue,
+	} = useForm<IUserInfoRequest>({
+		resolver: yupResolver(RegisterUserSchema),
+	});
+	const { editUser } = useContext(UserContext);
+
+	const submitExclude = () => {
+		onCloseModalExclude();
+		notify("Perfil excluído!");
+	};
+
+	const submitEdit = () => {
+		onClose();
+		notify("Perfil atualizado!");
+	};
+
 	const initialRef = React.useRef(null);
 	const finalRef = React.useRef(null);
 
 	return (
 		<>
-			{/* <Button onClick={onOpen} ref={finalRef}>
-				Open Modal
-			</Button> */}
 			<Modal
 				initialFocusRef={initialRef}
 				finalFocusRef={finalRef}
@@ -69,73 +79,140 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 			>
 				<ModalOverlay />
 				<ModalContent>
-					<ModalHeader>Editar Perfil</ModalHeader>
-					<ModalCloseButton />
+					<ModalHeader
+						fontFamily="Lexend"
+						fontWeight={500}
+						fontSize="16px"
+						paddingY={4}
+						color="var(--gray-1)"
+						lineHeight="20px"
+					>
+						Editar Perfil
+					</ModalHeader>
+					<ModalCloseButton
+						color="var(--gray-4)"
+						_hover={{
+							color: "var(--gray-0)",
+							bgColor: "var(--gray-4)",
+						}}
+					/>
 
-					<ModalBody pb={6}>
-						<Text mb={6}>Informações pessoais</Text>
+					<ModalBody
+						pb={6}
+						pt={0}
+						fontFamily="Inter"
+						fontWeight={500}
+						fontSize="14px"
+					>
+						<Text lineHeight="24px" color="var(--gray-0)">
+							Informações pessoais
+						</Text>
 
-						<FormControl>
-							<FormLabel htmlFor="name">Nome</FormLabel>
+						<FormControl mt={4}>
+							<FormLabel
+								htmlFor="name"
+								fontFamily="Inter"
+								fontWeight={500}
+								fontSize="14px"
+							>
+								Nome
+							</FormLabel>
 							<Input
 								id="name"
 								type="text"
 								h={"48px"}
 								placeholder="Maria Lima"
+								focusBorderColor="purple.500"
 								ref={initialRef}
 							/>
 						</FormControl>
 
-						<FormControl>
-							<FormLabel htmlFor="email">E-mail</FormLabel>
+						<FormControl mt={4}>
+							<FormLabel
+								htmlFor="email"
+								fontFamily="Inter"
+								fontWeight={500}
+								fontSize="14px"
+							>
+								E-mail
+							</FormLabel>
 							<Input
 								id="email"
 								type="email"
 								h={"48px"}
 								placeholder="email@gmail.com"
+								focusBorderColor="purple.500"
 							/>
 						</FormControl>
 
-						<FormControl>
-							<FormLabel htmlFor="cpf">CPF</FormLabel>
+						<FormControl mt={4}>
+							<FormLabel
+								htmlFor="cpf"
+								fontFamily="Inter"
+								fontWeight={500}
+								fontSize="14px"
+							>
+								CPF
+							</FormLabel>
 							<Input
 								id="cpf"
 								type="text"
 								h={"48px"}
 								placeholder="000.000.000-00"
+								focusBorderColor="purple.500"
 							/>
 						</FormControl>
 
-						<FormControl>
-							<FormLabel htmlFor="phone">Celular</FormLabel>
+						<FormControl mt={4}>
+							<FormLabel
+								htmlFor="phone"
+								fontFamily="Inter"
+								fontWeight={500}
+								fontSize="14px"
+							>
+								Celular
+							</FormLabel>
 							<Input
 								id="phone"
 								h={"48px"}
 								type="text"
 								placeholder="(DDD) 90000-0000"
+								focusBorderColor="purple.500"
 							/>
 						</FormControl>
 
-						<FormControl>
-							<FormLabel htmlFor="birthday">
+						<FormControl mt={4}>
+							<FormLabel
+								htmlFor="birthday"
+								fontFamily="Inter"
+								fontWeight={500}
+								fontSize="14px"
+							>
 								Data de Nascimento
 							</FormLabel>
 							<Input
 								h={"48px"}
 								type="text"
 								id="birthday"
-								placeholder="01/01/90"
+								placeholder="01/01/1990"
+								focusBorderColor="purple.500"
 							/>
 						</FormControl>
 
-						<FormControl>
-							<FormLabel htmlFor="description">
+						<FormControl mt={4}>
+							<FormLabel
+								htmlFor="description"
+								fontFamily="Inter"
+								fontWeight={500}
+								fontSize="14px"
+							>
 								Descrição
 							</FormLabel>
 							<Textarea
 								id="description"
 								resize={"none"}
 								placeholder="Sua descrição aqui..."
+								focusBorderColor="purple.500"
 							/>
 						</FormControl>
 					</ModalBody>
@@ -158,7 +235,10 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							h={"48px"}
 							w={"100%"}
 							_hover={{ color: "var(--white-fixed)" }}
-							onClick={submitAd}
+							onClick={() => {
+								onClose();
+								onOpenModalExclude();
+							}}
 						>
 							Excluir Perfil
 						</Button>
@@ -168,9 +248,10 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							bg={"var(--random-13)"}
 							h={"48px"}
 							w={"100%"}
-							onClick={() => {
-								onClose(), notify("Perfil atualizado!");
-							}}
+							onClick={
+								submitEdit
+								//handleSubmit(submitEdit)
+							}
 						>
 							Salvar Alterações
 						</Button>
@@ -211,10 +292,7 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							h={"48px"}
 							w={"auto"}
 							_hover={{ color: "var(--white-fixed)" }}
-							onClick={() => {
-								onCloseModalExclude();
-								notify("Perfil excluído!");
-							}}
+							onClick={submitExclude}
 						>
 							Sim, excluir meu perfil
 						</Button>
