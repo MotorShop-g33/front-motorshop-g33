@@ -1,5 +1,6 @@
 import {
   Card,
+  Tag,
   CardBody,
   CardFooter,
   Avatar,
@@ -16,6 +17,7 @@ import {
   Paragraph_2_500,
 } from "../../styles/typography";
 import { Link } from "react-router-dom";
+import { GoodBuyTag } from "../annoucementTag";
 
 interface iAnnouncementCard {
   id: string;
@@ -24,6 +26,7 @@ interface iAnnouncementCard {
   description: string;
   year: number | string;
   price: number | string;
+  fipe: number | string;
   milage: number;
   user: any;
 }
@@ -35,6 +38,7 @@ export const AnnouncementCard = ({
   description,
   year,
   price,
+  fipe,
   milage,
   user,
 }: iAnnouncementCard) => {
@@ -43,6 +47,16 @@ export const AnnouncementCard = ({
       return img;
     } else {
       return "https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image.png";
+    }
+  }
+
+  function tagGoodBuy(fipe: number, price: number): Boolean {
+    const verifyFipe = fipe * 0.05;
+    const verifyPrice = fipe - verifyFipe;
+    if (price < verifyPrice) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -72,8 +86,10 @@ export const AnnouncementCard = ({
             display={"flex"}
             justifyContent={"center"}
             transition={".3s linear"}
+            position={"relative"}
             _hover={{ transform: "scale(1.04)" }}
           >
+            {tagGoodBuy(Number(fipe), Number(price)) ? <GoodBuyTag /> : ""}
             <Image src={handleCarImage()} h={152}></Image>
           </Box>
           <Box margin={"16px 0px"}>

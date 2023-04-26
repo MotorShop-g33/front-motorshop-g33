@@ -43,6 +43,12 @@ export const FilterAside = () => {
     setFilterValue(e);
   };
 
+  const ClearFilter = () => {
+    setFilterValue(undefined);
+
+    // location.reload();
+  };
+
   return (
     <Flex flexDir={"column"}>
       <Flex flexDir={"column"} gap={"1rem"}>
@@ -169,14 +175,16 @@ export const FilterAside = () => {
       </Flex>
 
       <Box
-        display={{ base: "none", md: "flex" }}
+        display={{ base: "flex", md: "flex" }}
         justifyContent={"center"}
         maxW={"210px"}
+        mt={"1rem"}
       >
         <Button
           bg={"var(--brand2)"}
           color={"var(--white-fixed)"}
           p={"1rem 5rem"}
+          onClick={ClearFilter}
         >
           Limpar filtros
         </Button>

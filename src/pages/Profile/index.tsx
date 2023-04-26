@@ -73,6 +73,7 @@ export const Profile = () => {
                         description={product.description}
                         year={product.year}
                         price={product.price}
+                        fipe={product.fipe}
                         milage={product.milage}
                       ></ProfileAds>
                     ))
@@ -85,6 +86,7 @@ export const Profile = () => {
                         description={product.description}
                         year={product.year}
                         price={product.price}
+                        fipe={product.fipe}
                         milage={product.milage}
                         user={userProfile}
                       ></ProfileCard>
@@ -109,6 +111,7 @@ export const Profile = () => {
                         description={product.description}
                         year={product.year}
                         price={product.price}
+                        fipe={product.fipe}
                         milage={product.milage}
                       ></ProfileAds>
                     ))
@@ -121,6 +124,7 @@ export const Profile = () => {
                         description={product.description}
                         year={product.year}
                         price={product.price}
+                        fipe={product.fipe}
                         milage={product.milage}
                         user={userProfile}
                       ></ProfileCard>

@@ -25,6 +25,7 @@ interface IProfileCard {
   description: string;
   year: number | string;
   price: number | string;
+  fipe: number | string;
   milage: number;
   user: any;
 }
@@ -36,6 +37,7 @@ interface IProfileAds {
   description: string;
   year: number | string;
   price: number | string;
+  fipe: number | string;
   milage: number;
 }
 
@@ -46,6 +48,7 @@ export const ProfileAds = ({
   description,
   year,
   price,
+  fipe,
   milage,
 }: IProfileAds) => {
   function handleCarImage(): string {
@@ -125,6 +128,7 @@ export const ProfileCard = ({
   description,
   year,
   price,
+  fipe,
   milage,
   user,
 }: IProfileCard) => {
