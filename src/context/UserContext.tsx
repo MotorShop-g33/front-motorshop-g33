@@ -15,12 +15,14 @@ export interface IUserContextProps {
 }
 
 interface IUserContext {
-  setCount: (data: number) => void;
-  count: number;
+  SetCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  maxPage: number;
   token: string | null;
   navigate: NavigateFunction;
   productsList: IAnnouncements[];
   filterproduct: IAnnouncements[];
+  setFilterProduct: React.Dispatch<React.SetStateAction<IAnnouncements[]>>;
   setFilterValue: React.Dispatch<
     React.SetStateAction<string | number | undefined>
   >;
@@ -43,20 +45,29 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const { pathname } = useLocation();
 
   const token = localStorage.getItem("@tokenG33:token");
-  const [count, setCount] = useState(0);
-  const [user, setUser] = useState<IUser>({} as IUser);
+  const [currentPage, SetCurrentPage] = useState<number>(0);
+  const [maxPage, SetMaxPage] = useState<number>(1);
+  const page_limit = 12;
 
+  const [user, setUser] = useState<IUser>({} as IUser);
   const [productsList, setProductsList] = useState<IAnnouncements[]>([]);
   const [filterValue, setFilterValue] = useState<string | number | undefined>(
     undefined
   );
   const [filterPrice, setFilterPrice] = useState<IAnnouncements[]>([]);
-  const [filterKm, setFilterKm] = useState<IAnnouncements[]>([]);
   const [filterproduct, setFilterProduct] = useState<IAnnouncements[]>([]);
 
   const annoucements = async (): Promise<void> => {
     try {
-      const { data } = await api.get("announcement");
+      const { data } = await api.get(
+        `announcement?page=${currentPage}&limit=${page_limit}`
+      );
+      if (data.next) {
+        SetMaxPage(data.next.page);
+      }
+      console.log(maxPage);
+
+      // const { data } = await api.get("announcement");
       setProductsList(data.results);
     } catch (error) {
       console.log(error);
@@ -126,7 +137,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
   const handlePriceMin = () => {
     const minPrice = filterproduct.sort((a: any, b: any) => a.price - b.price);
-    console.log(minPrice);
     setFilterPrice(minPrice);
 
     setFilterPrice([]);
@@ -141,8 +151,8 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     const minKm = filterproduct.sort(
       (a: IAnnouncements, b: IAnnouncements) => a.milage - b.milage
     );
-    console.log(minKm);
     setFilterPrice(minKm);
+
     setFilterPrice([]);
   };
   const handleMaxKm = () => {
@@ -176,13 +186,14 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       getUserLogin();
       annoucements();
     }
-  }, [token]);
+  }, [token, currentPage]);
 
   return (
     <UserContext.Provider
       value={{
-        count,
-        setCount,
+        currentPage,
+        maxPage,
+        SetCurrentPage,
         token,
         navigate,
         productsList,
@@ -197,6 +208,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         handleMinKm,
         handleMaxKm,
         filterproduct,
+        setFilterProduct,
       }}
     >
       {children}

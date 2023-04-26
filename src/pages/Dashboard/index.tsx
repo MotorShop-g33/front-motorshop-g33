@@ -6,6 +6,7 @@ import { UnorderedList, useMediaQuery } from "@chakra-ui/react";
 import G33 from "../../assets/icon_g33.png";
 import { FilterAside } from "../../components/filterAside";
 import { ModalFilter } from "../../components/filterAside/model.filter";
+import { Pagination } from "../../components/pagination";
 
 export const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -78,6 +79,7 @@ export const Dashboard = () => {
           )}
         </Content>
         <ModalFilter />
+        <Pagination />
       </MainSection>
     </>
   );
