@@ -49,6 +49,7 @@ export const Dashboard = () => {
                   description={product.description}
                   year={product.year}
                   price={product.price}
+                  fipe={product.fipe}
                   milage={product.milage}
                   user={product.user}
                 ></AnnouncementCard>
@@ -71,6 +72,7 @@ export const Dashboard = () => {
                   description={product.description}
                   year={product.year}
                   price={product.price}
+                  fipe={product.fipe}
                   milage={product.milage}
                   user={product.user}
                 ></AnnouncementCard>
