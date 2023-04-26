@@ -53,7 +53,6 @@ export const AnnouncementCard = ({
   function tagGoodBuy(fipe: number, price: number): Boolean {
     const verifyFipe = fipe * 0.05;
     const verifyPrice = fipe - verifyFipe;
-    console.log(title, " - ", verifyPrice);
     if (price < verifyPrice) {
       return true;
     } else {
