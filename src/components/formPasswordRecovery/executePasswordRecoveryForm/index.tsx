@@ -4,16 +4,21 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button_medium_text } from "../../../styles/buttons";
 import { Heading_4_600 } from "../../../styles/typography";
 import { PasswordRecForm } from "../../../styles/formPasswordRecovery";
+import { useParams } from "react-router-dom";
 import * as yup from "yup";
+import { useContext } from "react";
+import { UserContext } from "../../../context/UserContext";
 
 interface IpasswordRecovery {
     password: string,
 }
 
 export const ExecutePasswordRecoveryForm = () => {
+    const {resetToken} = useParams()
+    const {executePasswordRecovery} = useContext(UserContext)
 
     const schema = yup.object({
-        password: yup.string().email("O valor inserido não é um email").required("Email obrigatório")
+        password: yup.string().required("Senha obrigatória")
     })
 
     const {
@@ -23,7 +28,12 @@ export const ExecutePasswordRecoveryForm = () => {
     } = useForm<IpasswordRecovery>({ resolver: yupResolver(schema) });
 
     const HandleRecovery = (data: any) => {
-        console.log(data)
+        if (resetToken) {
+            const replacedToken = resetToken.replace(/&/g, ".");
+            //console.log(data)
+            console.log(replacedToken)
+            executePasswordRecovery(data, replacedToken)
+        }
     }
 
     return (

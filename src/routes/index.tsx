@@ -15,7 +15,9 @@ export const RoutesApp = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/request-password-recovery" element={<RequestPasswordRecoveryPage />} />
-      <Route path="/execute-password-recovery" element={<ExecutePasswordRecoveryPage />} />
+      <Route path="/execute-password-recovery">
+        <Route path=":resetToken" element={<ExecutePasswordRecoveryPage />}/>
+      </Route>
       <Route path="/product" element={<ProductDetailsPage />} />
       <Route path="/profile" element={<Profile />} />
     </Routes>

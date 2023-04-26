@@ -4,8 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Button_medium_text } from "../../../styles/buttons";
 import { Heading_4_600 } from "../../../styles/typography";
 import { PasswordRecForm } from "../../../styles/formPasswordRecovery";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import * as yup from "yup";
+import { UserContext } from "../../../context/UserContext";
 
 interface IpasswordRecovery {
     email: string,
@@ -13,6 +14,7 @@ interface IpasswordRecovery {
 
 export const RequestPasswordRecoveryForm = () => {
     const [isSubmitted, setIsSubmitted] = useState(false)
+    const {requestPasswordRecovery} = useContext(UserContext)
 
     const schema = yup.object({
         email: yup.string().email("O valor inserido não é um email").required("Email obrigatório")
@@ -25,7 +27,7 @@ export const RequestPasswordRecoveryForm = () => {
     } = useForm<IpasswordRecovery>({ resolver: yupResolver(schema) });
 
     const HandleRecovery = (data: any) => {
-        console.log(data)
+        requestPasswordRecovery(data)
     }
 
     return (
@@ -36,10 +38,10 @@ export const RequestPasswordRecoveryForm = () => {
                     <FormLabel>Digite seu e-mail</FormLabel>
                     <Input type="email" {...register("email")}></Input>
                     <FormHelperText>Se seu e-mail corresponder a uma conta, enviaremos um código a ele.</FormHelperText>
+                    { errors.email && <FormHelperText color={"red"}>{errors.email.message}</FormHelperText> }
                 </FormControl>
                 <Button_medium_text 
                     type="submit"
-                    disabled={isSubmitted ? (true) : (false)} 
                     set_background_color={isSubmitted ? ("random-5") : ("transparent")} 
                     set_hover_bg_color="random-5" 
                     set_hover_txt_color="white-fixed" 
@@ -52,3 +54,7 @@ export const RequestPasswordRecoveryForm = () => {
         </Box>
     );
 };
+
+/*
+
+*/
