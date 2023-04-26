@@ -27,7 +27,7 @@ interface IUserContext {
   filterValue: string | number | undefined;
   loginUser: (data: ILoginUser) => void;
   registerUser: (data: IUserRequest, onOpen: () => void) => void;
-  editUser: (id: string, data: IUserInfoRequest) => void;//
+  editUser: (data: IUserInfoRequest) => void;//
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
   handlePriceMin: () => void;
@@ -116,10 +116,11 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 //
-  const editUser = async (id: string, data: IUserInfoRequest): Promise<void> => {
-    console.log(data);
+  const editUser = async (data: IUserInfoRequest): Promise<void> => {
+    console.log("Dados:" + data);
     try {
-      await api.patch(`/users/${id}`, data);
+      await api.patch(`/users`, data);
+      getUserLogin();
     } catch (error: any) {
       console.log(error.response.data);
     }

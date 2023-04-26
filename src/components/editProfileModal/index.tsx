@@ -17,10 +17,10 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import React, { useContext } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { RegisterUserSchema } from "../../validateSchemas/validateUserSchema";
 import { useForm } from "react-hook-form";
 import { IUserInfoRequest } from "../../interfaces/user";
 import { UserContext } from "../../context/UserContext";
+import { EditInfoUserSchema } from "../../validateSchemas/validateUserSchema";
 
 type ModalProps = {
 	isOpen: boolean;
@@ -51,16 +51,17 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 		formState: { errors },
 		setValue,
 	} = useForm<IUserInfoRequest>({
-		resolver: yupResolver(RegisterUserSchema),
+		resolver: yupResolver(EditInfoUserSchema),
 	});
-	const { editUser } = useContext(UserContext);
+	const { user, editUser } = useContext(UserContext);
 
 	const submitExclude = () => {
 		onCloseModalExclude();
 		notify("Perfil excluído!");
 	};
 
-	const submitEdit = () => {
+	const submitEdit = async (data: IUserInfoRequest) => {
+		editUser(data);
 		onClose();
 		notify("Perfil atualizado!");
 	};
@@ -123,7 +124,9 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								h={"48px"}
 								placeholder="Maria Lima"
 								focusBorderColor="purple.500"
-								ref={initialRef}
+								defaultValue={user.name}
+								{...register("name")}
+								//ref={initialRef}
 							/>
 						</FormControl>
 
@@ -142,6 +145,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								h={"48px"}
 								placeholder="email@gmail.com"
 								focusBorderColor="purple.500"
+								defaultValue={user.email}
+								{...register("email")}
 							/>
 						</FormControl>
 
@@ -160,6 +165,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								h={"48px"}
 								placeholder="000.000.000-00"
 								focusBorderColor="purple.500"
+								defaultValue={user.cpf}
+								{...register("cpf")}
 							/>
 						</FormControl>
 
@@ -178,6 +185,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								type="text"
 								placeholder="(DDD) 90000-0000"
 								focusBorderColor="purple.500"
+								defaultValue={user.phone}
+								{...register("phone")}
 							/>
 						</FormControl>
 
@@ -196,6 +205,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								id="birthday"
 								placeholder="01/01/1990"
 								focusBorderColor="purple.500"
+								//value={user.birthday.toString()}
+								{...register("birthday")}
 							/>
 						</FormControl>
 
@@ -213,6 +224,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								resize={"none"}
 								placeholder="Sua descrição aqui..."
 								focusBorderColor="purple.500"
+								defaultValue={user.description}
+								{...register("description")}
 							/>
 						</FormControl>
 					</ModalBody>
@@ -249,8 +262,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							h={"48px"}
 							w={"100%"}
 							onClick={
-								submitEdit
-								//handleSubmit(submitEdit)
+								//submitEdit
+								handleSubmit(submitEdit)
 							}
 						>
 							Salvar Alterações
