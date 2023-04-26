@@ -8,7 +8,7 @@ import {
 } from "../interfaces/announcements";
 import { ILoginUser } from "../interfaces/login";
 import { Box, useDisclosure, useToast } from "@chakra-ui/react";
-import { IUser, IUserRequest } from "../interfaces/user";
+import { IUser, IUserInfoRequest, IUserRequest } from "../interfaces/user";//
 
 export interface IUserContextProps {
   children: React.ReactNode;
@@ -27,6 +27,7 @@ interface IUserContext {
   filterValue: string | number | undefined;
   loginUser: (data: ILoginUser) => void;
   registerUser: (data: IUserRequest, onOpen: () => void) => void;
+  editUser: (id: string, data: IUserInfoRequest) => void;//
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
   handlePriceMin: () => void;
@@ -114,7 +115,16 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       });
     }
   };
-
+//
+  const editUser = async (id: string, data: IUserInfoRequest): Promise<void> => {
+    console.log(data);
+    try {
+      await api.patch(`/users/${id}`, data);
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  }
+//
   const newAd = async (data: IAnnouncementsRequest) => {
     try {
       api.defaults.headers.authorization = `Bearer ${token}`;
@@ -197,6 +207,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         handleMinKm,
         handleMaxKm,
         filterproduct,
+        editUser,//
       }}
     >
       {children}
