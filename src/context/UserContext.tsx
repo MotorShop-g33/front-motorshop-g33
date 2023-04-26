@@ -47,6 +47,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const token = localStorage.getItem("@tokenG33:token");
   const [currentPage, SetCurrentPage] = useState<number>(0);
   const [maxPage, SetMaxPage] = useState<number>(1);
+  const [reload, setReload] = useState(false);
   const page_limit = 12;
 
   const [user, setUser] = useState<IUser>({} as IUser);
@@ -54,8 +55,11 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const [filterValue, setFilterValue] = useState<string | number | undefined>(
     undefined
   );
+
   const [filterPrice, setFilterPrice] = useState<IAnnouncements[]>([]);
-  const [filterproduct, setFilterProduct] = useState<IAnnouncements[]>([]);
+  const [filterproduct, setFilterProduct] = useState<IAnnouncements[]>(
+    [] || undefined
+  );
 
   const annoucements = async (): Promise<void> => {
     try {
@@ -65,8 +69,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       if (data.next) {
         SetMaxPage(data.next.page);
       }
-      console.log(maxPage);
-
       // const { data } = await api.get("announcement");
       setProductsList(data.results);
     } catch (error) {
@@ -186,7 +188,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       getUserLogin();
       annoucements();
     }
-  }, [token, currentPage]);
+  }, [token, currentPage, reload]);
 
   return (
     <UserContext.Provider

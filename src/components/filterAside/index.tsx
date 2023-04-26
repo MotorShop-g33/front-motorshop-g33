@@ -12,8 +12,6 @@ export const FilterAside = () => {
     handlePriceMax,
     handleMaxKm,
     handleMinKm,
-    setFilterProduct,
-    SetCurrentPage,
   } = useContext(UserContext);
   //provisorio
   const singleBrand: string[] = [];
@@ -46,8 +44,9 @@ export const FilterAside = () => {
   };
 
   const ClearFilter = () => {
-    console.log(productsList);
-    setFilterProduct(productsList);
+    setFilterValue(undefined);
+
+    // location.reload();
   };
 
   return (
@@ -176,18 +175,16 @@ export const FilterAside = () => {
       </Flex>
 
       <Box
-        display={{ base: "none", md: "flex" }}
+        display={{ base: "flex", md: "flex" }}
         justifyContent={"center"}
         maxW={"210px"}
+        mt={"1rem"}
       >
         <Button
           bg={"var(--brand2)"}
           color={"var(--white-fixed)"}
           p={"1rem 5rem"}
-          onClick={() => {
-            SetCurrentPage(0);
-            ClearFilter();
-          }}
+          onClick={ClearFilter}
         >
           Limpar filtros
         </Button>
