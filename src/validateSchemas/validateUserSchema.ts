@@ -48,3 +48,12 @@ export const EditInfoUserSchema = yup.object().shape({
 		.typeError("Insira uma data válida no formato MM/DD/AAAA"),
 	description: yup.string().notRequired(),
 });
+
+export const EditAddressUserSchema = yup.object().shape({
+	cep: yup.string().notRequired(),
+	state: yup.string().notRequired(),
+	city: yup.string().notRequired(),
+	street: yup.string().notRequired(),
+	number: yup.string().notRequired(),
+	complement: yup.string().notRequired(),
+});
