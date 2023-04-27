@@ -75,6 +75,7 @@ export const Profile = () => {
                         price={product.price}
                         fipe={product.fipe}
                         milage={product.milage}
+                        isActive={product.isActive}
                       ></ProfileAds>
                     ))
                   : profileAds.map((product) => (
@@ -88,6 +89,7 @@ export const Profile = () => {
                         price={product.price}
                         fipe={product.fipe}
                         milage={product.milage}
+                        isActive={product.isActive}
                         user={userProfile}
                       ></ProfileCard>
                     ))}
@@ -113,6 +115,7 @@ export const Profile = () => {
                         price={product.price}
                         fipe={product.fipe}
                         milage={product.milage}
+                        isActive={product.isActive}
                       ></ProfileAds>
                     ))
                   : profileAds.map((product) => (
@@ -126,6 +129,7 @@ export const Profile = () => {
                         price={product.price}
                         fipe={product.fipe}
                         milage={product.milage}
+                        isActive={product.isActive}
                         user={userProfile}
                       ></ProfileCard>
                     ))}
