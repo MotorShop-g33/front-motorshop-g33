@@ -33,12 +33,12 @@ export const RegisterUserSchema = yup.object().shape({
 
 export const EditInfoUserSchema = yup.object().shape({
 	name: yup.string().min(3, "Mínimo de 3 caracteres").notRequired(),
-	email: yup.string().email("Email inválido").notRequired(),
+	email: yup.string().min(9, "Mínimo de 9 caracteres").email("Email inválido").notRequired(),
 	cpf: yup
 		.string()
 		.matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido")
 		.notRequired(),
-	phone: yup.string().min(10, "Mínimo de 3 números").notRequired(),
+	phone: yup.string().min(10, "Mínimo de 10 números").notRequired(),
 	birthday: yup
 		.date()
 		.transform(function (value, originalValue) {
