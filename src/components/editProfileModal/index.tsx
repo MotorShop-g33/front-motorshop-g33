@@ -1,6 +1,7 @@
 import {
 	Button,
 	FormControl,
+	FormErrorMessage,
 	FormLabel,
 	Input,
 	Modal,
@@ -29,51 +30,42 @@ type ModalProps = {
 
 export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 	const {
-		isOpen: isOpenModalExclude,
-		onOpen: onOpenModalExclude,
-		onClose: onCloseModalExclude,
+		isOpen: isOpenModalDelete,
+		onOpen: onOpenModalDelete,
+		onClose: onCloseModalDelete,
 	} = useDisclosure();
-
 	const notify = (message: string) =>
 		toast.success(message, {
 			position: "top-right",
-			autoClose: 3500,
+			autoClose: 3000,
 			hideProgressBar: false,
 			closeOnClick: true,
 			draggable: true,
 			progress: undefined,
 			theme: "light",
 		});
-
 	const {
 		handleSubmit,
 		register,
 		formState: { errors },
-		setValue,
 	} = useForm<IUserInfoRequest>({
 		resolver: yupResolver(EditInfoUserSchema),
 	});
-	const { user, editUser } = useContext(UserContext);
-
-	const submitExclude = () => {
-		onCloseModalExclude();
+	const { user, editUser, deleteUser } = useContext(UserContext);
+	const submitDelete = () => {
+		deleteUser();
+		onCloseModalDelete();
 		notify("Perfil excluído!");
 	};
-
 	const submitEdit = async (data: IUserInfoRequest) => {
 		editUser(data);
 		onClose();
 		notify("Perfil atualizado!");
 	};
 
-	const initialRef = React.useRef(null);
-	const finalRef = React.useRef(null);
-
 	return (
 		<>
 			<Modal
-				initialFocusRef={initialRef}
-				finalFocusRef={finalRef}
 				isOpen={isOpen}
 				onClose={onClose}
 				size={"xl"}
@@ -109,7 +101,7 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							Informações pessoais
 						</Text>
 
-						<FormControl mt={4}>
+						<FormControl isInvalid={Boolean(errors.name)} mt={4}>
 							<FormLabel
 								htmlFor="name"
 								fontFamily="Inter"
@@ -126,11 +118,13 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								focusBorderColor="purple.500"
 								defaultValue={user.name}
 								{...register("name")}
-								//ref={initialRef}
 							/>
+							<FormErrorMessage>
+                {errors.name?.message}
+              </FormErrorMessage>
 						</FormControl>
 
-						<FormControl mt={4}>
+						<FormControl isInvalid={Boolean(errors.email)} mt={4}>
 							<FormLabel
 								htmlFor="email"
 								fontFamily="Inter"
@@ -148,9 +142,12 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								defaultValue={user.email}
 								{...register("email")}
 							/>
+							<FormErrorMessage>
+                {errors.email?.message}
+              </FormErrorMessage>
 						</FormControl>
 
-						<FormControl mt={4}>
+						<FormControl isInvalid={Boolean(errors.cpf)} mt={4}>
 							<FormLabel
 								htmlFor="cpf"
 								fontFamily="Inter"
@@ -168,9 +165,12 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								defaultValue={user.cpf}
 								{...register("cpf")}
 							/>
+							<FormErrorMessage>
+                {errors.cpf?.message}
+              </FormErrorMessage>
 						</FormControl>
 
-						<FormControl mt={4}>
+						<FormControl isInvalid={Boolean(errors.phone)} mt={4}>
 							<FormLabel
 								htmlFor="phone"
 								fontFamily="Inter"
@@ -188,9 +188,12 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								defaultValue={user.phone}
 								{...register("phone")}
 							/>
+							<FormErrorMessage>
+                {errors.phone?.message}
+              </FormErrorMessage>
 						</FormControl>
 
-						<FormControl mt={4}>
+						<FormControl isInvalid={Boolean(errors.birthday)} mt={4}>
 							<FormLabel
 								htmlFor="birthday"
 								fontFamily="Inter"
@@ -205,12 +208,15 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								id="birthday"
 								placeholder="01/01/1990"
 								focusBorderColor="purple.500"
-								//value={user.birthday.toString()}
+								//defaultValue={user.birthday}
 								{...register("birthday")}
 							/>
+							<FormErrorMessage>
+                {errors.birthday?.message}
+              </FormErrorMessage>
 						</FormControl>
 
-						<FormControl mt={4}>
+						<FormControl isInvalid={Boolean(errors.description)} mt={4}>
 							<FormLabel
 								htmlFor="description"
 								fontFamily="Inter"
@@ -227,6 +233,9 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								defaultValue={user.description}
 								{...register("description")}
 							/>
+							<FormErrorMessage>
+                {errors.description?.message}
+              </FormErrorMessage>
 						</FormControl>
 					</ModalBody>
 
@@ -250,7 +259,7 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							_hover={{ color: "var(--white-fixed)" }}
 							onClick={() => {
 								onClose();
-								onOpenModalExclude();
+								onOpenModalDelete();
 							}}
 						>
 							Excluir Perfil
@@ -262,7 +271,6 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							h={"48px"}
 							w={"100%"}
 							onClick={
-								//submitEdit
 								handleSubmit(submitEdit)
 							}
 						>
@@ -272,7 +280,7 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 				</ModalContent>
 			</Modal>
 
-			<Modal isOpen={isOpenModalExclude} onClose={onCloseModalExclude}>
+			<Modal isOpen={isOpenModalDelete} onClose={onCloseModalDelete}>
 				<ModalOverlay />
 				<ModalContent w={"95%"} maxW={"500px"}>
 					<ModalHeader>Excluir perfil</ModalHeader>
@@ -294,7 +302,7 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							bg={"var(--gray-6)"}
 							h={"48px"}
 							w={"auto"}
-							onClick={onClose}
+							onClick={onCloseModalDelete}
 						>
 							Não, cancelar
 						</Button>
@@ -305,7 +313,7 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							h={"48px"}
 							w={"auto"}
 							_hover={{ color: "var(--white-fixed)" }}
-							onClick={submitExclude}
+							onClick={submitDelete}
 						>
 							Sim, excluir meu perfil
 						</Button>
