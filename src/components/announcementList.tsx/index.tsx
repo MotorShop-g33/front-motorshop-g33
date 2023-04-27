@@ -25,8 +25,8 @@ interface iAnnouncementCard {
   title: string;
   description: string;
   year: number | string;
-  price: number;
-  fipe: number;
+  price: number | string;
+  fipe: number | string;
   milage: number;
   user: any;
 }
@@ -53,13 +53,11 @@ export const AnnouncementCard = ({
   function tagGoodBuy(fipe: number, price: number): Boolean {
     const verifyFipe = fipe * 0.05;
     const verifyPrice = fipe - verifyFipe;
-    console.log(title, " - ", verifyPrice)
-    if(price < verifyPrice){
+    if (price < verifyPrice) {
       return true;
-    }else{
+    } else {
       return false;
     }
-    
   }
 
   function handlePrice(): string {
@@ -81,9 +79,7 @@ export const AnnouncementCard = ({
   return (
     <ListItem className="Ola" as={Link} to={`/product?ad=${id}`}>
       <Card w={312} h={360} boxShadow={"none"}>
-        
         <CardBody padding={"0"}>
-        
           <Box
             bg={"var(--gray-7)"}
             h={152}
@@ -92,7 +88,8 @@ export const AnnouncementCard = ({
             transition={".3s linear"}
             position={"relative"}
             _hover={{ transform: "scale(1.04)" }}
-          >{tagGoodBuy(fipe, price) ? <GoodBuyTag /> : ''}
+          >
+            {tagGoodBuy(Number(fipe), Number(price)) ? <GoodBuyTag /> : ""}
             <Image src={handleCarImage()} h={152}></Image>
           </Box>
           <Box margin={"16px 0px"}>

@@ -15,12 +15,14 @@ export interface IUserContextProps {
 }
 
 interface IUserContext {
-  setCount: (data: number) => void;
-  count: number;
+  SetCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  currentPage: number;
+  maxPage: number;
   token: string | null;
   navigate: NavigateFunction;
   productsList: IAnnouncements[];
   filterproduct: IAnnouncements[];
+  setFilterProduct: React.Dispatch<React.SetStateAction<IAnnouncements[]>>;
   setFilterValue: React.Dispatch<
     React.SetStateAction<string | number | undefined>
   >;
@@ -35,6 +37,8 @@ interface IUserContext {
   handlePriceMax: () => void;
   handleMinKm: () => void;
   handleMaxKm: () => void;
+  requestPasswordRecovery: (data: {email: string}) => void;
+  executePasswordRecovery: (data: {password: string}, token: string) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -45,20 +49,31 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const { pathname } = useLocation();
 
   const token = localStorage.getItem("@tokenG33:token");
-  const [count, setCount] = useState(0);
-  const [user, setUser] = useState<IUser>({} as IUser);
+  const [currentPage, SetCurrentPage] = useState<number>(0);
+  const [maxPage, SetMaxPage] = useState<number>(1);
+  const [reload, setReload] = useState(false);
+  const page_limit = 12;
 
+  const [user, setUser] = useState<IUser>({} as IUser);
   const [productsList, setProductsList] = useState<IAnnouncements[]>([]);
   const [filterValue, setFilterValue] = useState<string | number | undefined>(
     undefined
   );
+
   const [filterPrice, setFilterPrice] = useState<IAnnouncements[]>([]);
-  const [filterKm, setFilterKm] = useState<IAnnouncements[]>([]);
-  const [filterproduct, setFilterProduct] = useState<IAnnouncements[]>([]);
+  const [filterproduct, setFilterProduct] = useState<IAnnouncements[]>(
+    [] || undefined
+  );
 
   const annoucements = async (): Promise<void> => {
     try {
-      const { data } = await api.get("announcement");
+      const { data } = await api.get(
+        `announcement?page=${currentPage}&limit=${page_limit}`
+      );
+      if (data.next) {
+        SetMaxPage(data.next.page);
+      }
+      // const { data } = await api.get("announcement");
       setProductsList(data.results);
     } catch (error) {
       console.log(error);
@@ -135,6 +150,43 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       console.log(error.response.data);
     }
   }
+  
+  const requestPasswordRecovery = async (data: {email: string}): Promise<void> => {
+    try {
+      await api.post("/users/resetPassword", data)
+    } catch (error: any) {
+      const toastmsg = error.response.data.message;
+      toast({
+        title: "error loging",
+        position: "top-right",
+        isClosable: true,
+        render: () => (
+          <Box color="white" p={3} bg="red.400">
+            {`${toastmsg}`}
+          </Box>
+        ),
+      });
+    }
+  }
+
+  const executePasswordRecovery = async (data: {password: string}, token: string): Promise<void> => {
+    try {
+      await api.patch(`/users/resetPassword/${token}`, data)
+      navigate("/login")
+    } catch (error: any) {
+      const toastmsg = error.response.data.message;
+      toast({
+        title: "error loging",
+        position: "top-right",
+        isClosable: true,
+        render: () => (
+          <Box color="white" p={3} bg="red.400">
+            {`${toastmsg}`}
+          </Box>
+        ),
+      });
+    }
+  }
 
   const newAd = async (data: IAnnouncementsRequest) => {
     try {
@@ -147,7 +199,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
   const handlePriceMin = () => {
     const minPrice = filterproduct.sort((a: any, b: any) => a.price - b.price);
-    console.log(minPrice);
     setFilterPrice(minPrice);
 
     setFilterPrice([]);
@@ -162,8 +213,8 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     const minKm = filterproduct.sort(
       (a: IAnnouncements, b: IAnnouncements) => a.milage - b.milage
     );
-    console.log(minKm);
     setFilterPrice(minKm);
+
     setFilterPrice([]);
   };
   const handleMaxKm = () => {
@@ -197,13 +248,14 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       getUserLogin();
       annoucements();
     }
-  }, [token]);
+  }, [token, currentPage, reload]);
 
   return (
     <UserContext.Provider
       value={{
-        count,
-        setCount,
+        currentPage,
+        maxPage,
+        SetCurrentPage,
         token,
         navigate,
         productsList,
@@ -220,6 +272,9 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         filterproduct,
         editUser,
         deleteUser,
+        requestPasswordRecovery,
+        executePasswordRecovery,
+        setFilterProduct,
       }}
     >
       {children}
