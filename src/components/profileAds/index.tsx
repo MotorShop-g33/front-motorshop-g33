@@ -17,6 +17,7 @@ import {
   Paragraph_2_500,
 } from "../../styles/typography";
 import { Link } from "react-router-dom";
+import { ActiveTag, InactiveTag } from "../annoucementTag";
 
 interface IProfileCard {
   id: string;
@@ -27,6 +28,7 @@ interface IProfileCard {
   price: number | string;
   fipe: number | string;
   milage: number;
+  isActive: boolean;
   user: any;
 }
 
@@ -39,6 +41,7 @@ interface IProfileAds {
   price: number | string;
   fipe: number | string;
   milage: number;
+  isActive: boolean;
 }
 
 export const ProfileAds = ({
@@ -49,6 +52,7 @@ export const ProfileAds = ({
   year,
   price,
   fipe,
+  isActive,
   milage,
 }: IProfileAds) => {
   function handleCarImage(): string {
@@ -79,6 +83,7 @@ export const ProfileAds = ({
     <ListItem className="Ola">
       <Card w={312} h={450} boxShadow={"none"}>
         <CardHeader padding={"16px"} h={300} as={Link} to={`/product?ad=${id}`}>
+          {isActive ? <ActiveTag /> : <InactiveTag />}
           <Box
             bg={"var(--fixed-white)"}
             h={150}
@@ -130,6 +135,7 @@ export const ProfileCard = ({
   price,
   fipe,
   milage,
+  isActive,
   user,
 }: IProfileCard) => {
   function handleCarImage(): string {
@@ -160,6 +166,7 @@ export const ProfileCard = ({
     <ListItem className="Ola" as={Link} to={`/product?ad=${id}`}>
       <Card w={312} h={400} boxShadow={"none"}>
         <CardBody padding={"16px"} h={300}>
+        {isActive ? <ActiveTag /> : <InactiveTag />}
           <Box
             bg={"var(--fixed-white)"}
             h={152}
