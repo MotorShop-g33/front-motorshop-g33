@@ -250,7 +250,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         handleMaxKm,
         filterproduct,
         requestPasswordRecovery,
-        executePasswordRecovery
+        executePasswordRecovery,
         setFilterProduct,
       }}
     >
