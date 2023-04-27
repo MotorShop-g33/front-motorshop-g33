@@ -65,13 +65,9 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
 	return (
 		<>
-			<Modal
-				isOpen={isOpen}
-				onClose={onClose}
-				size={"xl"}
-			>
+			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
-				<ModalContent>
+				<ModalContent w={"95%"} maxW={"xl"}>
 					<ModalHeader
 						fontFamily="Lexend"
 						fontWeight={500}
@@ -120,8 +116,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								{...register("name")}
 							/>
 							<FormErrorMessage>
-                {errors.name?.message}
-              </FormErrorMessage>
+								{errors.name?.message}
+							</FormErrorMessage>
 						</FormControl>
 
 						<FormControl isInvalid={Boolean(errors.email)} mt={4}>
@@ -143,8 +139,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								{...register("email")}
 							/>
 							<FormErrorMessage>
-                {errors.email?.message}
-              </FormErrorMessage>
+								{errors.email?.message}
+							</FormErrorMessage>
 						</FormControl>
 
 						<FormControl isInvalid={Boolean(errors.cpf)} mt={4}>
@@ -166,8 +162,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								{...register("cpf")}
 							/>
 							<FormErrorMessage>
-                {errors.cpf?.message}
-              </FormErrorMessage>
+								{errors.cpf?.message}
+							</FormErrorMessage>
 						</FormControl>
 
 						<FormControl isInvalid={Boolean(errors.phone)} mt={4}>
@@ -189,11 +185,14 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								{...register("phone")}
 							/>
 							<FormErrorMessage>
-                {errors.phone?.message}
-              </FormErrorMessage>
+								{errors.phone?.message}
+							</FormErrorMessage>
 						</FormControl>
 
-						<FormControl isInvalid={Boolean(errors.birthday)} mt={4}>
+						<FormControl
+							isInvalid={Boolean(errors.birthday)}
+							mt={4}
+						>
 							<FormLabel
 								htmlFor="birthday"
 								fontFamily="Inter"
@@ -212,11 +211,14 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								{...register("birthday")}
 							/>
 							<FormErrorMessage>
-                {errors.birthday?.message}
-              </FormErrorMessage>
+								{errors.birthday?.message}
+							</FormErrorMessage>
 						</FormControl>
 
-						<FormControl isInvalid={Boolean(errors.description)} mt={4}>
+						<FormControl
+							isInvalid={Boolean(errors.description)}
+							mt={4}
+						>
 							<FormLabel
 								htmlFor="description"
 								fontFamily="Inter"
@@ -234,8 +236,8 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								{...register("description")}
 							/>
 							<FormErrorMessage>
-                {errors.description?.message}
-              </FormErrorMessage>
+								{errors.description?.message}
+							</FormErrorMessage>
 						</FormControl>
 					</ModalBody>
 
@@ -270,9 +272,7 @@ export const EditProfileModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 							bg={"var(--random-13)"}
 							h={"48px"}
 							w={"100%"}
-							onClick={
-								handleSubmit(submitEdit)
-							}
+							onClick={handleSubmit(submitEdit)}
 						>
 							Salvar Alterações
 						</Button>

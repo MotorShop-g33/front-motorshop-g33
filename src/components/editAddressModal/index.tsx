@@ -56,9 +56,9 @@ export const EditAddressModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
 	return (
 		<>
-			<Modal isOpen={isOpen} onClose={onClose} size={"xl"}>
+			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
-				<ModalContent>
+				<ModalContent w={"95%"} maxW={"xl"}>
 					<ModalHeader
 						fontFamily="Lexend"
 						fontWeight={500}
