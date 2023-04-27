@@ -13,13 +13,23 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import { BtnHeader } from "./btnHeader";
 import logoG33 from "../../assets/logo_g33.png";
+import { EditProfileModal } from "../editProfileModal";
 
 export const HeaderMenu = () => {
   const { isOpen } = useDisclosure();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const { token, navigate, user } = useContext(UserContext);
 
@@ -104,10 +114,11 @@ export const HeaderMenu = () => {
                   <MenuItem
                     bg={"var(--gray-9)"}
                     color={"black"}
-                    onClick={() => navigate("/register")}
+                    onClick={handleOpenModal}
                   >
                     Editar perfil
                   </MenuItem>
+                  <EditProfileModal isOpen={isModalOpen} onClose={handleCloseModal}/>
                   <MenuItem
                     bg={"var(--gray-9)"}
                     color={"black"}

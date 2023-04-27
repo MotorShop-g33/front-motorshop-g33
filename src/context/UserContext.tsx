@@ -8,7 +8,7 @@ import {
 } from "../interfaces/announcements";
 import { ILoginUser } from "../interfaces/login";
 import { Box, useDisclosure, useToast } from "@chakra-ui/react";
-import { IUser, IUserRequest } from "../interfaces/user";
+import { IUser, IUserInfoRequest, IUserRequest } from "../interfaces/user";
 
 export interface IUserContextProps {
   children: React.ReactNode;
@@ -29,6 +29,8 @@ interface IUserContext {
   filterValue: string | number | undefined;
   loginUser: (data: ILoginUser) => void;
   registerUser: (data: IUserRequest, onOpen: () => void) => void;
+  editUser: (data: IUserInfoRequest) => void;
+  deleteUser: () => void;
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
   handlePriceMin: () => void;
@@ -130,6 +132,25 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
+  const editUser = async (data: IUserInfoRequest): Promise<void> => {
+    try {
+      await api.patch(`/users`, data);
+      getUserLogin();
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  }
+
+  const deleteUser = async () => {
+    try {
+      await api.delete(`/users`);
+      localStorage.removeItem("@tokenG33:token");
+      navigate("/");
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  }
+  
   const requestPasswordRecovery = async (data: {email: string}): Promise<void> => {
     try {
       await api.post("/users/resetPassword", data)
@@ -249,6 +270,8 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         handleMinKm,
         handleMaxKm,
         filterproduct,
+        editUser,
+        deleteUser,
         requestPasswordRecovery,
         executePasswordRecovery,
         setFilterProduct,
