@@ -8,7 +8,7 @@ import {
 } from "../interfaces/announcements";
 import { ILoginUser } from "../interfaces/login";
 import { Box, useDisclosure, useToast } from "@chakra-ui/react";
-import { IUser, IUserInfoRequest, IUserRequest } from "../interfaces/user";
+import { IUser, IUserAddressRequest, IUserInfoRequest, IUserRequest } from "../interfaces/user";
 
 export interface IUserContextProps {
   children: React.ReactNode;
@@ -29,7 +29,7 @@ interface IUserContext {
   filterValue: string | number | undefined;
   loginUser: (data: ILoginUser) => void;
   registerUser: (data: IUserRequest, onOpen: () => void) => void;
-  editUser: (data: IUserInfoRequest) => void;
+  editUser: (data: IUserInfoRequest | IUserAddressRequest) => void;
   deleteUser: () => void;
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
@@ -132,7 +132,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
-  const editUser = async (data: IUserInfoRequest): Promise<void> => {
+  const editUser = async (data: IUserInfoRequest | IUserAddressRequest): Promise<void> => {
     try {
       await api.patch(`/users`, data);
       getUserLogin();
