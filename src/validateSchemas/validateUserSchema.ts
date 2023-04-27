@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { parse } from "date-fns";
 
 export const RegisterUserSchema = yup.object().shape({
 	name: yup.string().min(3).required("Nome, Obrigatório"),
@@ -31,13 +32,19 @@ export const RegisterUserSchema = yup.object().shape({
 });
 
 export const EditInfoUserSchema = yup.object().shape({
-	name: yup.string().min(3).notRequired(),
-	email: yup.string().email("E-mail invalido").notRequired(),
+	name: yup.string().min(3, "Mínimo de 3 caracteres").notRequired(),
+	email: yup.string().email("Email inválido").notRequired(),
 	cpf: yup
 		.string()
 		.matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido")
 		.notRequired(),
-	phone: yup.string().min(10, "min 10 números").notRequired(),
-	birthday: yup.date().notRequired(),
+	phone: yup.string().min(10, "Mínimo de 3 números").notRequired(),
+	birthday: yup
+		.date()
+		.transform(function (value, originalValue) {
+			const parsedDate = parse(originalValue, "dd/MM/yyyy", new Date());
+			return parsedDate;
+		})
+		.typeError("Insira uma data válida no formato MM/DD/AAAA"),
 	description: yup.string().notRequired(),
 });
