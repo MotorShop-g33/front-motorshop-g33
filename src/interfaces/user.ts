@@ -56,3 +56,11 @@ export interface IUserInfoRequest {
   description: string;
 }
 
+export interface IUserAddressRequest {
+  complement: string;
+  number: string;
+  street: string;
+  city: string;
+  state: string;
+  cep: string;
+}

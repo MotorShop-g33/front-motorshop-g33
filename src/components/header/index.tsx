@@ -2,7 +2,6 @@ import {
   Box,
   Flex,
   Avatar,
-  Link,
   IconButton,
   Button,
   Menu,
@@ -18,17 +17,19 @@ import { UserContext } from "../../context/UserContext";
 import { BtnHeader } from "./btnHeader";
 import logoG33 from "../../assets/logo_g33.png";
 import { EditProfileModal } from "../editProfileModal";
+import { EditAddressModal } from "../editAddressModal";
 
 export const HeaderMenu = () => {
   const { isOpen } = useDisclosure();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+	const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  const handleOpenModal = (modal: boolean) => {
+    modal ? setIsProfileModalOpen(true) : setIsAddressModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseModal = (modal: boolean) => {
+    modal ? setIsProfileModalOpen(false) : setIsAddressModalOpen(false);
   };
 
   const { token, navigate, user } = useContext(UserContext);
@@ -114,18 +115,19 @@ export const HeaderMenu = () => {
                   <MenuItem
                     bg={"var(--gray-9)"}
                     color={"black"}
-                    onClick={handleOpenModal}
+                    onClick={() => handleOpenModal(true)}
                   >
                     Editar perfil
                   </MenuItem>
-                  <EditProfileModal isOpen={isModalOpen} onClose={handleCloseModal}/>
+                  <EditProfileModal isOpen={isProfileModalOpen} onClose={() => handleCloseModal(true)} />
                   <MenuItem
                     bg={"var(--gray-9)"}
                     color={"black"}
-                    onClick={() => navigate("/login")} // exemplo ao clicar trocar /p login
+                    onClick={() => handleOpenModal(false)}
                   >
                     Editar endereço
                   </MenuItem>
+                  <EditAddressModal isOpen={isAddressModalOpen} onClose={() => handleCloseModal(false)}	/>
                   {user.isStaff == true && (
                     <MenuItem
                       bg={"var(--gray-9)"}
