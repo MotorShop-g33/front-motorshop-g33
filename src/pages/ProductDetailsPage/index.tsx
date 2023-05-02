@@ -71,7 +71,6 @@ export const ProductDetailsPage = () => {
   useEffect(() => {
     getProductAd(adId);
   }, []);
-  console.log(token);
   const productData = {
     img: productAd?.avatar,
     title: productAd?.model,
@@ -215,6 +214,7 @@ export const ProductDetailsPage = () => {
                   onClick={handleSubmit(handleComment)}
                   isDisabled={token == undefined ? true : false}
                   color={"var(--white-fixed)"}
+                  _hover={{ color: "var(--gray-1)", bg: "var(--gray-4)" }}
                 >
                   <Text>{!token ? "faça login" : "Comentar"}</Text>
                 </Button>

@@ -1,5 +1,6 @@
 import { Avatar, List, ListItem } from "@chakra-ui/react";
 import { DivInfo } from "../../styles/commentsList";
+import moment from "moment";
 
 interface IUserComments {
   name: string;
@@ -13,15 +14,18 @@ interface IComments {
   user: IUserComments;
 }
 
-// interface ICommentsObject {
-//   comment: IComments[];
-// }
-
 interface ICommentsList {
-  comments: IComments;
+  comments: IComments[];
 }
+const now = moment();
 
-export const CommentsList = ({ comments }: IComments) => {
+export const CommentsList = ({ comments }: ICommentsList) => {
+  // const test = comments?.map((item) => {
+  //   console.log(moment(item.createdAt).fromNow());
+  //   const diffInMinutes = now.diff(moment(item.createdAt), "days");
+  //   console.log(diffInMinutes);
+  // });
+
   return (
     <List spacing={10}>
       {comments?.map((item: IComments) => (
@@ -29,7 +33,7 @@ export const CommentsList = ({ comments }: IComments) => {
           <DivInfo className="info-user">
             <Avatar name={item.user?.name} />
             <h1>{item.user?.name}</h1>
-            <p className="post-at">{item?.createdAt}</p>
+            <p className="post-at">{moment(item?.createdAt).fromNow()}</p>
           </DivInfo>
           <p className="description">{item?.comments}</p>
         </ListItem>
