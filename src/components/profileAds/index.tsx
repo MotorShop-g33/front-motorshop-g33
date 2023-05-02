@@ -18,6 +18,7 @@ import {
 } from "../../styles/typography";
 import { Link } from "react-router-dom";
 import { ActiveTag, InactiveTag } from "../annoucementTag";
+import { EditAnnouncModal } from "../editAnnouncModal";
 
 interface IProfileCard {
   id: string;
@@ -118,7 +119,7 @@ export const ProfileAds = ({
           </Box>
         </CardBody>
         <CardFooter h={100} display={"flex"} justifyContent={"space-between"}>
-          <button>Editar</button>
+          <EditAnnouncModal />
           <button>Ver Detalhes</button>
         </CardFooter>
       </Card>

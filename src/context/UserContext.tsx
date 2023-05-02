@@ -33,6 +33,7 @@ interface IUserContext {
   deleteUser: () => void;
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
+  editAd: (data: IAnnouncementsRequest) => void;
   handlePriceMin: () => void;
   handlePriceMax: () => void;
   handleMinKm: () => void;
@@ -197,6 +198,16 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
+  const editAd = async (data: IAnnouncementsRequest): Promise<void> => {
+    try {
+      console.log(data);
+      //await api.patch(`/announcements`, data);
+      //getUserLogin();
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  }
+
   const handlePriceMin = () => {
     const minPrice = filterproduct.sort((a: any, b: any) => a.price - b.price);
     setFilterPrice(minPrice);
@@ -265,6 +276,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         registerUser,
         user,
         newAd,
+        editAd,
         handlePriceMin,
         handlePriceMax,
         handleMinKm,
