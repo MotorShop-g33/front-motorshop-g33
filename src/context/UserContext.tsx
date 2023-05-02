@@ -4,11 +4,16 @@ import { api } from "../services";
 import {
   IAnnouncements,
   IAnnouncementsRequest,
-  IListAnnouncements,
 } from "../interfaces/announcements";
 import { ILoginUser } from "../interfaces/login";
 import { Box, useDisclosure, useToast } from "@chakra-ui/react";
-import { IUser, IUserAddressRequest, IUserInfoRequest, IUserRequest } from "../interfaces/user";
+import {
+  IUser,
+  IUserAddressRequest,
+  IUserInfoRequest,
+  IUserRequest,
+} from "../interfaces/user";
+import { ICommentRequest } from "../interfaces/comments";
 
 export interface IUserContextProps {
   children: React.ReactNode;
@@ -37,8 +42,9 @@ interface IUserContext {
   handlePriceMax: () => void;
   handleMinKm: () => void;
   handleMaxKm: () => void;
-  requestPasswordRecovery: (data: {email: string}) => void;
-  executePasswordRecovery: (data: {password: string}, token: string) => void;
+  createCommnet: (data: ICommentRequest, id: string) => void;
+  requestPasswordRecovery: (data: { email: string }) => void;
+  executePasswordRecovery: (data: { password: string }, token: string) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -51,7 +57,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const token = localStorage.getItem("@tokenG33:token");
   const [currentPage, SetCurrentPage] = useState<number>(0);
   const [maxPage, SetMaxPage] = useState<number>(1);
-  const [reload, setReload] = useState(false);
   const page_limit = 12;
 
   const [user, setUser] = useState<IUser>({} as IUser);
@@ -132,14 +137,16 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
-  const editUser = async (data: IUserInfoRequest | IUserAddressRequest): Promise<void> => {
+  const editUser = async (
+    data: IUserInfoRequest | IUserAddressRequest
+  ): Promise<void> => {
     try {
       await api.patch(`/users`, data);
       getUserLogin();
     } catch (error: any) {
       console.log(error.response.data);
     }
-  }
+  };
 
   const deleteUser = async () => {
     try {
@@ -149,30 +156,13 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     } catch (error: any) {
       console.log(error.response.data);
     }
-  }
-  
-  const requestPasswordRecovery = async (data: {email: string}): Promise<void> => {
-    try {
-      await api.post("/users/resetPassword", data)
-    } catch (error: any) {
-      const toastmsg = error.response.data.message;
-      toast({
-        title: "error loging",
-        position: "top-right",
-        isClosable: true,
-        render: () => (
-          <Box color="white" p={3} bg="red.400">
-            {`${toastmsg}`}
-          </Box>
-        ),
-      });
-    }
-  }
+  };
 
-  const executePasswordRecovery = async (data: {password: string}, token: string): Promise<void> => {
+  const requestPasswordRecovery = async (data: {
+    email: string;
+  }): Promise<void> => {
     try {
-      await api.patch(`/users/resetPassword/${token}`, data)
-      navigate("/login")
+      await api.post("/users/resetPassword", data);
     } catch (error: any) {
       const toastmsg = error.response.data.message;
       toast({
@@ -186,7 +176,29 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         ),
       });
     }
-  }
+  };
+
+  const executePasswordRecovery = async (
+    data: { password: string },
+    token: string
+  ): Promise<void> => {
+    try {
+      await api.patch(`/users/resetPassword/${token}`, data);
+      navigate("/login");
+    } catch (error: any) {
+      const toastmsg = error.response.data.message;
+      toast({
+        title: "error loging",
+        position: "top-right",
+        isClosable: true,
+        render: () => (
+          <Box color="white" p={3} bg="red.400">
+            {`${toastmsg}`}
+          </Box>
+        ),
+      });
+    }
+  };
 
   const newAd = async (data: IAnnouncementsRequest) => {
     try {
@@ -224,6 +236,35 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     setFilterPrice(maxKm);
   };
 
+  const createCommnet = async (data: ICommentRequest, id: string) => {
+    try {
+      await api.post(`/comment/${id}`, data);
+      toast({
+        title: "success",
+        position: "top-right",
+        isClosable: true,
+        render: () => (
+          <Box color="white" p={3} bg="gray.400">
+            {`Comentario criado com sucesso`}
+          </Box>
+        ),
+      });
+      location.reload();
+    } catch (error: any) {
+      const toastmsg = error.response.data.message;
+      toast({
+        title: "error loging",
+        position: "top-right",
+        isClosable: true,
+        render: () => (
+          <Box color="white" p={3} bg="red.400">
+            {`${toastmsg}`}
+          </Box>
+        ),
+      });
+    }
+  };
+
   useEffect(() => {
     if (filterValue == undefined) {
       setFilterProduct(productsList);
@@ -248,7 +289,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       getUserLogin();
       annoucements();
     }
-  }, [token, currentPage, reload]);
+  }, [token, currentPage]);
 
   return (
     <UserContext.Provider
@@ -275,6 +316,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         requestPasswordRecovery,
         executePasswordRecovery,
         setFilterProduct,
+        createCommnet,
       }}
     >
       {children}

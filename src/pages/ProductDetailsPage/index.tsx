@@ -1,6 +1,8 @@
 import { CommentsList } from "../../components/commentsList";
 import { PhotosList } from "../../components/photosList";
 import { Button_medium_text } from "../../styles/buttons";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   AddComments,
   Comments,
@@ -21,24 +23,55 @@ import { useLocation, Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { IAnnouncements } from "../../interfaces/announcements";
 import { api } from "../../services";
-import { Avatar } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
+import { createCommentSchema } from "../../validateSchemas/validateCommentSchema";
+import { ICommentRequest } from "../../interfaces/comments";
 
 export const ProductDetailsPage = () => {
   const [productAd, setProductAd] = useState<IAnnouncements>();
+  useState<IAnnouncements>();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const adId = queryParams.get('ad');
+  const adId = queryParams.get("ad");
+  const { createCommnet, token } = useContext(UserContext);
+  const [comments, setComments] = useState<string>();
 
-  useEffect(() => {
-    const getProductAd = async (adId: string | null): Promise<void> => {
+  const getProductAd = async (adId: string | null): Promise<void> => {
     try {
       const response = await api.get("announcement/" + adId);
       setProductAd(response.data);
     } catch (error) {}
   };
-  getProductAd(adId);
+  const godComments = [
+    "Gostei muito!",
+    "incrível!",
+    "Recomendarei para meus amigos!",
+  ];
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<ICommentRequest>({
+    resolver: yupResolver(createCommentSchema),
+  });
+
+  const handleComment = (data: ICommentRequest) => {
+    createCommnet(data, adId!);
+  };
+
+  useEffect(() => {
+    getProductAd(adId);
   }, []);
-  
+  console.log(token);
   const productData = {
     img: productAd?.avatar,
     title: productAd?.model,
@@ -50,11 +83,11 @@ export const ProductDetailsPage = () => {
     milage: productAd?.milage,
     year: productAd?.year,
     price: productAd?.price,
-    photos: productAd?.photos
+    photos: productAd?.photos,
   };
-  
+
   const photosAnnouncement = productData.photos;
-  
+
   // --> DADOS MOCKADOS APENAS PARA VISUALIZAÇÃO DO DESIGN DOS CARDS (NECESSÁRIO DELEÇÃO FUTURA) <--
   const fakeComments = [
     {
@@ -83,8 +116,6 @@ export const ProductDetailsPage = () => {
       createdAt: "há 8 dias",
     },
   ];
-
-  
 
   return (
     <Main>
@@ -118,12 +149,20 @@ export const ProductDetailsPage = () => {
         <InfoSection>
           <ProductPhotos>
             <h1>Fotos</h1>
-            {photosAnnouncement ? <PhotosList photosList={photosAnnouncement} /> : ''}
+            {photosAnnouncement ? (
+              <PhotosList photosList={photosAnnouncement} />
+            ) : (
+              ""
+            )}
           </ProductPhotos>
           <UserProfile>
-            <Avatar name={productData.username} size={"xl"}/>
-            <h1>{productData.username}</h1><span>{productData.usertext}</span>
-            <Link className="profileLink" to={`/profile?id=${productData.userid}`}>
+            <Avatar name={productData.username} size={"xl"} />
+            <h1>{productData.username}</h1>
+            <span>{productData.usertext}</span>
+            <Link
+              className="profileLink"
+              to={`/profile?id=${productData.userid}`}
+            >
               Ver anúncios
             </Link>
           </UserProfile>
@@ -134,9 +173,69 @@ export const ProductDetailsPage = () => {
         <CommentsProduct>
           <Comments>
             <h1 className="comments-h1">Comments</h1>
-            <CommentsList commentsList={fakeComments} />
+            <CommentsList comments={productAd?.comment} />
           </Comments>
-          <AddComments>Add Comments</AddComments>
+          <AddComments>
+            <Box>
+              <Flex alignItems={"center"} gap={"8px"}>
+                <Avatar name={productData.username} size={"md"} />
+                <Text>{productData.username}</Text>
+              </Flex>
+              <Flex
+                border={"1px solid #ccc"}
+                borderRadius={"5px"}
+                p={"1rem"}
+                mt={"1rem"}
+                mb={"1rem"}
+                gap={"1rem"}
+                display={{ base: "block", md: "flex" }}
+              >
+                <FormControl>
+                  <Textarea
+                    height={"150px"}
+                    border={"none"}
+                    resize="none"
+                    fontSize={"1rem"}
+                    defaultValue={comments}
+                    placeholder={
+                      "Carro muito confortável, foi uma ótima experiência de compra..."
+                    }
+                    {...register("comment")}
+                  />
+                </FormControl>
+                <Button
+                  alignSelf={"flex-end"}
+                  mt={"1rem"}
+                  fontSize={"14px"}
+                  fontWeight={500}
+                  bg={"var(--random-13)"}
+                  width={"108px"}
+                  height={"38px"}
+                  type="submit"
+                  onClick={handleSubmit(handleComment)}
+                  isDisabled={token == undefined ? true : false}
+                  color={"var(--white-fixed)"}
+                >
+                  <Text>{!token ? "faça login" : "Comentar"}</Text>
+                </Button>
+              </Flex>
+              <Flex gap={"8px"}>
+                {godComments?.map((comment) => (
+                  <Button
+                    borderRadius={"1rem"}
+                    key={comment}
+                    onClick={() => {
+                      setComments(comment);
+                    }}
+                  >
+                    <Text as={"span"} fontSize={"14px"} fontWeight={500}>
+                      {comment}
+                    </Text>
+                  </Button>
+                ))}
+              </Flex>
+            </Box>
+          </AddComments>
         </CommentsProduct>
       </SecondarySection>
     </Main>
