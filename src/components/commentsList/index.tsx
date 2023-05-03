@@ -1,4 +1,4 @@
-import { Avatar, List, ListItem } from "@chakra-ui/react";
+import { Avatar, List, ListItem, Text } from "@chakra-ui/react";
 import { DivInfo } from "../../styles/commentsList";
 import moment from "moment";
 
@@ -20,11 +20,7 @@ interface ICommentsList {
 const now = moment();
 
 export const CommentsList = ({ comments }: ICommentsList) => {
-  // const test = comments?.map((item) => {
-  //   console.log(moment(item.createdAt).fromNow());
-  //   const diffInMinutes = now.diff(moment(item.createdAt), "days");
-  //   console.log(diffInMinutes);
-  // });
+  moment.locale("pt");
 
   return (
     <List spacing={10}>
@@ -33,7 +29,15 @@ export const CommentsList = ({ comments }: ICommentsList) => {
           <DivInfo className="info-user">
             <Avatar name={item.user?.name} />
             <h1>{item.user?.name}</h1>
-            <p className="post-at">{moment(item?.createdAt).fromNow()}</p>
+            <Text>{`há ${
+              moment().diff(item.createdAt, "hours") < 24
+                ? moment().diff(item.createdAt, "hours") + " horas"
+                : moment(item.createdAt)
+                    .startOf("days")
+                    .fromNow()
+                    .replace("a day ago", " 1 dia")
+                    .replace("a year ago", "1 ano")
+            } `}</Text>
           </DivInfo>
           <p className="description">{item?.comments}</p>
         </ListItem>
