@@ -22,6 +22,7 @@ const now = moment();
 export const CommentsList = ({ comments }: ICommentsList) => {
   moment.locale("pt");
 
+  const test = comments?.map((item) => {});
   return (
     <List spacing={10}>
       {comments?.map((item: IComments) => (
@@ -31,7 +32,10 @@ export const CommentsList = ({ comments }: ICommentsList) => {
             <h1>{item.user?.name}</h1>
             <Text>{`há ${
               moment().diff(item.createdAt, "hours") < 24
-                ? moment().diff(item.createdAt, "hours") + " horas"
+                ? moment(item.createdAt)
+                    .startOf("minutes")
+                    .fromNow()
+                    .replace("ago", "")
                 : moment(item.createdAt)
                     .startOf("days")
                     .fromNow()
