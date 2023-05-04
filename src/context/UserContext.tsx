@@ -3,6 +3,7 @@ import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../services";
 import {
   IAnnouncements,
+  IAnnouncementsEdit,
   IAnnouncementsRequest,
   IListAnnouncements,
 } from "../interfaces/announcements";
@@ -33,7 +34,8 @@ interface IUserContext {
   deleteUser: () => void;
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
-  editAd: (data: IAnnouncementsRequest) => void;
+  editAd: (data: IAnnouncementsEdit) => void;
+  announc: IAnnouncementsEdit;
   handlePriceMin: () => void;
   handlePriceMax: () => void;
   handleMinKm: () => void;
@@ -56,6 +58,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const page_limit = 12;
 
   const [user, setUser] = useState<IUser>({} as IUser);
+  const [announc, setAnnounc] = useState<IAnnouncementsEdit>({} as IAnnouncementsEdit);
   const [productsList, setProductsList] = useState<IAnnouncements[]>([]);
   const [filterValue, setFilterValue] = useState<string | number | undefined>(
     undefined
@@ -198,11 +201,12 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
-  const editAd = async (data: IAnnouncementsRequest): Promise<void> => {
+  const editAd = async (data: IAnnouncementsEdit): Promise<void> => {
+    console.log("3942518e-3aa7-4ded-899a-f9308bc92b02 <><><><><> " + data.id)
     try {
-      console.log(data);
-      //await api.patch(`/announcements`, data);
-      //getUserLogin();
+      console.log("id: " + data.id)
+      await api.patch(`/announcement/${data.id}`, data);
+      location.reload();
     } catch (error: any) {
       console.log(error.response.data);
     }
@@ -277,6 +281,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         user,
         newAd,
         editAd,
+        announc,
         handlePriceMin,
         handlePriceMax,
         handleMinKm,

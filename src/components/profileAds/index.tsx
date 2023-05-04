@@ -19,6 +19,8 @@ import {
 import { Link } from "react-router-dom";
 import { ActiveTag, InactiveTag } from "../annoucementTag";
 import { EditAnnouncModal } from "../editAnnouncModal";
+import { useState } from "react";
+import { ProductDetailsPage } from "../../pages/ProductDetailsPage";
 
 interface IProfileCard {
   id: string;
@@ -80,9 +82,14 @@ export const ProfileAds = ({
     return `R$${thousandsFormatted}${decimalPart}`;
   }
 
+  const [selectedAnnouncId, setSelectedAnnouncId] = useState(null);
+  function handleAnnouncClick(announcId: any) {
+    setSelectedAnnouncId(announcId);
+  }
+
   return (
     <ListItem className="Ola">
-      <Card w={312} h={450} boxShadow={"none"}>
+      <Card w={312} h={450} boxShadow={"none"} onClick={() => handleAnnouncClick(id)}>
         <CardHeader padding={"16px"} h={300} as={Link} to={`/product?ad=${id}`}>
           {isActive ? <ActiveTag /> : <InactiveTag />}
           <Box
@@ -119,7 +126,7 @@ export const ProfileAds = ({
           </Box>
         </CardBody>
         <CardFooter h={100} display={"flex"} justifyContent={"space-between"}>
-          <EditAnnouncModal />
+          <EditAnnouncModal announcId={selectedAnnouncId} />
           <button>Ver Detalhes</button>
         </CardFooter>
       </Card>
