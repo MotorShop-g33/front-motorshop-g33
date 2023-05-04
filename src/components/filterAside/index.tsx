@@ -45,8 +45,6 @@ export const FilterAside = () => {
 
   const ClearFilter = () => {
     setFilterValue(undefined);
-
-    // location.reload();
   };
 
   return (

@@ -17,6 +17,7 @@ export interface IAnnouncements {
   updatedAt: Date;
   user: IAdUser;
   photos: [];
+  comment: [];
 }
 
 export interface IAnnouncementsRequest {
