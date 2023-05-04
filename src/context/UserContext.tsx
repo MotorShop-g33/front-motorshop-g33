@@ -3,6 +3,7 @@ import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../services";
 import {
   IAnnouncements,
+  IAnnouncementsEdit,
   IAnnouncementsRequest,
 } from "../interfaces/announcements";
 import { ILoginUser } from "../interfaces/login";
@@ -38,6 +39,9 @@ interface IUserContext {
   deleteUser: () => void;
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
+  editAd: (data: IAnnouncementsEdit) => void;
+  deleteAnnounc: (id: string) => void;
+  announc: IAnnouncementsEdit;
   handlePriceMin: () => void;
   handlePriceMax: () => void;
   handleMinKm: () => void;
@@ -60,6 +64,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const page_limit = 12;
 
   const [user, setUser] = useState<IUser>({} as IUser);
+  const [announc, setAnnounc] = useState<IAnnouncementsEdit>({} as IAnnouncementsEdit);
   const [productsList, setProductsList] = useState<IAnnouncements[]>([]);
   const [filterValue, setFilterValue] = useState<string | number | undefined>(
     undefined
@@ -210,22 +215,22 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     // }
 
     try {
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlzU3RhZmYiOnRydWUsImlhdCI6MTY4MzIxMDQ1MCwiZXhwIjoxNjgzMjk2ODUwLCJzdWIiOiJlMzIwNmE5NC0xNTYwLTRiYjctYjY0MS00MmNhMTEyMzUyMmEifQ.8QDSXJkxhFu8KhJiGdYo9I4G0BrKNso0DrHWBkpvDpE";
+      // const token =
+      //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlzU3RhZmYiOnRydWUsImlhdCI6MTY4MzIxMDQ1MCwiZXhwIjoxNjgzMjk2ODUwLCJzdWIiOiJlMzIwNmE5NC0xNTYwLTRiYjctYjY0MS00MmNhMTEyMzUyMmEifQ.8QDSXJkxhFu8KhJiGdYo9I4G0BrKNso0DrHWBkpvDpE";
       const formData = new FormData();
       formData.append("avatar", data.avatar[0]); // adiciona o arquivo avatar
       formData.append("brand", data.brand); // adiciona o campo brand
       formData.append("color", data.color); // adiciona o campo color
       formData.append("model", data.model);
       formData.append("fuel", data.fuel);
-      formData.append("milage", data.milage);
-      formData.append("fipe", data.fipe);
-      formData.append("price", data.price);
+      formData.append("milage", data.milage.toString());
+      formData.append("fipe", data.fipe.toString());
+      formData.append("price", data.price.toString());
       formData.append("description", data.description);
       for (let i = 0; i < data.photos.length; i++) {
         formData.append("photos", data.photos[i]);
       }
-      formData.append("year", data.year);
+      formData.append("year", data.year.toString());
       // ... adicione mais campos aqui conforme necessário
       api.defaults.headers.authorization = `Bearer ${token}`;
       console.log(formData);
@@ -239,6 +244,24 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       console.log(error.response.data);
     }
   };
+
+  const editAd = async (data: IAnnouncementsEdit): Promise<void> => {
+    try {
+      await api.patch(`/announcement/${data.id}`, data);
+      location.reload();
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  }
+
+  const deleteAnnounc = async (id: string) => {
+    try {
+      await api.delete(`/announcement/${id}`);
+      location.reload();
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  }
 
   const handlePriceMin = () => {
     const minPrice = filterproduct.sort((a: any, b: any) => a.price - b.price);
@@ -337,6 +360,9 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         registerUser,
         user,
         newAd,
+        editAd,
+        deleteAnnounc,
+        announc,
         handlePriceMin,
         handlePriceMax,
         handleMinKm,

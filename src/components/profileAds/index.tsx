@@ -6,8 +6,6 @@ import {
   Avatar,
   Image,
   Box,
-  Wrap,
-  WrapItem,
   ListItem,
 } from "@chakra-ui/react";
 import {
@@ -18,6 +16,8 @@ import {
 } from "../../styles/typography";
 import { Link } from "react-router-dom";
 import { ActiveTag, InactiveTag } from "../annoucementTag";
+import { EditAnnouncModal } from "../editAnnouncModal";
+import { useState } from "react";
 
 interface IProfileCard {
   id: string;
@@ -79,9 +79,14 @@ export const ProfileAds = ({
     return `R$${thousandsFormatted}${decimalPart}`;
   }
 
+  const [selectedAnnouncId, setSelectedAnnouncId] = useState(null);
+  function handleAnnouncClick(announcId: any) {
+    setSelectedAnnouncId(announcId);
+  }
+
   return (
     <ListItem className="Ola">
-      <Card w={312} h={450} boxShadow={"none"}>
+      <Card w={312} h={450} boxShadow={"none"} onClick={() => handleAnnouncClick(id)}>
         <CardHeader padding={"16px"} h={300} as={Link} to={`/product?ad=${id}`}>
           {isActive ? <ActiveTag /> : <InactiveTag />}
           <Box
@@ -117,9 +122,9 @@ export const ProfileAds = ({
             <Heading_7_500>{handlePrice()}</Heading_7_500>
           </Box>
         </CardBody>
-        <CardFooter h={100} display={"flex"} justifyContent={"space-between"}>
-          <button>Editar</button>
-          <button>Ver Detalhes</button>
+        <CardFooter h={100} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+          <EditAnnouncModal announcId={selectedAnnouncId} />
+          <a href={`/product?ad=${id}`}><button>Ver Detalhes</button></a>
         </CardFooter>
       </Card>
     </ListItem>

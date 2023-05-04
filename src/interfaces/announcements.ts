@@ -45,3 +45,18 @@ export interface ITableFipe {
   value: number;
   year: string;
 }
+
+export interface IAnnouncementsEdit {
+  id: string;
+  brand: string;
+  model: string;
+  year: number;
+  fuel: string;
+  milage: number;
+  color: string;
+  fipe: number;
+  price: number;
+  description: string;
+  avatar: string;
+  photos: string[];
+}
