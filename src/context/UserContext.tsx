@@ -35,6 +35,7 @@ interface IUserContext {
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
   editAd: (data: IAnnouncementsEdit) => void;
+  deleteAnnounc: (id: string) => void;
   announc: IAnnouncementsEdit;
   handlePriceMin: () => void;
   handlePriceMax: () => void;
@@ -202,10 +203,17 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   };
 
   const editAd = async (data: IAnnouncementsEdit): Promise<void> => {
-    console.log("3942518e-3aa7-4ded-899a-f9308bc92b02 <><><><><> " + data.id)
     try {
-      console.log("id: " + data.id)
       await api.patch(`/announcement/${data.id}`, data);
+      location.reload();
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  }
+
+  const deleteAnnounc = async (id: string) => {
+    try {
+      await api.delete(`/announcement/${id}`);
       location.reload();
     } catch (error: any) {
       console.log(error.response.data);
@@ -281,6 +289,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         user,
         newAd,
         editAd,
+        deleteAnnounc,
         announc,
         handlePriceMin,
         handlePriceMax,

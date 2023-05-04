@@ -161,7 +161,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 		resolver: yupResolver(CreateAnnouncementSchema),
 	});
 
-	const { user, editAd } = useContext(UserContext);
+	const { user, editAd, deleteAnnounc } = useContext(UserContext);
 
 	const editAnnounc = async (data: any) => {
 		const updatedAnnounc = {
@@ -214,6 +214,13 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 		};
 		fetchAnnounc();
 	}, [announcId]);
+
+	const submitDelete = (id: string) => {
+		console.log(id);
+		deleteAnnounc(id);
+		onCloseModal2();
+		//notify("Anúncio excluído!");
+	};
 
 	return (
 		<>
@@ -631,7 +638,9 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 												w={"50%"}
 												pl={"28px"}
 												pr={"28px"}
-												onClick={() => setIsActive(true)}
+												onClick={() =>
+													setIsActive(true)
+												}
 											>
 												Sim
 											</Button>
@@ -643,7 +652,9 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 												w={"50%"}
 												pl={"28px"}
 												pr={"28px"}
-												onClick={() => setIsActive(false)}
+												onClick={() =>
+													setIsActive(false)
+												}
 											>
 												Não
 											</Button>
@@ -764,7 +775,10 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 							<ModalFooter>
 								<Button
 									className="buttonFooter"
-									onClick={onCloseModal1}
+									onClick={() => {
+										onCloseModal1();
+										onOpenModal2();
+									}}
 									color="var(--gray-2)"
 									bg="var(--gray-6)"
 									colorScheme="gray"
@@ -832,7 +846,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 							h={"48px"}
 							w={"auto"}
 							_hover={{ color: "var(--white-fixed)" }}
-							//onClick={submitDelete}
+							onClick={() => submitDelete(ad["id"])}
 						>
 							Sim, excluir anúncio
 						</Button>
