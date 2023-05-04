@@ -6,8 +6,6 @@ import {
   Avatar,
   Image,
   Box,
-  Wrap,
-  WrapItem,
   ListItem,
 } from "@chakra-ui/react";
 import {
@@ -20,7 +18,6 @@ import { Link } from "react-router-dom";
 import { ActiveTag, InactiveTag } from "../annoucementTag";
 import { EditAnnouncModal } from "../editAnnouncModal";
 import { useState } from "react";
-import { ProductDetailsPage } from "../../pages/ProductDetailsPage";
 
 interface IProfileCard {
   id: string;
@@ -125,9 +122,9 @@ export const ProfileAds = ({
             <Heading_7_500>{handlePrice()}</Heading_7_500>
           </Box>
         </CardBody>
-        <CardFooter h={100} display={"flex"} justifyContent={"space-between"}>
+        <CardFooter h={100} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
           <EditAnnouncModal announcId={selectedAnnouncId} />
-          <button>Ver Detalhes</button>
+          <a href={`/product?ad=${id}`}><button>Ver Detalhes</button></a>
         </CardFooter>
       </Card>
     </ListItem>

@@ -41,7 +41,7 @@ export const ProductDetailsPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const adId = queryParams.get("ad");
-  const { createCommnet, token } = useContext(UserContext);
+  const { createCommnet, token, user } = useContext(UserContext);
   const [comments, setComments] = useState<string>();
 
   const getProductAd = async (adId: string | null): Promise<void> => {
@@ -177,8 +177,8 @@ export const ProductDetailsPage = () => {
           <AddComments>
             <Box>
               <Flex alignItems={"center"} gap={"8px"}>
-                <Avatar name={productData.username} size={"md"} />
-                <Text>{productData.username}</Text>
+                <Avatar name={user.name} size={"md"} />
+                <Text>{user.name}</Text>
               </Flex>
               <Flex
                 border={"1px solid #ccc"}

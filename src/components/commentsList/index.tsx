@@ -15,7 +15,7 @@ interface IComments {
 }
 
 interface ICommentsList {
-  comments: IComments[];
+  comments?: IComments[];
 }
 const now = moment();
 

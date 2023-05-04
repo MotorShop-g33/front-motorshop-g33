@@ -41,7 +41,7 @@ interface Item {
 	value: string;
 }
 
-export const EditAnnouncModal = (announcId: string) => {
+export const EditAnnouncModal = ({ announcId }: any) => {
 	console.log(announcId + "announcID");
 	const {
 		isOpen: isOpenModal1,
@@ -147,7 +147,7 @@ export const EditAnnouncModal = (announcId: string) => {
 		resolver: yupResolver(CreateAnnouncementSchema),
 	});
 
-	const { editAd, deleteAnnounc } = useContext(UserContext);
+	const { user, navigate, editAd, deleteAnnounc } = useContext(UserContext);
 	const isError = getFipe() === "";
 
 	const notify = (message: string) =>
@@ -200,7 +200,8 @@ export const EditAnnouncModal = (announcId: string) => {
 		console.log(id);
 		deleteAnnounc(id);
 		onCloseModal2();
-		//notify("Anúncio excluído!");
+		// navigate(`/profile?id=${user.id}`)
+		// notify("Anúncio excluído!");
 	};
 
 	return (
@@ -286,9 +287,7 @@ export const EditAnnouncModal = (announcId: string) => {
 										{errors.brand?.message}
 									</FormErrorMessage>
 								</FormControl>
-								<FormControl
-									mt={4}
-								>
+								<FormControl mt={4}>
 									<FormLabel className="label">
 										Modelo
 									</FormLabel>
@@ -304,11 +303,7 @@ export const EditAnnouncModal = (announcId: string) => {
 												Selecione o modelo
 											</option>
 										) : (
-											<option
-												value=""
-											
-												hidden
-											>
+											<option value="" hidden>
 												{ad["model"]}
 											</option>
 										)}
@@ -338,8 +333,7 @@ export const EditAnnouncModal = (announcId: string) => {
 									alignItems="flex-start"
 									mt={4}
 								>
-									<FormControl
-									>
+									<FormControl>
 										<FormLabel className="label">
 											Ano
 										</FormLabel>
@@ -352,11 +346,7 @@ export const EditAnnouncModal = (announcId: string) => {
 												)
 											}
 										>
-											<option
-												value=""
-					
-												hidden
-											>
+											<option value="" hidden>
 												{ad["year"]}
 											</option>
 											{yearFipe?.map(
@@ -375,9 +365,7 @@ export const EditAnnouncModal = (announcId: string) => {
 										</FormErrorMessage>
 									</FormControl>
 
-									<FormControl
-									
-									>
+									<FormControl>
 										<FormLabel className="label">
 											Combustível
 										</FormLabel>
@@ -418,7 +406,7 @@ export const EditAnnouncModal = (announcId: string) => {
 										</FormErrorMessage>
 									</FormControl>
 								</HStack>
-								
+
 								<Stack>
 									<HStack
 										display="flex"
@@ -504,14 +492,12 @@ export const EditAnnouncModal = (announcId: string) => {
 												/>
 												<Input
 													//isDisabled
-													isReadOnly	
+													isReadOnly
 													focusBorderColor="purple.500"
 													id="fipe"
 													type="number"
 													placeholder={ad["fipe"]}
-													defaultValue={Number(
-														getFipe()
-													)}
+													value={Number(getFipe())}
 													//{...register("fipe")}
 													onChange={(e) => {
 														setFipe(getFipe());
@@ -626,9 +612,7 @@ export const EditAnnouncModal = (announcId: string) => {
 										</HStack>
 									</Stack>
 								</FormControl>
-								<FormControl
-									mt={4}
-								>
+								<FormControl isDisabled mt={4}>
 									<FormLabel className="label">
 										Imagem da capa
 									</FormLabel>
@@ -642,12 +626,8 @@ export const EditAnnouncModal = (announcId: string) => {
 											setAvatar(e.target.value);
 										}}
 									/>
-									
 								</FormControl>
-								<FormControl
-									mt={4}
-					
-								>
+								<FormControl isDisabled mt={4}>
 									<FormLabel className="label">
 										1° Imagem da galeria
 									</FormLabel>
@@ -676,6 +656,7 @@ export const EditAnnouncModal = (announcId: string) => {
 									{inputs.map(
 										(value: string, index: number) => (
 											<FormControl
+												isDisabled
 												mt={4}
 												isInvalid={Boolean(
 													errors.photos
@@ -714,7 +695,8 @@ export const EditAnnouncModal = (announcId: string) => {
 								</>
 								<Button
 									onClick={addInput}
-									isDisabled={count >= 5}
+									isDisabled
+									//isDisabled={count >= 5}
 									className="buttonAddImage"
 									whiteSpace="pre-wrap"
 									color="var(--random-13)"
@@ -756,7 +738,6 @@ export const EditAnnouncModal = (announcId: string) => {
 									_active={{
 										bg: "var(--random-5)",
 									}}
-							
 									onClick={editAnnounc}
 								>
 									Salvar alterações
