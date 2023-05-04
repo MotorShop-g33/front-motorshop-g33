@@ -81,7 +81,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 	const [price, setPrice] = useState<any>(ad["price"]);
 	const [description, setDescription] = useState<any>(ad["description"]);
 	const [avatar, setAvatar] = useState<any>(ad["avatar"]);
-	const [isActive, setIsActive] = useState<string>(ad["isActive"]);
+	const [isActive, setIsActive] = useState<boolean>(ad["isActive"]);
 	const [addPhotos, setAddPhotos] = useState<string[]>(ad["addPhotos"]);
 	const [otherBrand, setOtherBrand] = useState<Boolean>(false);
 	// const [avatar, setAvatar] = useState<string>(announc["avatar"]);
@@ -175,6 +175,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 			fipe: fipe,
 			price: price,
 			description: description,
+			isActive: isActive,
 			avatar: avatar,
 			addPhotos: addPhotos,
 		};
@@ -262,11 +263,12 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 								</Text>
 								<FormControl>
 									<Input
+										isReadOnly
 										focusBorderColor="purple.500"
 										id="id"
 										type="text"
 										className="input"
-										placeholder={ad["id"]}
+										placeholder={"id: " + ad["id"]}
 										value={id}
 										{...register("id")}
 									/>
@@ -537,7 +539,9 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 													id="fipe"
 													type="number"
 													placeholder={ad["fipe"]}
-													defaultValue={Number(getFipe())}
+													defaultValue={Number(
+														getFipe()
+													)}
 													//{...register("fipe")}
 													onChange={(e) => {
 														setFipe(getFipe());
@@ -612,39 +616,40 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 										{errors.description?.message}
 									</FormErrorMessage>
 								</FormControl>
-								{/* <FormControl mt={4}>
-								<FormLabel className="label">
-									Publicado
-								</FormLabel>
-								<Stack>
-									<HStack>
-										<Button
-											colorScheme="white"
-											color={"var(--gray-2)"}
-											//bg={"var(--gray-6)"}
-											border={"solid 1px"}
-											h={"48px"}
-											w={"50%"}
-											pl={"28px"}
-											pr={"28px"}
-										>
-											Sim
-										</Button>
-										<Button
-											colorScheme="purple"
-											color={"var(--white-fixed)"}
-											bg={"var(--random-13)"}
-											h={"48px"}
-											w={"50%"}
-											pl={"28px"}
-											pr={"28px"}
-										>
-											Não
-										</Button>
-									</HStack>
-								</Stack>
-							</FormControl>
-*/}
+								<FormControl mt={4}>
+									<FormLabel className="label">
+										Publicado
+									</FormLabel>
+									<Stack>
+										<HStack>
+											<Button
+												colorScheme="gray"
+												color={"var(--gray-2)"}
+												//bg={"var(--gray-6)"}
+												border={"solid 1px"}
+												h={"48px"}
+												w={"50%"}
+												pl={"28px"}
+												pr={"28px"}
+												onClick={() => setIsActive(true)}
+											>
+												Sim
+											</Button>
+											<Button
+												colorScheme="purple"
+												color={"var(--white-fixed)"}
+												bg={"var(--random-13)"}
+												h={"48px"}
+												w={"50%"}
+												pl={"28px"}
+												pr={"28px"}
+												onClick={() => setIsActive(false)}
+											>
+												Não
+											</Button>
+										</HStack>
+									</Stack>
+								</FormControl>
 								<FormControl
 									mt={4}
 									//isInvalid={Boolean(errors.avatar)}
