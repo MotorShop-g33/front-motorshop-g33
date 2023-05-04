@@ -41,7 +41,7 @@ interface Item {
 	value: string;
 }
 
-export const EditAnnouncModal = ({ announcId }: string) => {
+export const EditAnnouncModal = (announcId: string) => {
 	console.log(announcId + "announcID");
 	const {
 		isOpen: isOpenModal1,

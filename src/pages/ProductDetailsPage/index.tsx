@@ -140,7 +140,7 @@ export const ProductDetailsPage = () => {
             </div>
           </InfoProduct>
           <DescriptionProduct>
-            <h1>Description</h1>
+            <h1>Descrição</h1>
             <p>{productData.description}</p>
           </DescriptionProduct>
         </ProductSection>
@@ -171,7 +171,7 @@ export const ProductDetailsPage = () => {
       <SecondarySection>
         <CommentsProduct>
           <Comments>
-            <h1 className="comments-h1">Comments</h1>
+            <h1 className="comments-h1">Comentários</h1>
             <CommentsList comments={productAd?.comment} />
           </Comments>
           <AddComments>
