@@ -27,12 +27,7 @@ import {
 } from "@chakra-ui/react";
 
 import { DivModal } from "../../styles/createAnnouncementModal";
-import {
-	IAnnouncements,
-	IAnnouncementsEdit,
-	IAnnouncementsRequest,
-	ITableFipe,
-} from "../../interfaces/announcements";
+import { IAnnouncementsEdit } from "../../interfaces/announcements";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CreateAnnouncementSchema } from "../../validateSchemas/validateAnnouncementSchema";
 import { UserContext } from "../../context/UserContext";
@@ -46,13 +41,7 @@ interface Item {
 	value: string;
 }
 
-interface Announcement {
-	brand: string;
-	title: string;
-	content: string;
-}
-
-export const EditAnnouncModal = ({ announcId }: any) => {
+export const EditAnnouncModal = ({ announcId }: string) => {
 	console.log(announcId + "announcID");
 	const {
 		isOpen: isOpenModal1,
@@ -67,25 +56,22 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 
 	const [inputs, setInputs] = useState<string[]>([]);
 	const [count, setCount] = useState<number>(0);
-	//const [filterAnnunc, setFlterAnnunc] = useState<any | []>([]);
 	const [annunc, setAnnunc] = useState<any>();
 	const [ad, setAd] = useState<any>([]);
 	const [id, setId] = useState<string>(ad["id"]);
 	const [brand, setBrand] = useState<string>(ad["brand"]);
 	const [model, setModel] = useState<string>(ad["model"]);
-	const [year, setYear] = useState<string>(ad["year"]);
+	const [year, setYear] = useState<number>(ad["year"]);
 	const [fuel, setFuel] = useState<string>(ad["fuel"]);
-	const [milage, setMilage] = useState<string>(ad["milage"]);
+	const [milage, setMilage] = useState<number>(ad["milage"]);
 	const [color, setColor] = useState<string>(ad["color"]);
-	const [fipe, setFipe] = useState<string>(ad["fipe"]);
-	const [price, setPrice] = useState<any>(ad["price"]);
-	const [description, setDescription] = useState<any>(ad["description"]);
-	const [avatar, setAvatar] = useState<any>(ad["avatar"]);
+	const [fipe, setFipe] = useState<number>(ad["fipe"]);
+	const [price, setPrice] = useState<number>(ad["price"]);
+	const [description, setDescription] = useState<string>(ad["description"]);
+	const [avatar, setAvatar] = useState<string>(ad["avatar"]);
 	const [isActive, setIsActive] = useState<boolean>(ad["isActive"]);
 	const [addPhotos, setAddPhotos] = useState<string[]>(ad["addPhotos"]);
 	const [otherBrand, setOtherBrand] = useState<Boolean>(false);
-	// const [avatar, setAvatar] = useState<string>(announc["avatar"]);
-	//const [fipe, setfipe] = useState<any>();
 	const baseURL = "https://kenzie-kars.herokuapp.com/cars";
 
 	const yearFipe = [2019, 2020, 2021, 2022];
@@ -161,7 +147,32 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 		resolver: yupResolver(CreateAnnouncementSchema),
 	});
 
-	const { user, editAd, deleteAnnounc } = useContext(UserContext);
+	const { editAd, deleteAnnounc } = useContext(UserContext);
+	const isError = getFipe() === "";
+
+	const notify = (message: string) =>
+		toast.success(message, {
+			position: "top-right",
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+		});
+
+	console.log(ad["fipe"] + " -o|||o- " + ad["model"] + "  aaa");
+	useEffect(() => {
+		const fetchAnnounc = async () => {
+			try {
+				const response = await api.get(`announcement/${announcId}`);
+				setAd(response.data);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchAnnounc();
+	}, [announcId]);
 
 	const editAnnounc = async (data: any) => {
 		const updatedAnnounc = {
@@ -183,37 +194,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 		editAd(updatedAnnounc);
 		onCloseModal1();
 		//notify("Anúncio atualizado!");
-		// location.reload();
-		// onOpenModal2();
 	};
-
-	const isError = getFipe() === "";
-
-	//const [announc, setAnnounc] = useState(user.announcement);
-	const notify = (message: string) =>
-		toast.success(message, {
-			position: "top-right",
-			autoClose: 3000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			draggable: true,
-			progress: undefined,
-			theme: "light",
-		});
-
-	console.log(fipe);
-	console.log(ad["model"] + " -o|||o- " + ad["model"] + "  aaa");
-	useEffect(() => {
-		const fetchAnnounc = async () => {
-			try {
-				const response = await api.get(`announcement/${announcId}`);
-				setAd(response.data);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		fetchAnnounc();
-	}, [announcId]);
 
 	const submitDelete = (id: string) => {
 		console.log(id);
@@ -239,9 +220,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 				<DivModal>
 					<ModalOverlay />
 					<ModalContent>
-						<form
-						//onSubmit={handleSubmit(editAnnounc)}
-						>
+						<form>
 							<ModalHeader
 								fontFamily="Lexend"
 								fontWeight={500}
@@ -268,7 +247,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 								<Text lineHeight="24px" color="var(--gray-0)">
 									Infomações do veículo
 								</Text>
-								<FormControl>
+								{/* <FormControl>
 									<Input
 										isReadOnly
 										focusBorderColor="purple.500"
@@ -279,12 +258,8 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 										value={id}
 										{...register("id")}
 									/>
-								</FormControl>
-								<FormControl
-									//isRequired
-									mt={4}
-									//isInvalid={Boolean(errors.brand)}
-								>
+								</FormControl> */}
+								<FormControl mt={4}>
 									<FormLabel className="label">
 										Marca
 									</FormLabel>
@@ -296,12 +271,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 											setOtherBrand(true);
 										}}
 									>
-										<option
-											value=""
-											//value={ad["brand"]}
-											//selected
-											hidden
-										>
+										<option value="" hidden>
 											{ad["brand"]}
 										</option>
 										{objAnnunc.map(
@@ -317,20 +287,16 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 									</FormErrorMessage>
 								</FormControl>
 								<FormControl
-									//isRequired
 									mt={4}
-									//isInvalid={Boolean(errors.model)}
 								>
 									<FormLabel className="label">
 										Modelo
 									</FormLabel>
 									<Select
 										focusBorderColor="purple.500"
-										//defaultValue={ad["model"]}
 										{...register("model")}
 										onChange={(e) => {
 											setModel(e.target.value);
-											//setFipe(getFipe());
 										}}
 									>
 										{otherBrand ? (
@@ -340,8 +306,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 										) : (
 											<option
 												value=""
-												//value={ad["model"]}
-												//selected
+											
 												hidden
 											>
 												{ad["model"]}
@@ -368,31 +333,28 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 										{errors.model?.message}
 									</FormErrorMessage>
 								</FormControl>
-								{/* <Stack> */}
 								<HStack
 									display="flex"
 									alignItems="flex-start"
 									mt={4}
 								>
 									<FormControl
-									//isRequired
-									//isInvalid={Boolean(errors.year)}
 									>
 										<FormLabel className="label">
 											Ano
 										</FormLabel>
 										<Select
 											focusBorderColor="purple.500"
-											// defaultValue={ad["year"]}
 											{...register("year")}
 											onChange={(e) =>
-												setYear(e.target.value)
+												setYear(
+													parseInt(e.target.value)
+												)
 											}
 										>
 											<option
 												value=""
-												//value={ad["year"]}
-												//selected
+					
 												hidden
 											>
 												{ad["year"]}
@@ -414,8 +376,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 									</FormControl>
 
 									<FormControl
-									//isRequired
-									//isInvalid={Boolean(errors.fuel)}
+									
 									>
 										<FormLabel className="label">
 											Combustível
@@ -456,8 +417,8 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 											{errors.fuel?.message}
 										</FormErrorMessage>
 									</FormControl>
-								</HStack>{" "}
-								{/**/}
+								</HStack>
+								
 								<Stack>
 									<HStack
 										display="flex"
@@ -474,14 +435,16 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 												<Input
 													focusBorderColor="purple.500"
 													id="milage"
-													type="text"
+													type="number"
 													className="input"
 													placeholder={ad["milage"]}
 													value={milage}
 													{...register("milage")}
 													onChange={(e) => {
 														setMilage(
-															e.target.value
+															parseInt(
+																e.target.value
+															)
 														);
 													}}
 												/>
@@ -541,7 +504,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 												/>
 												<Input
 													//isDisabled
-													//isReadOnly
+													isReadOnly	
 													focusBorderColor="purple.500"
 													id="fipe"
 													type="number"
@@ -589,7 +552,9 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 													{...register("price")}
 													onChange={(e) => {
 														setPrice(
-															e.target.value
+															parseFloat(
+																e.target.value
+															)
 														);
 													}}
 												/>
@@ -632,8 +597,8 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 											<Button
 												colorScheme="gray"
 												color={"var(--gray-2)"}
-												//bg={"var(--gray-6)"}
 												border={"solid 1px"}
+												bg={"var(--white-fixed)"}
 												h={"48px"}
 												w={"50%"}
 												pl={"28px"}
@@ -663,7 +628,6 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 								</FormControl>
 								<FormControl
 									mt={4}
-									//isInvalid={Boolean(errors.avatar)}
 								>
 									<FormLabel className="label">
 										Imagem da capa
@@ -674,19 +638,15 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 										type="text"
 										className="input"
 										placeholder={ad["avatar"]}
-										//defaultValue={announc["avatar"]}
-										//{...register("avatar")}
 										onChange={(e) => {
 											setAvatar(e.target.value);
 										}}
 									/>
-									<FormErrorMessage>
-										{errors.avatar?.message}
-									</FormErrorMessage>
+									
 								</FormControl>
 								<FormControl
 									mt={4}
-									//isInvalid={Boolean(errors.photos)}
+					
 								>
 									<FormLabel className="label">
 										1° Imagem da galeria
@@ -796,8 +756,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 									_active={{
 										bg: "var(--random-5)",
 									}}
-									// type="submit"
-									// onClick={handleSubmit(editAnnounc)}
+							
 									onClick={editAnnounc}
 								>
 									Salvar alterações
