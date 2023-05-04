@@ -427,11 +427,11 @@ export const CreateAnnouncementModal = () => {
                     type="file"
                     className="input"
                     placeholder="https://image.com"
-                    onChange={(e) => {
-                      setAddPhotos([...addPhotos, e.target.value]);
-                      setValue("photos", [e.target.value]);
-                    }}
-                    // {...register("photos")}
+                    // onChange={(e) => {
+                    //   setAddPhotos([...addPhotos, e.target.value]);
+                    //   setValue("photos", [e.target.value]);
+                    // }}
+                    {...register("photos")}
                     multiple
                   />
                   <FormErrorMessage>{errors.photos?.message}</FormErrorMessage>
@@ -453,15 +453,15 @@ export const CreateAnnouncementModal = () => {
                         type="file"
                         // key={index + 1}
                         value={value}
-                        onChange={(event) => {
-                          handleInputChange(event, index);
-                          setAddPhotos([...addPhotos, event.target.value]);
-                          setValue("photos", [
-                            ...addPhotos,
-                            event.target.value,
-                          ]);
-                        }}
-                        // {...register("photos")}
+                        // onChange={(event) => {
+                        //   handleInputChange(event, index);
+                        //   setAddPhotos([...addPhotos, event.target.value]);
+                        //   setValue("photos", [
+                        //     ...addPhotos,
+                        //     event.target.value,
+                        //   ]);
+                        // }}
+                        {...register("photos")}
                         className="input"
                         placeholder="https://image.com"
                         multiple

@@ -42,7 +42,6 @@ interface Item {
 }
 
 export const EditAnnouncModal = ({ announcId }: any) => {
-	console.log(announcId + "announcID");
 	const {
 		isOpen: isOpenModal1,
 		onOpen: onOpenModal1,
@@ -161,7 +160,6 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 			theme: "light",
 		});
 
-	console.log(ad["fipe"] + " -o|||o- " + ad["model"] + "  aaa");
 	useEffect(() => {
 		const fetchAnnounc = async () => {
 			try {
@@ -426,7 +424,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 													type="number"
 													className="input"
 													placeholder={ad["milage"]}
-													value={milage}
+													defaultValue={milage}
 													{...register("milage")}
 													onChange={(e) => {
 														setMilage(
@@ -460,7 +458,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 												type="text"
 												className="input"
 												placeholder={ad["color"]}
-												value={color}
+												defaultValue={color}
 												{...register("color")}
 												onChange={(e) => {
 													setColor(e.target.value);
@@ -497,7 +495,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 													id="fipe"
 													type="number"
 													placeholder={ad["fipe"]}
-													value={Number(getFipe())}
+													//value={Number(getFipe())}
 													//{...register("fipe")}
 													onChange={(e) => {
 														setFipe(getFipe());
@@ -534,7 +532,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
 													id="price"
 													type="number"
 													placeholder={ad["price"]}
-													value={price}
+													defaultValue={price}
 													{...register("price")}
 													onChange={(e) => {
 														setPrice(
