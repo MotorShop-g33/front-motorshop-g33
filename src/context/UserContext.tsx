@@ -49,6 +49,7 @@ interface IUserContext {
   createCommnet: (data: ICommentRequest, id: string) => void;
   requestPasswordRecovery: (data: { email: string }) => void;
   executePasswordRecovery: (data: { password: string }, token: string) => void;
+  render: boolean;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -64,11 +65,14 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const page_limit = 12;
 
   const [user, setUser] = useState<IUser>({} as IUser);
-  const [announc, setAnnounc] = useState<IAnnouncementsEdit>({} as IAnnouncementsEdit);
+  const [announc, setAnnounc] = useState<IAnnouncementsEdit>(
+    {} as IAnnouncementsEdit
+  );
   const [productsList, setProductsList] = useState<IAnnouncements[]>([]);
   const [filterValue, setFilterValue] = useState<string | number | undefined>(
     undefined
   );
+  const [render, setRender] = useState<boolean>(false);
 
   const [filterPrice, setFilterPrice] = useState<IAnnouncements[]>([]);
   const [filterproduct, setFilterProduct] = useState<IAnnouncements[]>(
@@ -206,6 +210,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   };
 
   const newAd = async (data: any) => {
+    setRender(true);
     try {
       const formData = new FormData();
       formData.append("avatar", data.avatar[0]);
@@ -245,7 +250,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       }
 
       api.defaults.headers.authorization = `Bearer ${token}`;
-      console.log(formData);
       const response = await api.post("announcement", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -254,6 +258,8 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       console.log(response.data);
     } catch (error: any) {
       console.log(error.response.data);
+    } finally {
+      setRender(false);
     }
   };
 
@@ -264,7 +270,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     } catch (error: any) {
       console.log(error.response.data);
     }
-  }
+  };
 
   const deleteAnnounc = async (id: string) => {
     try {
@@ -273,7 +279,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     } catch (error: any) {
       console.log(error.response.data);
     }
-  }
+  };
 
   const handlePriceMin = () => {
     const minPrice = filterproduct.sort((a: any, b: any) => a.price - b.price);
@@ -386,6 +392,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         executePasswordRecovery,
         setFilterProduct,
         createCommnet,
+        render,
       }}
     >
       {children}
