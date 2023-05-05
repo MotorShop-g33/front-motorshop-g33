@@ -402,6 +402,7 @@ export const CreateAnnouncementModal = () => {
                     type="file"
                     className="input"
                     placeholder="https://image.com"
+
                     {...register("photos")}
                     multiple
                   />

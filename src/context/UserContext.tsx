@@ -3,6 +3,7 @@ import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../services";
 import {
   IAnnouncements,
+  IAnnouncementsEdit,
   IAnnouncementsRequest,
 } from "../interfaces/announcements";
 import { ILoginUser } from "../interfaces/login";
@@ -38,6 +39,9 @@ interface IUserContext {
   deleteUser: () => void;
   user: IUser;
   newAd: (data: IAnnouncementsRequest) => void;
+  editAd: (data: IAnnouncementsEdit) => void;
+  deleteAnnounc: (id: string) => void;
+  announc: IAnnouncementsEdit;
   handlePriceMin: () => void;
   handlePriceMax: () => void;
   handleMinKm: () => void;
@@ -60,6 +64,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const page_limit = 12;
 
   const [user, setUser] = useState<IUser>({} as IUser);
+  const [announc, setAnnounc] = useState<IAnnouncementsEdit>({} as IAnnouncementsEdit);
   const [productsList, setProductsList] = useState<IAnnouncements[]>([]);
   const [filterValue, setFilterValue] = useState<string | number | undefined>(
     undefined
@@ -208,10 +213,11 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       formData.append("color", data.color);
       formData.append("model", data.model);
       formData.append("fuel", data.fuel);
-      formData.append("milage", data.milage);
-      formData.append("fipe", data.fipe);
-      formData.append("price", data.price);
+      formData.append("milage", data.milage.toString());
+      formData.append("fipe", data.fipe.toString());
+      formData.append("price", data.price.toString());
       formData.append("description", data.description);
+
       formData.append("year", data.year);
       let allPhotos: File[] = [];
       if (data.photos) {
@@ -250,6 +256,24 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       console.log(error.response.data);
     }
   };
+
+  const editAd = async (data: IAnnouncementsEdit): Promise<void> => {
+    try {
+      await api.patch(`/announcement/${data.id}`, data);
+      location.reload();
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  }
+
+  const deleteAnnounc = async (id: string) => {
+    try {
+      await api.delete(`/announcement/${id}`);
+      location.reload();
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
+  }
 
   const handlePriceMin = () => {
     const minPrice = filterproduct.sort((a: any, b: any) => a.price - b.price);
@@ -348,6 +372,9 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         registerUser,
         user,
         newAd,
+        editAd,
+        deleteAnnounc,
+        announc,
         handlePriceMin,
         handlePriceMax,
         handleMinKm,
