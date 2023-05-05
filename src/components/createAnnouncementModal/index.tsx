@@ -484,8 +484,7 @@ export const CreateAnnouncementModal = () => {
       <Modal
         isOpen={isOpenModal2}
         onClose={() => {
-          onCloseModal2();
-          // , location.reload();
+          onCloseModal2(), location.reload();
         }}
       >
         <ModalOverlay />
