@@ -10,10 +10,6 @@ export const CreateAnnouncementSchema = yup.object().shape({
   fipe: yup.number().notRequired(),
   price: yup.number().required("Preço obrigatório"),
   description: yup.string().required("Descrição obrigatória"),
-  // avatar: yup.string().required("Imagem da capa obrigatória"),
-  // photos: yup
-  // 	.array()
-  // 	.of(yup.string().url().notRequired())
-  // 	.min(1, "add pelo")
-  // 	.required(),
+  avatar: yup.mixed().required("Imagem da capa obrigatória"),
+  photos: yup.mixed().required(),
 });
