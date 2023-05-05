@@ -1,7 +1,7 @@
 import { Avatar, List, ListItem, Text } from "@chakra-ui/react";
 import { DivInfo } from "../../styles/commentsList";
 import moment from "moment";
-
+import "moment/dist/locale/pt-br";
 interface IUserComments {
   name: string;
 }
@@ -20,7 +20,7 @@ interface ICommentsList {
 const now = moment();
 
 export const CommentsList = ({ comments }: ICommentsList) => {
-  moment.locale("pt");
+  moment.locale();
 
   const test = comments?.map((item) => {});
   return (
@@ -30,17 +30,10 @@ export const CommentsList = ({ comments }: ICommentsList) => {
           <DivInfo className="info-user">
             <Avatar name={item.user?.name} />
             <h1>{item.user?.name}</h1>
-            <Text>{`há ${
+            <Text>{`${
               moment().diff(item.createdAt, "hours") < 24
-                ? moment(item.createdAt)
-                    .startOf("minutes")
-                    .fromNow()
-                    .replace("ago", "")
-                : moment(item.createdAt)
-                    .startOf("days")
-                    .fromNow()
-                    .replace("a day ago", " 1 dia")
-                    .replace("a year ago", "1 ano")
+                ? moment(item.createdAt).startOf("minutes").fromNow()
+                : moment(item.createdAt).startOf("days").fromNow()
             } `}</Text>
           </DivInfo>
           <p className="description">{item?.comments}</p>

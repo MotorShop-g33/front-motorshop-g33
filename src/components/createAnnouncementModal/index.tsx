@@ -121,7 +121,6 @@ export const CreateAnnouncementModal = () => {
   const submitAd = async (data: IAnnouncementsRequest) => {
     data.fipe = getFipe();
     newAd(data);
-    console.log(data);
     onCloseModal1();
     onOpenModal2();
   };
@@ -402,7 +401,6 @@ export const CreateAnnouncementModal = () => {
                     type="file"
                     className="input"
                     placeholder="https://image.com"
-
                     {...register("photos")}
                     multiple
                   />
@@ -486,7 +484,8 @@ export const CreateAnnouncementModal = () => {
       <Modal
         isOpen={isOpenModal2}
         onClose={() => {
-          onCloseModal2(), location.reload();
+          onCloseModal2();
+          // , location.reload();
         }}
       >
         <ModalOverlay />

@@ -86,7 +86,12 @@ export const ProfileAds = ({
 
   return (
     <ListItem className="Ola">
-      <Card w={312} h={450} boxShadow={"none"} onClick={() => handleAnnouncClick(id)}>
+      <Card
+        w={312}
+        h={450}
+        boxShadow={"none"}
+        onClick={() => handleAnnouncClick(id)}
+      >
         <CardHeader padding={"16px"} h={300} as={Link} to={`/product?ad=${id}`}>
           {isActive ? <ActiveTag /> : <InactiveTag />}
           <Box
@@ -122,9 +127,16 @@ export const ProfileAds = ({
             <Heading_7_500>{handlePrice()}</Heading_7_500>
           </Box>
         </CardBody>
-        <CardFooter h={100} display={"flex"} alignItems={"center"} justifyContent={"space-between"}>
+        <CardFooter
+          h={100}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+        >
           <EditAnnouncModal announcId={selectedAnnouncId} />
-          <a href={`/product?ad=${id}`}><button>Ver Detalhes</button></a>
+          <a href={`/product?ad=${id}`}>
+            <button>Ver Detalhes</button>
+          </a>
         </CardFooter>
       </Card>
     </ListItem>
@@ -171,7 +183,7 @@ export const ProfileCard = ({
     <ListItem className="Ola" as={Link} to={`/product?ad=${id}`}>
       <Card w={312} h={400} boxShadow={"none"}>
         <CardBody padding={"16px"} h={300}>
-        {isActive ? <ActiveTag /> : <InactiveTag />}
+          {isActive ? <ActiveTag /> : <InactiveTag />}
           <Box
             bg={"var(--fixed-white)"}
             h={152}
