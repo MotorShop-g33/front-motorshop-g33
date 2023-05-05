@@ -200,33 +200,44 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     }
   };
 
-  const newAd = async (data: IAnnouncementsRequest) => {
-    // console.log(data);
-    // try {
-    //   api.defaults.headers.authorization = `Bearer ${token}`;
-    //   const response = await api.post("announcement", data);
-    // } catch (error: any) {
-    //   console.log(error.response.data);
-    // }
-
+  const newAd = async (data: any) => {
     try {
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ZmFsc2UsImlzU3RhZmYiOnRydWUsImlhdCI6MTY4MzIxMDQ1MCwiZXhwIjoxNjgzMjk2ODUwLCJzdWIiOiJlMzIwNmE5NC0xNTYwLTRiYjctYjY0MS00MmNhMTEyMzUyMmEifQ.8QDSXJkxhFu8KhJiGdYo9I4G0BrKNso0DrHWBkpvDpE";
       const formData = new FormData();
-      formData.append("avatar", data.avatar[0]); // adiciona o arquivo avatar
-      formData.append("brand", data.brand); // adiciona o campo brand
-      formData.append("color", data.color); // adiciona o campo color
+      formData.append("avatar", data.avatar[0]);
+      formData.append("brand", data.brand);
+      formData.append("color", data.color);
       formData.append("model", data.model);
       formData.append("fuel", data.fuel);
       formData.append("milage", data.milage);
       formData.append("fipe", data.fipe);
       formData.append("price", data.price);
       formData.append("description", data.description);
-      for (let i = 0; i < data.photos.length; i++) {
-        formData.append("photos", data.photos[i]);
-      }
       formData.append("year", data.year);
-      // ... adicione mais campos aqui conforme necessário
+      let allPhotos: File[] = [];
+      if (data.photos) {
+        allPhotos = allPhotos.concat(data.photos[0]);
+      }
+
+      if (data.photos2) {
+        allPhotos = allPhotos.concat(data.photos2[0]);
+      }
+
+      if (data.photos3) {
+        allPhotos = allPhotos.concat(data.photos3[0]);
+      }
+
+      if (data.photos4) {
+        allPhotos = allPhotos.concat(data.photos4[0]);
+      }
+
+      if (data.photos5) {
+        allPhotos = allPhotos.concat(data.photos5[0]);
+      }
+
+      for (let i = 0; i < allPhotos.length; i++) {
+        formData.append("photos", allPhotos[i]);
+      }
+
       api.defaults.headers.authorization = `Bearer ${token}`;
       console.log(formData);
       const response = await api.post("announcement", formData, {

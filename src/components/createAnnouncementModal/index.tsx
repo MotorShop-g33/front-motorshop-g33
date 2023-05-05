@@ -27,10 +27,7 @@ import {
 } from "@chakra-ui/react";
 
 import { DivModal } from "../../styles/createAnnouncementModal";
-import {
-  IAnnouncementsRequest,
-  ITableFipe,
-} from "../../interfaces/announcements";
+import { IAnnouncementsRequest } from "../../interfaces/announcements";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CreateAnnouncementSchema } from "../../validateSchemas/validateAnnouncementSchema";
 import { UserContext } from "../../context/UserContext";
@@ -39,12 +36,6 @@ import { api } from "../../services";
 interface Item {
   name: string;
   value: string;
-}
-
-interface Announcement {
-  brand: string;
-  title: string;
-  content: string;
 }
 
 export const CreateAnnouncementModal = () => {
@@ -61,13 +52,11 @@ export const CreateAnnouncementModal = () => {
 
   const [inputs, setInputs] = useState<string[]>([]);
   const [count, setCount] = useState<number>(0);
-  //const [filterAnnunc, setFlterAnnunc] = useState<any | []>([]);
   const [annunc, setAnnunc] = useState<any>();
   const [name, setName] = useState<string>();
   const [brand, setBrand] = useState<string>();
   const [fuel, setFuel] = useState<string>();
   const [year, setYear] = useState<string>();
-  //const [fipe, setfipe] = useState<any>();
   const baseURL = "https://kenzie-kars.herokuapp.com/cars";
 
   const yearFipe = [2019, 2020, 2021, 2022];
@@ -110,44 +99,30 @@ export const CreateAnnouncementModal = () => {
     if (brand) {
       table(brand);
     }
-    // tableFipe();
   }, [brand]);
 
   const addInput = () => {
-    if (count < 5) {
+    if (count < 4) {
       setInputs([...inputs, ""]);
       setCount(count + 1);
     }
-  };
-
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const newInputs: string[] = [...inputs];
-    newInputs[index] = event.target.value;
-    setInputs(newInputs);
   };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm<IAnnouncementsRequest>({
     resolver: yupResolver(CreateAnnouncementSchema),
   });
 
   const { newAd } = useContext(UserContext);
 
-  const [addPhotos, setAddPhotos] = useState<string[]>([]);
-
   const submitAd = async (data: IAnnouncementsRequest) => {
     data.fipe = getFipe();
+    newAd(data);
     console.log(data);
-    const addPhoto = newAd(data);
     onCloseModal1();
-    //location.reload();
     onOpenModal2();
   };
 
@@ -427,11 +402,7 @@ export const CreateAnnouncementModal = () => {
                     type="file"
                     className="input"
                     placeholder="https://image.com"
-                    onChange={(e) => {
-                      setAddPhotos([...addPhotos, e.target.value]);
-                      setValue("photos", [e.target.value]);
-                    }}
-                    // {...register("photos")}
+                    {...register("photos")}
                     multiple
                   />
                   <FormErrorMessage>{errors.photos?.message}</FormErrorMessage>
@@ -449,21 +420,11 @@ export const CreateAnnouncementModal = () => {
                       </FormLabel>
                       <Input
                         focusBorderColor="purple.500"
-                        id="photos"
+                        id={`photos${index + 2}`}
                         type="file"
-                        // key={index + 1}
-                        value={value}
-                        onChange={(event) => {
-                          handleInputChange(event, index);
-                          setAddPhotos([...addPhotos, event.target.value]);
-                          setValue("photos", [
-                            ...addPhotos,
-                            event.target.value,
-                          ]);
-                        }}
-                        // {...register("photos")}
                         className="input"
                         placeholder="https://image.com"
+                        {...register(`photos${index + 2}`)}
                         multiple
                       />
                     </FormControl>
@@ -472,7 +433,7 @@ export const CreateAnnouncementModal = () => {
 
                 <Button
                   onClick={addInput}
-                  isDisabled={count >= 5}
+                  isDisabled={count >= 4}
                   className="buttonAddImage"
                   whiteSpace="pre-wrap"
                   color="var(--random-13)"
