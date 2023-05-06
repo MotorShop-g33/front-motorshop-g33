@@ -49,7 +49,7 @@ interface IUserContext {
   createCommnet: (data: ICommentRequest, id: string) => void;
   requestPasswordRecovery: (data: { email: string }) => void;
   executePasswordRecovery: (data: { password: string }, token: string) => void;
-  render: boolean;
+  render: IAnnouncements;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -72,7 +72,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const [filterValue, setFilterValue] = useState<string | number | undefined>(
     undefined
   );
-  const [render, setRender] = useState<boolean>(false);
+  const [render, setRender] = useState<IAnnouncements>({} as IAnnouncements);
 
   const [filterPrice, setFilterPrice] = useState<IAnnouncements[]>([]);
   const [filterproduct, setFilterProduct] = useState<IAnnouncements[]>(
@@ -210,7 +210,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   };
 
   const newAd = async (data: any) => {
-    setRender(true);
     try {
       const formData = new FormData();
       formData.append("avatar", data.avatar[0]);
@@ -225,6 +224,15 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
       formData.append("year", data.year);
       let allPhotos: File[] = [];
+      // esta verificando o file . porem não estou conseguindo tirar o "avatar"
+      // pois tambem e im filelist ai gera um erro no db
+
+      // Object.values(data).forEach((value, i, key) => {
+      //   if (value instanceof FileList) {
+      //     allPhotos.push(value[0]);
+      //   }
+      // });
+
       if (data.photos) {
         allPhotos = allPhotos.concat(data.photos[0]);
       }
@@ -245,9 +253,9 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         allPhotos = allPhotos.concat(data.photos5[0]);
       }
 
-      for (let i = 0; i < allPhotos.length; i++) {
-        formData.append("photos", allPhotos[i]);
-      }
+      allPhotos.forEach((photo) => {
+        formData.append("photos", photo);
+      });
 
       api.defaults.headers.authorization = `Bearer ${token}`;
       const response = await api.post("announcement", formData, {
@@ -256,10 +264,10 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         },
       });
       console.log(response.data);
+      setRender(response.data);
     } catch (error: any) {
       console.log(error.response.data);
     } finally {
-      setRender(false);
     }
   };
 
