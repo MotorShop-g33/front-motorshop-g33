@@ -57,16 +57,16 @@ export const EditAnnouncModal = ({ announcId }: any) => {
   const [count, setCount] = useState<number>(0);
   const [annunc, setAnnunc] = useState<any>();
   const [ad, setAd] = useState<any>([]);
-  const [id, setId] = useState<string>(ad["id"]);
-  const [brand, setBrand] = useState<string>(ad["brand"]);
-  const [model, setModel] = useState<string>(ad["model"]);
-  const [year, setYear] = useState<number>(ad["year"]);
-  const [fuel, setFuel] = useState<string>(ad["fuel"]);
-  const [milage, setMilage] = useState<number>(ad["milage"]);
-  const [color, setColor] = useState<string>(ad["color"]);
-  const [fipe, setFipe] = useState<number>(ad["fipe"]);
-  const [price, setPrice] = useState<number>(ad["price"]);
-  const [description, setDescription] = useState<string>(ad["description"]);
+  const [id, setId] = useState<string>(ad.id);
+  const [brand, setBrand] = useState<string>(ad.brand);
+  const [model, setModel] = useState<string>(ad.model);
+  const [year, setYear] = useState<number>(ad.year);
+  const [fuel, setFuel] = useState<string>(ad.fuel);
+  const [milage, setMilage] = useState<number>(ad.milage);
+  const [color, setColor] = useState<string>(ad.color);
+  const [fipe, setFipe] = useState<number>(ad.fipe);
+  const [price, setPrice] = useState<number>(ad.price);
+  const [description, setDescription] = useState<string>(ad.description);
   const [avatar, setAvatar] = useState<string>(ad["avatar"]);
   const [isActive, setIsActive] = useState<boolean>(ad["isActive"]);
   const [addPhotos, setAddPhotos] = useState<string[]>(ad["addPhotos"]);
@@ -376,8 +376,8 @@ export const EditAnnouncModal = ({ announcId }: any) => {
                           id="milage"
                           type="number"
                           className="input"
-                          placeholder={ad["milage"]}
-                          defaultValue={milage}
+                          placeholder={"30000"}
+                          defaultValue={ad.milage}
                           {...register("milage")}
                           onChange={(e) => {
                             setMilage(parseInt(e.target.value));
@@ -402,8 +402,8 @@ export const EditAnnouncModal = ({ announcId }: any) => {
                         id="color"
                         type="text"
                         className="input"
-                        placeholder={ad["color"]}
-                        defaultValue={color}
+                        placeholder={"Branco"}
+                        defaultValue={ad.color}
                         {...register("color")}
                         onChange={(e) => {
                           setColor(e.target.value);
@@ -463,8 +463,8 @@ export const EditAnnouncModal = ({ announcId }: any) => {
                           focusBorderColor="purple.500"
                           id="price"
                           type="number"
-                          placeholder={ad["price"]}
-                          defaultValue={price}
+                          placeholder={"150000"}
+                          defaultValue={ad.price}
                           {...register("price")}
                           onChange={(e) => {
                             setPrice(parseFloat(e.target.value));
@@ -484,8 +484,8 @@ export const EditAnnouncModal = ({ announcId }: any) => {
                     id="description"
                     className="textArea"
                     resize="none"
-                    placeholder={ad["description"]}
-                    value={description}
+                    placeholder={"Descreva sobre o anúncio aqui..."}
+                    defaultValue={ad.description}
                     {...register("description")}
                     onChange={(e) => {
                       setDescription(e.target.value);
