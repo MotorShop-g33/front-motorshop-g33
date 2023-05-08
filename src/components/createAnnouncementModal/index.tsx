@@ -120,6 +120,7 @@ export const CreateAnnouncementModal = () => {
 
   const submitAd = async (data: IAnnouncementsRequest) => {
     data.fipe = getFipe();
+    console.log(data);
     newAd(data);
     onCloseModal1();
     onOpenModal2();
@@ -484,7 +485,7 @@ export const CreateAnnouncementModal = () => {
       <Modal
         isOpen={isOpenModal2}
         onClose={() => {
-          onCloseModal2(), location.reload();
+          onCloseModal2();
         }}
       >
         <ModalOverlay />

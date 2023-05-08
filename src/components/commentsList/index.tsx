@@ -46,7 +46,6 @@ export const CommentsList = ({ comments }: ICommentsList) => {
 
 	const { editComment } = useContext(UserContext);
 
-	const [comment, setComment] = useState<string>("");
 	const [editedCommentId, setEditedCommentId] = useState<string | null>(
 		"null"
 	);
