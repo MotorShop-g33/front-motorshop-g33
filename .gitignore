@@ -26,3 +26,4 @@ dist-ssr
 *.sw?
 yarn.lock
 yarn.lock
+.vercel

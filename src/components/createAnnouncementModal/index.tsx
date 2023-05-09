@@ -423,7 +423,7 @@ export const CreateAnnouncementModal = () => {
                         type="file"
                         className="input"
                         placeholder="https://image.com"
-                        {...register(`photos${index + 2}`)}
+                        {...register(`photos${index + 2}` as any)}
                         multiple
                       />
                     </FormControl>
