@@ -43,7 +43,8 @@ export const ProductDetailsPage = () => {
   const adId = queryParams.get("ad");
   const { createCommnet, token, user } = useContext(UserContext);
   const [comments, setComments] = useState<string>();
-
+  const url = `https://wa.me/${user.phone}`;
+  const whatsappLink = <Link to={url}>Comprar</Link>;
   const getProductAd = async (adId: string | null): Promise<void> => {
     try {
       const response = await api.get("announcement/" + adId);
@@ -87,35 +88,6 @@ export const ProductDetailsPage = () => {
 
   const photosAnnouncement = productData.photos;
 
-  // --> DADOS MOCKADOS APENAS PARA VISUALIZAÇÃO DO DESIGN DOS CARDS (NECESSÁRIO DELEÇÃO FUTURA) <--
-  const fakeComments = [
-    {
-      id: 1,
-      userImg:
-        "https://www.pngplay.com/wp-content/uploads/14/Princess-Fiona-PNG-Clipart-Background.png",
-      username: "Fiona",
-      description: "Burro de qualidade, tração nas quatro patas! POTEEENTE!",
-      createdAt: "há 3 dias",
-    },
-    {
-      id: 2,
-      userImg:
-        "https://www.seekpng.com/png/full/145-1453424_shrek-movie-dragon-james-charles-dragon-from-shrek.png",
-      username: "Dragon",
-      description: "Esse já é rodado, pau pra toda obra uiui",
-      createdAt: "há 1 dia",
-    },
-    {
-      id: 3,
-      userImg:
-        "https://www.pngplay.com/wp-content/uploads/12/Shrek-PNG-HD-Quality.png",
-      username: "Shrek",
-      description:
-        "Esse é o meu preferido, já rodei muitos quilômetros com ele, pra qualquer lugar que eu ia.",
-      createdAt: "há 8 dias",
-    },
-  ];
-
   return (
     <Main>
       <PrimarySection>
@@ -135,7 +107,7 @@ export const ProductDetailsPage = () => {
                 <p>R$ {productData.price}</p>
               </div>
               <Button_medium_text className="purchase-button">
-                Comprar
+                {whatsappLink}
               </Button_medium_text>
             </div>
           </InfoProduct>
