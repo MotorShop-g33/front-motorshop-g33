@@ -30,8 +30,6 @@ export const ExecutePasswordRecoveryForm = () => {
     const HandleRecovery = (data: any) => {
         if (resetToken) {
             const replacedToken = resetToken.replace(/&/g, ".");
-            //console.log(data)
-            console.log(replacedToken)
             executePasswordRecovery(data, replacedToken)
         }
     }

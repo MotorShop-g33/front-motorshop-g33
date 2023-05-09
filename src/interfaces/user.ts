@@ -44,6 +44,7 @@ export interface IAdUser {
   id: string;
   name: string;
   description: string;
+  phone: string;
 }
 
 export interface IUserInfoRequest {

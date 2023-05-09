@@ -120,7 +120,6 @@ export const CreateAnnouncementModal = () => {
 
   const submitAd = async (data: IAnnouncementsRequest) => {
     data.fipe = getFipe();
-    console.log(data);
     newAd(data);
     onCloseModal1();
     onOpenModal2();
