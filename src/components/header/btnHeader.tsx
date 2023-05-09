@@ -37,7 +37,7 @@ export const BtnHeader = () => {
             <Link
               width={"90px"}
               colorScheme={"var(--gray-2)"}
-              href="http://localhost:5173/login"
+              href="https://motorshop33.vercel.app/login"
             >
               Fazer Login
             </Link>
@@ -49,7 +49,7 @@ export const BtnHeader = () => {
               p={" .6rem 2rem"}
               color={"black"}
               textAlign={"center"}
-              href="http://localhost:5173/register"
+              href="https://motorshop33.vercel.app/register"
             >
               Register
             </Link>
@@ -63,7 +63,7 @@ export const BtnHeader = () => {
           _hover={{ color: "blue", transitionDuration: "400ms" }}
           width={"90px"}
           colorScheme={"var(--gray-2)"}
-          href="http://localhost:5173/login"
+          href="https://motorshop33.vercel.app/login"
         >
           Fazer Login
         </Link>
@@ -72,7 +72,7 @@ export const BtnHeader = () => {
           border={"solid 1px var(--gray-4)"}
           p={" .6rem 2rem"}
           color={"black"}
-          href="http://localhost:5173/register"
+          href="https://motorshop33.vercel.app/register"
         >
           Register
         </Link>
