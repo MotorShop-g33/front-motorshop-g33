@@ -36,25 +36,22 @@ import { createCommentSchema } from "../../validateSchemas/validateCommentSchema
 import { ICommentRequest } from "../../interfaces/comments";
 
 export const ProductDetailsPage = () => {
-  const [productAd, setProductAd] = useState<IAnnouncements>();
-  useState<IAnnouncements>();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const adId = queryParams.get("ad");
   const { createCommnet, token, user } = useContext(UserContext);
-  const [comments, setComments] = useState<string>();
+  const [commentsMock, setCommentsMock] = useState<string>();
+  const url = `https://wa.me/${user.phone}`;
+  const whatsappLink = <Link to={url}>Comprar</Link>;
 
-  const getProductAd = async (adId: string | null): Promise<void> => {
-    try {
-      const response = await api.get("announcement/" + adId);
-      setProductAd(response.data);
-    } catch (error) {}
-  };
   const godComments = [
     "Gostei muito!",
     "incrível!",
     "Recomendarei para meus amigos!",
   ];
+
+  const { productAd, setProductAd, getProductAd, comments, setComments } =
+    useContext(UserContext);
 
   const {
     handleSubmit,
@@ -69,16 +66,18 @@ export const ProductDetailsPage = () => {
   };
 
   useEffect(() => {
-    getProductAd(adId);
-  }, []);
+    window.scrollTo(0, 0);
+    getProductAd(adId!);
+  }, [adId]);
+
   const productData = {
     img: productAd?.avatar,
     title: productAd?.model,
     description: productAd?.description,
     userImg: "",
-    userid: productAd?.user.id,
-    username: productAd?.user.name,
-    usertext: productAd?.user.description,
+    userid: productAd?.user?.id,
+    username: productAd?.user?.name,
+    usertext: productAd?.user?.description,
     milage: productAd?.milage,
     year: productAd?.year,
     price: productAd?.price,
@@ -86,35 +85,6 @@ export const ProductDetailsPage = () => {
   };
 
   const photosAnnouncement = productData.photos;
-
-  // --> DADOS MOCKADOS APENAS PARA VISUALIZAÇÃO DO DESIGN DOS CARDS (NECESSÁRIO DELEÇÃO FUTURA) <--
-  const fakeComments = [
-    {
-      id: 1,
-      userImg:
-        "https://www.pngplay.com/wp-content/uploads/14/Princess-Fiona-PNG-Clipart-Background.png",
-      username: "Fiona",
-      description: "Burro de qualidade, tração nas quatro patas! POTEEENTE!",
-      createdAt: "há 3 dias",
-    },
-    {
-      id: 2,
-      userImg:
-        "https://www.seekpng.com/png/full/145-1453424_shrek-movie-dragon-james-charles-dragon-from-shrek.png",
-      username: "Dragon",
-      description: "Esse já é rodado, pau pra toda obra uiui",
-      createdAt: "há 1 dia",
-    },
-    {
-      id: 3,
-      userImg:
-        "https://www.pngplay.com/wp-content/uploads/12/Shrek-PNG-HD-Quality.png",
-      username: "Shrek",
-      description:
-        "Esse é o meu preferido, já rodei muitos quilômetros com ele, pra qualquer lugar que eu ia.",
-      createdAt: "há 8 dias",
-    },
-  ];
 
   return (
     <Main>
@@ -135,7 +105,7 @@ export const ProductDetailsPage = () => {
                 <p>R$ {productData.price}</p>
               </div>
               <Button_medium_text className="purchase-button">
-                Comprar
+                {whatsappLink}
               </Button_medium_text>
             </div>
           </InfoProduct>
@@ -195,7 +165,7 @@ export const ProductDetailsPage = () => {
                     border={"none"}
                     resize="none"
                     fontSize={"1rem"}
-                    defaultValue={comments}
+                    defaultValue={commentsMock}
                     placeholder={
                       "Carro muito confortável, foi uma ótima experiência de compra..."
                     }
@@ -219,7 +189,7 @@ export const ProductDetailsPage = () => {
                   <Text>{!token ? "faça login" : "Comentar"}</Text>
                 </Button>
               </Flex>
-              <Flex gap={"8px"}>
+              {/* <Flex gap={"8px"}>
                 {godComments?.map((comment) => (
                   <Button
                     borderRadius={"1rem"}
@@ -233,7 +203,7 @@ export const ProductDetailsPage = () => {
                     </Text>
                   </Button>
                 ))}
-              </Flex>
+              </Flex> */}
             </Box>
           </AddComments>
         </CommentsProduct>
