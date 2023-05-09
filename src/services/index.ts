@@ -3,7 +3,7 @@ import axios from "axios";
 const token: string | null = localStorage.getItem("@token:token");
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000/",
+  baseURL: "https://motorshopg33v2.onrender.com/",
   timeout: 6000,
   headers: {
     "Content-Type": "application/json",
