@@ -193,15 +193,11 @@ export const EditAnnouncModal = ({ announcId }: any) => {
     data.fipe = getFipe();
     editAd(updatedAnnounc);
     onCloseModal1();
-    //notify("Anúncio atualizado!");
   };
 
   const submitDelete = (id: string) => {
-    console.log(id);
     deleteAnnounc(id);
     onCloseModal2();
-    // navigate(`/profile?id=${user.id}`)
-    // notify("Anúncio excluído!");
   };
 
   return (

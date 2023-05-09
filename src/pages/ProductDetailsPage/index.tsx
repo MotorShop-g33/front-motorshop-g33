@@ -41,8 +41,6 @@ export const ProductDetailsPage = () => {
   const adId = queryParams.get("ad");
   const { createCommnet, token, user } = useContext(UserContext);
   const [commentsMock, setCommentsMock] = useState<string>();
-  const url = `https://wa.me/${user.phone}`;
-  const whatsappLink = <Link to={url}>Comprar</Link>;
 
   const godComments = [
     "Gostei muito!",
@@ -52,6 +50,8 @@ export const ProductDetailsPage = () => {
 
   const { productAd, setProductAd, getProductAd, comments, setComments } =
     useContext(UserContext);
+  const url = `https://wa.me/${productAd?.user?.phone}`;
+  const whatsappLink = <Link to={url}>Comprar</Link>;
 
   const {
     handleSubmit,
@@ -82,6 +82,7 @@ export const ProductDetailsPage = () => {
     year: productAd?.year,
     price: productAd?.price,
     photos: productAd?.photos,
+    phone: productAd?.user?.phone,
   };
 
   const photosAnnouncement = productData.photos;

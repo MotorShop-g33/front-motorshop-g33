@@ -33,7 +33,6 @@ export const Profile = () => {
         setProfileAds(response.data.announcement);
       } catch (error) {}
     };
-    console.log("teste 111");
     if (profileId) {
       getProductAds(profileId);
     }

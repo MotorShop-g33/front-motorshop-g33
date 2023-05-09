@@ -50,7 +50,6 @@ export const CommentsList = ({}: ICommentsList) => {
 
   const [editedCommentId, setEditedCommentId] = useState<string | null>("null");
   const handleEditClick = (commentId: string) => {
-    console.log(commentId);
     setEditedCommentId(commentId);
   };
 

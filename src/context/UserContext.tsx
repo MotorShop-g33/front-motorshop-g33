@@ -100,8 +100,8 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       }
       // const { data } = await api.get("announcement");
       setProductsList(data.results);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      console.log(error.response.data);
     }
   };
 
@@ -266,7 +266,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response.data);
     } catch (error: any) {
       console.log(error.response.data);
     } finally {
@@ -387,8 +386,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   };
 
   const deleteComments = async (idComments: string) => {
-    console.log(idComments);
-
     try {
       await api.delete(`/comment/${idComments}`);
       setComments([...comments]);
