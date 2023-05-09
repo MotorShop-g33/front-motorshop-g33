@@ -36,26 +36,22 @@ import { createCommentSchema } from "../../validateSchemas/validateCommentSchema
 import { ICommentRequest } from "../../interfaces/comments";
 
 export const ProductDetailsPage = () => {
-  const [productAd, setProductAd] = useState<IAnnouncements>();
-  useState<IAnnouncements>();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const adId = queryParams.get("ad");
   const { createCommnet, token, user } = useContext(UserContext);
-  const [comments, setComments] = useState<string>();
+  const [commentsMock, setCommentsMock] = useState<string>();
   const url = `https://wa.me/${user.phone}`;
   const whatsappLink = <Link to={url}>Comprar</Link>;
-  const getProductAd = async (adId: string | null): Promise<void> => {
-    try {
-      const response = await api.get("announcement/" + adId);
-      setProductAd(response.data);
-    } catch (error) {}
-  };
+
   const godComments = [
     "Gostei muito!",
     "incrível!",
     "Recomendarei para meus amigos!",
   ];
+
+  const { productAd, setProductAd, getProductAd, comments, setComments } =
+    useContext(UserContext);
 
   const {
     handleSubmit,
@@ -70,16 +66,18 @@ export const ProductDetailsPage = () => {
   };
 
   useEffect(() => {
-    getProductAd(adId);
-  }, []);
+    window.scrollTo(0, 0);
+    getProductAd(adId!);
+  }, [adId]);
+
   const productData = {
     img: productAd?.avatar,
     title: productAd?.model,
     description: productAd?.description,
     userImg: "",
-    userid: productAd?.user.id,
-    username: productAd?.user.name,
-    usertext: productAd?.user.description,
+    userid: productAd?.user?.id,
+    username: productAd?.user?.name,
+    usertext: productAd?.user?.description,
     milage: productAd?.milage,
     year: productAd?.year,
     price: productAd?.price,
@@ -167,7 +165,7 @@ export const ProductDetailsPage = () => {
                     border={"none"}
                     resize="none"
                     fontSize={"1rem"}
-                    defaultValue={comments}
+                    defaultValue={commentsMock}
                     placeholder={
                       "Carro muito confortável, foi uma ótima experiência de compra..."
                     }
@@ -191,7 +189,7 @@ export const ProductDetailsPage = () => {
                   <Text>{!token ? "faça login" : "Comentar"}</Text>
                 </Button>
               </Flex>
-              <Flex gap={"8px"}>
+              {/* <Flex gap={"8px"}>
                 {godComments?.map((comment) => (
                   <Button
                     borderRadius={"1rem"}
@@ -205,7 +203,7 @@ export const ProductDetailsPage = () => {
                     </Text>
                   </Button>
                 ))}
-              </Flex>
+              </Flex> */}
             </Box>
           </AddComments>
         </CommentsProduct>

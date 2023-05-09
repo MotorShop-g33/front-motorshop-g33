@@ -33,9 +33,10 @@ interface ICommentsList {
 }
 const now = moment();
 
-export const CommentsList = ({ comments }: ICommentsList) => {
+export const CommentsList = ({}: ICommentsList) => {
   moment.locale();
-  console.log(comments);
+
+  const { comments, user } = useContext(UserContext);
 
   const {
     handleSubmit,
@@ -60,10 +61,9 @@ export const CommentsList = ({ comments }: ICommentsList) => {
     }
   };
 
-  const test = comments?.map((item) => {});
   return (
     <List spacing={10}>
-      {comments?.map((item: IComments) => (
+      {comments?.map((item: any) => (
         <ListItem key={item?.id}>
           <DivInfo className="info-user">
             <Avatar name={item.user?.name} />
@@ -86,13 +86,24 @@ export const CommentsList = ({ comments }: ICommentsList) => {
                 width: "100%",
               }}
             >
-              <form onSubmit={handleSubmit(confirmEdit)}>
+              <form
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                  width: "100%",
+                }}
+                onSubmit={handleSubmit(confirmEdit)}
+              >
                 <FormControl>
                   <Textarea
                     id={item.id}
-                    height={"40px"}
-                    resize={"horizontal"}
+                    minHeight="40px"
+                    maxHeight="100px"
+                    height="50px"
+                    resize={"vertical"}
                     defaultValue={item.comments}
+                    placeholder={item.comments}
                     {...register("comment")}
                   />
                 </FormControl>
@@ -107,7 +118,7 @@ export const CommentsList = ({ comments }: ICommentsList) => {
                     Deletar
                   </Button>
                   <Button
-                    colorScheme="red"
+                    colorScheme="gray"
                     onClick={() => setEditedCommentId(null)}
                   >
                     Cancelar
@@ -127,7 +138,11 @@ export const CommentsList = ({ comments }: ICommentsList) => {
               }}
             >
               <p className="description">{item?.comments}</p>
-              <Button onClick={() => handleEditClick(item.id)}>Editar</Button>
+              {item.user.id === user.id ? (
+                <Button onClick={() => handleEditClick(item.id)}>Editar</Button>
+              ) : (
+                <></>
+              )}
             </div>
           )}
         </ListItem>

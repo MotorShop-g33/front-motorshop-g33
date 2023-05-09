@@ -52,6 +52,11 @@ interface IUserContext {
   executePasswordRecovery: (data: { password: string }, token: string) => void;
   render: boolean;
   deleteComments: (data: string) => void;
+  productAd: IAnnouncements;
+  setProductAd: (data: IAnnouncements) => void;
+  getProductAd: (id: string) => void;
+  comments: string[];
+  setComments: (data: string[]) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -80,6 +85,10 @@ export const UserProvider = ({ children }: IUserContextProps) => {
   const [filterproduct, setFilterProduct] = useState<IAnnouncements[]>(
     [] || undefined
   );
+  const [productAd, setProductAd] = useState<IAnnouncements>(
+    {} as IAnnouncements
+  );
+  const [comments, setComments] = useState<string[]>([]);
 
   const annoucements = async (): Promise<void> => {
     try {
@@ -312,7 +321,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
   const createCommnet = async (data: ICommentRequest, id: string) => {
     try {
-      await api.post(`/comment/${id}`, data);
+      const response = await api.post(`/comment/${id}`, data);
       toast({
         title: "success",
         position: "top-right",
@@ -323,7 +332,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
           </Box>
         ),
       });
-      location.reload();
+      setComments([...comments, response.data]);
     } catch (error: any) {
       const toastmsg = error.response.data.message;
       toast({
@@ -341,7 +350,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
   const editComment = async (id: string, data: ICommentRequest) => {
     try {
-      await api.patch(`/comment/${id}`, data);
+      const response = await api.patch(`/comment/${id}`, data);
       toast({
         title: "success",
         position: "top-right",
@@ -352,7 +361,16 @@ export const UserProvider = ({ children }: IUserContextProps) => {
           </Box>
         ),
       });
-      location.reload();
+
+      const newListComments = comments?.filter(
+        (coment: any) => coment.id !== id
+      );
+
+      console.log(newListComments);
+
+      setComments([...newListComments, response.data]);
+
+      // location.reload();
     } catch (error: any) {
       const toastmsg = error.response.data.message;
       toast({
@@ -373,22 +391,35 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
     try {
       await api.delete(`/comment/${idComments}`);
+      setComments([...comments]);
+      const newListComments = comments?.filter(
+        (coment: any) => coment.id !== idComments
+      );
+
+      setComments(newListComments);
+
       toast({
         title: "success",
         position: "top-right",
         isClosable: true,
         render: () => (
           <Box color="white" p={3} bg="gray.400">
-            {`Comentario editado com sucesso`}
+            {`Comentário deletado com sucesso`}
           </Box>
         ),
       });
-      location.reload();
+      // location.reload();
     } catch (error: any) {
       console.log(error.response.data);
     }
-    {
-    }
+  };
+
+  const getProductAd = async (adId: string | null): Promise<void> => {
+    try {
+      const response = await api.get("announcement/" + adId);
+      setProductAd(response.data);
+      setComments(response.data.comment);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -449,6 +480,11 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         editComment,
         render,
         deleteComments,
+        productAd,
+        setProductAd,
+        getProductAd,
+        comments,
+        setComments,
       }}
     >
       {children}
