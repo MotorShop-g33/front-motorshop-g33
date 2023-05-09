@@ -2,7 +2,7 @@ import {
   Box,
   Flex,
   IconButton,
-  Link,
+  // Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -10,6 +10,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 export const BtnHeader = () => {
   const displayValue = useBreakpointValue({ base: "flex", md: "none" });
@@ -35,21 +36,24 @@ export const BtnHeader = () => {
         >
           <MenuItem>
             <Link
-              width={"90px"}
-              colorScheme={"var(--gray-2)"}
-              href="https://motorshop33.vercel.app/login"
+              style={{
+                width: "90px",
+              }}
+              to="/login"
             >
               Fazer Login
             </Link>
           </MenuItem>
           <MenuItem _hover={{ bg: "none" }}>
             <Link
-              w={"95%"}
-              border={"solid 1px var(--gray-4)"}
-              p={" .6rem 2rem"}
-              color={"black"}
-              textAlign={"center"}
-              href="https://motorshop33.vercel.app/register"
+              style={{
+                width: "95%",
+                border: "solid 1px var(--gray-4)",
+                padding: " .6rem 2rem",
+                color: "black",
+                textAlign: "center",
+              }}
+              to="/register"
             >
               Register
             </Link>
@@ -59,20 +63,22 @@ export const BtnHeader = () => {
 
       <Flex gap={5} align={"center"} display={{ base: "none", md: "flex" }}>
         <Link
-          fontWeight="600"
-          _hover={{ color: "blue", transitionDuration: "400ms" }}
-          width={"90px"}
-          colorScheme={"var(--gray-2)"}
-          href="https://motorshop33.vercel.app/login"
+          style={{
+            fontWeight: "600",
+            width: "90px",
+          }}
+          to="/login"
         >
           Fazer Login
         </Link>
         <Link
-          fontWeight="600"
-          border={"solid 1px var(--gray-4)"}
-          p={" .6rem 2rem"}
-          color={"black"}
-          href="https://motorshop33.vercel.app/register"
+          style={{
+            fontWeight: "600",
+            border: "solid 1px var(--gray-4)",
+            padding: " .6rem 2rem",
+            color: "black",
+          }}
+          to="/register"
         >
           Register
         </Link>

@@ -22,7 +22,7 @@ import { EditAddressModal } from "../editAddressModal";
 export const HeaderMenu = () => {
   const { isOpen } = useDisclosure();
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-	const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
 
   const handleOpenModal = (modal: boolean) => {
     modal ? setIsProfileModalOpen(true) : setIsAddressModalOpen(true);
@@ -119,7 +119,10 @@ export const HeaderMenu = () => {
                   >
                     Editar perfil
                   </MenuItem>
-                  <EditProfileModal isOpen={isProfileModalOpen} onClose={() => handleCloseModal(true)} />
+                  <EditProfileModal
+                    isOpen={isProfileModalOpen}
+                    onClose={() => handleCloseModal(true)}
+                  />
                   <MenuItem
                     bg={"var(--gray-9)"}
                     color={"black"}
@@ -127,7 +130,10 @@ export const HeaderMenu = () => {
                   >
                     Editar endereço
                   </MenuItem>
-                  <EditAddressModal isOpen={isAddressModalOpen} onClose={() => handleCloseModal(false)}	/>
+                  <EditAddressModal
+                    isOpen={isAddressModalOpen}
+                    onClose={() => handleCloseModal(false)}
+                  />
                   {user.isStaff == true && (
                     <MenuItem
                       bg={"var(--gray-9)"}
