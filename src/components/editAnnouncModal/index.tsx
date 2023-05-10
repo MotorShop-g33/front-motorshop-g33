@@ -640,7 +640,7 @@ export const EditAnnouncModal = ({ announcId }: any) => {
       <Modal
         isOpen={isOpenModal2}
         onClose={() => {
-          onCloseModal2(), location.reload();
+          onCloseModal2();
         }}
       >
         <ModalOverlay />

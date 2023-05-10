@@ -57,6 +57,11 @@ interface IUserContext {
   getProductAd: (id: string) => void;
   comments: string[];
   setComments: (data: string[]) => void;
+  getProductAds: (data: string) => void;
+  userProfile: IUser;
+  setUserProfile: (data: IUser) => void;
+  profileAds: IAnnouncements[];
+  setProfileAds: (data: IAnnouncements[]) => void;
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext);
@@ -89,6 +94,8 @@ export const UserProvider = ({ children }: IUserContextProps) => {
     {} as IAnnouncements
   );
   const [comments, setComments] = useState<string[]>([]);
+  const [userProfile, setUserProfile] = useState({} as IUser);
+  const [profileAds, setProfileAds] = useState<IAnnouncements[]>([]);
 
   const annoucements = async (): Promise<void> => {
     try {
@@ -275,8 +282,9 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
   const editAd = async (data: IAnnouncementsEdit): Promise<void> => {
     try {
-      await api.patch(`/announcement/${data.id}`, data);
-      location.reload();
+      const response = await api.patch(`/announcement/${data.id}`, data);
+      const newListAds = profileAds?.filter((adds: any) => adds.id !== data.id);
+      setProfileAds([...newListAds, response.data]);
     } catch (error: any) {
       console.log(error.response.data);
     }
@@ -284,8 +292,9 @@ export const UserProvider = ({ children }: IUserContextProps) => {
 
   const deleteAnnounc = async (id: string) => {
     try {
-      await api.delete(`/announcement/${id}`);
-      location.reload();
+      const response = await api.delete(`/announcement/${id}`);
+      const newListAds = profileAds?.filter((adds: any) => adds.id !== id);
+      setProfileAds([...newListAds]);
     } catch (error: any) {
       console.log(error.response.data);
     }
@@ -365,11 +374,7 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         (coment: any) => coment.id !== id
       );
 
-      console.log(newListComments);
-
       setComments([...newListComments, response.data]);
-
-      // location.reload();
     } catch (error: any) {
       const toastmsg = error.response.data.message;
       toast({
@@ -405,7 +410,6 @@ export const UserProvider = ({ children }: IUserContextProps) => {
           </Box>
         ),
       });
-      // location.reload();
     } catch (error: any) {
       console.log(error.response.data);
     }
@@ -416,6 +420,15 @@ export const UserProvider = ({ children }: IUserContextProps) => {
       const response = await api.get("announcement/" + adId);
       setProductAd(response.data);
       setComments(response.data.comment);
+    } catch (error) {}
+  };
+
+  const getProductAds = async (profileId: string | null): Promise<void> => {
+    try {
+      const response = await api.get("users/" + profileId);
+      setUserProfile(response.data);
+
+      setProfileAds(response.data.announcement);
     } catch (error) {}
   };
 
@@ -482,6 +495,11 @@ export const UserProvider = ({ children }: IUserContextProps) => {
         getProductAd,
         comments,
         setComments,
+        getProductAds,
+        userProfile,
+        setUserProfile,
+        profileAds,
+        setProfileAds,
       }}
     >
       {children}

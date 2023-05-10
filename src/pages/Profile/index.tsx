@@ -12,27 +12,27 @@ import {
   UnorderedList,
   useMediaQuery,
 } from "@chakra-ui/react";
-import { api } from "../../services";
 import { CreateAnnouncementModal } from "../../components/createAnnouncementModal";
 
 export const Profile = () => {
   const [isLargerThan750] = useMediaQuery("(min-width: 750px)");
-  const { token, navigate, user, render } = useContext(UserContext);
+  const {
+    token,
+    navigate,
+    user,
+    render,
+    getProductAds,
+    setUserProfile,
+    userProfile,
+    profileAds,
+  } = useContext(UserContext);
+  console.log(userProfile);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const profileId = queryParams.get("id");
-  const [profileAds, setProfileAds] = useState(user.announcement);
-  const [userProfile, setUserProfile] = useState(user);
 
   useEffect(() => {
-    const getProductAds = async (profileId: string | null): Promise<void> => {
-      try {
-        const response = await api.get("users/" + profileId);
-        setUserProfile(response.data);
-        setProfileAds(response.data.announcement);
-      } catch (error) {}
-    };
     if (profileId) {
       getProductAds(profileId);
     }
@@ -73,30 +73,30 @@ export const Profile = () => {
                   {userProfile.id == user.id
                     ? profileAds.map((product) => (
                         <ProfileAds
-                          key={product.id}
-                          id={product.id}
-                          img={product.avatar}
-                          title={product.model}
-                          description={product.description}
-                          year={product.year}
-                          price={product.price}
-                          fipe={product.fipe}
-                          milage={product.milage}
-                          isActive={product.isActive}
+                          key={product?.id}
+                          id={product?.id}
+                          img={product?.avatar}
+                          title={product?.model}
+                          description={product?.description}
+                          year={product?.year}
+                          price={product?.price}
+                          fipe={product?.fipe}
+                          milage={product?.milage}
+                          isActive={product?.isActive}
                         ></ProfileAds>
                       ))
                     : profileAds.map((product) => (
                         <ProfileCard
-                          key={product.id}
-                          id={product.id}
-                          img={product.avatar}
-                          title={product.model}
-                          description={product.description}
-                          year={product.year}
-                          price={product.price}
-                          fipe={product.fipe}
-                          milage={product.milage}
-                          isActive={product.isActive}
+                          key={product?.id}
+                          id={product?.id}
+                          img={product?.avatar}
+                          title={product?.model}
+                          description={product?.description}
+                          year={product?.year}
+                          price={product?.price}
+                          fipe={product?.fipe}
+                          milage={product?.milage}
+                          isActive={product?.isActive}
                           user={userProfile}
                         ></ProfileCard>
                       ))}
@@ -113,30 +113,30 @@ export const Profile = () => {
                   {userProfile.id == user.id
                     ? profileAds.map((product) => (
                         <ProfileAds
-                          key={product.id}
-                          id={product.id}
-                          img={product.avatar}
-                          title={product.model}
-                          description={product.description}
-                          year={product.year}
-                          price={product.price}
-                          fipe={product.fipe}
-                          milage={product.milage}
-                          isActive={product.isActive}
+                          key={product?.id}
+                          id={product?.id}
+                          img={product?.avatar}
+                          title={product?.model}
+                          description={product?.description}
+                          year={product?.year}
+                          price={product?.price}
+                          fipe={product?.fipe}
+                          milage={product?.milage}
+                          isActive={product?.isActive}
                         ></ProfileAds>
                       ))
                     : profileAds.map((product) => (
                         <ProfileCard
-                          key={product.id}
-                          id={product.id}
-                          img={product.avatar}
-                          title={product.model}
-                          description={product.description}
-                          year={product.year}
-                          price={product.price}
-                          fipe={product.fipe}
-                          milage={product.milage}
-                          isActive={product.isActive}
+                          key={product?.id}
+                          id={product?.id}
+                          img={product?.avatar}
+                          title={product?.model}
+                          description={product?.description}
+                          year={product?.year}
+                          price={product?.price}
+                          fipe={product?.fipe}
+                          milage={product?.milage}
+                          isActive={product?.isActive}
                           user={userProfile}
                         ></ProfileCard>
                       ))}
@@ -154,11 +154,11 @@ export const Profile = () => {
                 textAlign={"center"}
               >
                 <Box>
-                  <h2>Olá {user.name}, você ainda nao tem nenhuma anúncios</h2>
+                  <h2>Olá {user?.name}, você ainda nao tem nenhuma anúncios</h2>
                   <Text>
                     Crie seu primeiro anúncio aqui e nao perca mais tempo!
                   </Text>
-                  {userProfile.id == user.id && <CreateAnnouncementModal />}
+                  {userProfile?.id == user?.id && <CreateAnnouncementModal />}
                 </Box>
               </UnorderedList>
             )}
